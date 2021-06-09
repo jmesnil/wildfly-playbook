@@ -30,8 +30,9 @@ jobs:
         with:
           antora_playbook: antora-playbook.yml
           
-      - name: GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2.5.0
+      - name: GitHub Pages Publisher
+        uses: malept/github-action-gh-pages@v1.3.0
         with:
-          target_branch: gh-pages
-          build_dir: build/site
+          defaultBranch: main
+          docsPath: build/site
+    
