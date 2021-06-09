@@ -28,7 +28,7 @@ jobs:
       - name: Antora Site
         uses: kameshsampath/antora-site-action@v0.2.4
         with:
-          antora_playbook: antora-playbook.yaml
+          antora_playbook: antora-playbook.yml
           
       - name: GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.5.0
