@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaEE 7 Tutorial :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/JavaEE_Tutorial.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/JavaEE_Tutorial.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">JavaEE 7 Tutorial</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#169; 2017 The original authors.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">JavaEE 7 Tutorial</div>
+<ul class="sectlevel1">
+<li><a href="#Jakarta_RESTful_Web_Services">1. Jakarta RESTful Web Services</a>
+<ul class="sectlevel2">
+<li><a href="#content-java-api-restful-web-services">1.1. Content</a></li>
+<li><a href="#tutorial-overview">1.2. Tutorial Overview</a></li>
+<li><a href="#what-are-restful-web-services">1.3. What are RESTful Web Services?</a></li>
+<li><a href="#creating-a-restful-endpoint">1.4. Creating a RESTful endpoint</a></li>
+<li><a href="#package-and-build-the-endpoint">1.5. Package and build the endpoint</a></li>
+<li><a href="#deploy-the-endpoint-to-openshift">1.6. Deploy the endpoint to OpenShift</a></li>
+<li><a href="#building-the-mobile-client">1.7. Building the mobile client</a></li>
+<li><a href="#exploring-the-mobile-client">1.8. Exploring the mobile client</a></li>
+</ul>
+</li>
+<li><a href="#Jakarta_Servlet_Technology">2. Jakarta Servlet Technology</a>
+<ul class="sectlevel2">
+<li><a href="#content-java-servlet-technology">2.1. Content</a></li>
+<li><a href="#asynchronous-support">2.2. Asynchronous Support</a></li>
+</ul>
+</li>
+<li><a href="#Jakarta_Persistence_API">3. Jakarta Persistence API</a></li>
+<li><a href="#Jakarta_Transactions">4. Jakarta Transactions</a></li>
+<li><a href="#Managed_Beans">5. Managed Beans</a></li>
+<li><a href="#Jakarta_Contexts_and_Dependency_Injection">6. Jakarta Contexts and Dependency Injection</a></li>
+<li><a href="#Jakarta_Bean_Validation">7. Jakarta Bean Validation</a></li>
+<li><a href="#Jakarta_Messaging_API">8. Jakarta Messaging API</a>
+<ul class="sectlevel2">
+<li><a href="#configure-jbossas-for-messaging">8.1. Configure WildFly for Messaging</a></li>
+<li><a href="#adding-the-message-destinations">8.2. Adding the message destinations</a></li>
+</ul>
+</li>
+<li><a href="#Jakarta_Connectors_Architecture">9. Jakarta Connectors Architecture</a></li>
+<li><a href="#Jakarta_Mail">10. Jakarta Mail</a></li>
+<li><a href="#Java_Authorization_Contract_for_Containers_JACC">11. Java Authorization Contract for Containers (JACC)</a></li>
+<li><a href="#Jakarta_Authentication">12. Jakarta Authentication</a></li>
+<li><a href="#Jakarta_Enterprise_Beans">13. Jakarta Enterprise Beans</a>
+<ul class="sectlevel2">
+<li><a href="#session-beans">13.1. Session Beans</a>
+<ul class="sectlevel3">
+<li><a href="#stateful-session-beans">13.1.1. Stateful Session Beans</a></li>
+<li><a href="#stateless-session-beans">13.1.2. Stateless Session Beans</a></li>
+<li><a href="#singleton-session-beans">13.1.3. Singleton Session Beans</a></li>
+</ul>
+</li>
+<li><a href="#message-driven-beans">13.2. Message Driven Beans</a></li>
+<li><a href="#how-can-enterprise-javabeans-can-be-accessed">13.3. How can Enterprise JavaBeans can be accessed?</a>
+<ul class="sectlevel3">
+<li><a href="#remote-call-invocation">13.3.1. Remote call invocation</a></li>
+<li><a href="#local-call-invocation">13.3.2. Local call invocation</a></li>
+<li><a href="#web-services">13.3.3. Web Services</a></li>
+</ul>
+</li>
+<li><a href="#packaging">13.4. Packaging</a></li>
+</ul>
+</li>
+<li><a href="#Jakarta_XML_Web_Services">14. Jakarta XML Web Services</a>
+<ul class="sectlevel2">
+<li><a href="#developing-web-service-implementations">14.1. Developing web service implementations</a>
+<ul class="sectlevel3">
+<li><a href="#the-service-implementation-class">14.1.1. The service implementation class</a></li>
+<li><a href="#deploying-service-implementations">14.1.2. Deploying service implementations</a></li>
+</ul>
+</li>
+<li><a href="#consuming-web-services">14.2. Consuming web services</a>
+<ul class="sectlevel3">
+<li><a href="#creating-the-client-artifacts">14.2.1. Creating the client artifacts</a></li>
+<li><a href="#constructing-a-service-stub">14.2.2. Constructing a service stub</a></li>
+<li><a href="#appendix">14.2.3. Appendix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This guide is still under development, check back soon!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_RESTful_Web_Services"><a class="anchor" href="#Jakarta_RESTful_Web_Services"></a>1. Jakarta RESTful Web Services</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="content-java-api-restful-web-services"><a class="anchor" href="#content-java-api-restful-web-services"></a>1.1. Content</h3>
+
+</div>
+<div class="sect2">
+<h3 id="tutorial-overview"><a class="anchor" href="#tutorial-overview"></a>1.2. Tutorial Overview</h3>
+<div class="paragraph">
+<p>This chapter describes the Jakarta RESTful Web Services
+(defined in <a href="https://jakarta.ee/specifications/restful-ws/2.1/" class="bare">https://jakarta.ee/specifications/restful-ws/2.1/</a>).
+<a href="https://resteasy.github.io/">RESTEasy</a> is an portable implementation of
+this specification which can run in any Servlet container. Tight
+integration with JBoss Application Server is available for optimal user
+experience in that environment. While Jakarta RESTful Web Services is client as well as
+server-side specification, RESTeasy has innovated to bring Jakarta RESTful Web Services to the client
+through the RESTEasy Jakarta RESTful Web Services Client Framework.</p>
+</div>
+<div class="paragraph">
+<p>Detailed documentation on RESTEasy is available
+<a href="https://resteasy.github.io/docs/">here</a>.<br>
+The source for this tutorial is in github repository
+<a href="https://github.com/tdiesler/javaee-tutorial">git://github.com/tdiesler/javaee-tutorial.git</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://openshift.redhat.com/app">OpenShift</a>, is a portfolio of portable
+cloud services for deploying and managing applications in the cloud.
+This tutorial shows how to deploy a RESTful web service on the free
+OpenShift Express JavaEE cartridge that runs
+<a href="http://www.jboss.org/jbossas">JBossAS 7</a>.</p>
+</div>
+<div class="paragraph">
+<p>An application running on <a href="http://www.android.com">Android</a> shows how to
+leverage JBoss technology on mobile devices. Specifically, we show how
+use the RESTEasy client API from an Android device to integrate with a
+RESTful service running on a JBossAS 7 instance in the cloud.</p>
+</div>
+<div class="paragraph">
+<p>The following topics are addressed</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What are RESTful web services</p>
+</li>
+<li>
+<p>Creating a RESTful server endpoint</p>
+</li>
+<li>
+<p>Deploying a RESTful endpoint to a JBossAS instance in the cloud</p>
+</li>
+<li>
+<p>RESTEasy client running on an Android mobile device</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="what-are-restful-web-services"><a class="anchor" href="#what-are-restful-web-services"></a>1.3. What are RESTful Web Services?</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This section is still under development.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>RESTful web services are designed to expose APIs on the web. REST stands
+for <strong>Re</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer. It aims to provide
+better performance, scalability, and flexibility than traditinoal web
+services, by allowing clients to access data and resources using
+predictable URLs. Many well-known public web services expose RESTful
+APIs.</p>
+</div>
+<div class="paragraph">
+<p>The Jakarta specification for RESTful services is
+Jakarta RESTful Web Services. It is covered by Jakarta RESTful Web Services 2.1 (<a href="https://jakarta.ee/specifications/restful-ws/2.1/" class="bare">https://jakarta.ee/specifications/restful-ws/2.1/</a>).
+In the REST model, the server exposes APIs through specific URIs
+(typically URLs), and clients access those URIs to query or modify data.
+REST uses a stateless communication protocol. Typically, this is HTTP.</p>
+</div>
+<div class="paragraph">
+<p>The following is a summary of RESTful design principles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A URL is tied to a resource using the <code>@Path</code> annotation. Clients
+access the resource using the URL.</p>
+</li>
+<li>
+<p>Create, Read, Update, and Delete (CRUD) operations are accessed via
+<code>PUT</code>, <code>GET</code>, <code>POST</code>, and <code>DELETE</code> requests in the HTTP protocol.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PUT</code> creates a new resource.</p>
+</li>
+<li>
+<p><code>DELETE</code> deletes a resource.</p>
+</li>
+<li>
+<p><code>GET</code> retrieves the current state of a resource.</p>
+</li>
+<li>
+<p><code>POST</code> updates a resources&#8217;s state.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Resources are decoupled from their representation, so that clients can
+request the data in a variety of different formats.</p>
+</li>
+<li>
+<p>Stateful interactions require explicit state transfer, in the form of
+URL rewriting, cookies, and hidden form fields. State can also be
+embedded in response messages.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-a-restful-endpoint"><a class="anchor" href="#creating-a-restful-endpoint"></a>1.4. Creating a RESTful endpoint</h3>
+<div class="paragraph">
+<p>A RESTful endpoint is deployed as JavaEE web archive (WAR). For this
+tutorial we use a simple library application to manage some books. There
+are two classes in this application:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Library</p>
+</li>
+<li>
+<p>Book</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Book is a plain old Java object (POJO) with two attributes. This is
+a simple Java representation of a RESTful entity.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">public class Book {
+
+    private String isbn;
+    private String title;
+
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Library is the RESTful Root Resource. Here we use a set of standard
+Jakarta RESTful Web Services annotations to define</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The root path to the library resource</p>
+</li>
+<li>
+<p>The wire representation of the data (MIME type)</p>
+</li>
+<li>
+<p>The Http methods and corresponding paths</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@Path("/library")
+@Consumes({ "application/json" })
+@Produces({ "application/json" })
+public class Library {
+
+    @GET
+    @Path("/books")
+    public Collection&lt;Book&gt; getBooks() {
+    ...
+    }
+
+    @GET
+    @Path("/book/{isbn}")
+    public Book getBook(@PathParam("isbn") String id) {
+    ...
+    }
+
+    @PUT
+    @Path("/book/{isbn}")
+    public Book addBook(@PathParam("isbn") String id, @QueryParam("title") String title) {
+    ...
+    }
+
+    @POST
+    @Path("/book/{isbn}")
+    public Book updateBook(@PathParam("isbn") String id, String title) {
+    ...
+    }
+
+    @DELETE
+    @Path("/book/{isbn}")
+    public Book removeBook(@PathParam("isbn") String id) {
+    ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Library root resource uses these Jakarta RESTful Web Services annotations:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@Path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifies the URI path that a resource class or class method
+will serve requests for</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@Consumes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the media types that the methods of a resource class
+can accept</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@Produces</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the media type(s) that the methods of a resource
+class can produce</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates that the annotated method responds to HTTP GET requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@PUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates that the annotated method responds to HTTP PUT requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates that the annotated method responds to HTTP POST
+requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@DELETE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates that the annotated method responds to HTTP DELETE
+requests</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For a full description of the available JAX-RS annotations, see the
+<a href="http://download.oracle.com/javaee/6/api/javax/ws/rs/package-summary.html">JAX-RS
+API</a> documentation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="package-and-build-the-endpoint"><a class="anchor" href="#package-and-build-the-endpoint"></a>1.5. Package and build the endpoint</h3>
+<div class="paragraph">
+<p>To package the endpoint we create a simple web archive and include a
+web.xml with the following content</p>
+</div>
+<div class="paragraph">
+<p>Review</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<a href="https://issues.redhat.com/browse/AS7-1674">AS7-1674</a> Remove or explain why
+web.xml is needed for RESTful endpoints
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;javax.ws.rs.core.Application&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The root context is defined in jboss-web.xml</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;jboss-web&gt;
+  &lt;context-root&gt;jaxrs-sample&lt;/context-root&gt;
+&lt;/jboss-web&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The code for the JAX-RS part of this tutorial is available on
+<a href="https://github.com/tdiesler/javaee-tutorial/tree/master/jaxrs" class="bare">https://github.com/tdiesler/javaee-tutorial/tree/master/jaxrs</a>. In this
+step we clone the repository and build the endpoint using
+<a href="http://maven.apache.org">maven</a>. There are a number of JAX-RS client
+tests that run against a local JBossAS 7 instance. Before we build the
+project, we set the JBOSS_HOME environment variable accordingly.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.jboss.org/arquillian">Arquillian</a>, the test framework we use
+throughout this tutorial, can manage server startup/shutdown. It is
+however also possible to startup the server instance manually before you
+run the tests. The latter allows you to look at the console and see what
+log output the deployment phase and Jakarta RESTful Web Services endpoint invocations produce.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ git clone git://github.com/tdiesler/javaee-tutorial.git
+Cloning into javaee-tutorial...
+
+$ cd javaee-tutorial/jaxrs
+$ export JBOSS_HOME=~/workspace/jboss-as-7.0.1.Final
+$ mvn install
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] JavaEE Tutorial - JAX-RS .......................... SUCCESS [1.694s]
+[INFO] JavaEE Tutorial - JAX-RS Server ................... SUCCESS [2.392s]
+[INFO] JavaEE Tutorial - JAX-RS Client ................... SUCCESS [7.304s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 12.142s</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deploy-the-endpoint-to-openshift"><a class="anchor" href="#deploy-the-endpoint-to-openshift"></a>1.6. Deploy the endpoint to OpenShift</h3>
+<div class="paragraph">
+<p>First we need to create a free
+<a href="https://openshift.redhat.com/app/express">OpenShift Express</a> account and
+select the JavaEE cartridge that runs JBossAS 7. Once we have received
+the confirmation email from OpenShift we can continue to create our
+subdomain and deploy the RESTful endpoint. A series of videos on the
+OpenShift Express page shows you how to do this. There is also an
+excellent <a href="https://openshift.redhat.com/app/express#quickstart">quick
+start document</a> that you have access to after login.</p>
+</div>
+<div class="paragraph">
+<p>For this tutorial we assume you have done the above and that we can
+continue by creating the OpenShift application. This step sets up your
+JBossAS 7 instance in the cloud. Additionally a <a href="http://git-scm.com">Git</a>
+repository is configured that gives access to your deployed application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ rhc-create-app -a tutorial -t jbossas-7.0
+Password:
+
+Attempting to create remote application space: tutorial
+Successfully created application: tutorial
+Now your new domain name is being propagated worldwide (this might take a minute)...
+
+Success!  Your application is now published here:
+
+      http://tutorial-tdiesler.rhcloud.com/
+
+The remote repository is located here:
+
+    ssh://79dcb9db5e134cccb9d1ba33e6089667@tutorial-tdiesler.rhcloud.com/~/git/tutorial.git/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we can clone the remote Git repository to our local workspace</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ git clone ssh://79dcb9db5e134cccb9d1ba33e6089667@tutorial-tdiesler.rhcloud.com/~/git/tutorial.git
+Cloning into tutorial...
+remote: Counting objects: 24, done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 24 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (24/24), 21.84 KiB, done.
+
+ls -1 tutorial
+deployments
+pom.xml
+README
+src</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because we want to deploy an already existing web application, which
+we&#8217;ll build in the next step, we can safely remove the source artefacts
+from the repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ rm -rf tutorial/src tutorial/pom.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we copy the Jakarta RESTful Web Services endpoint webapp that we built above to the
+'deployments' folder and commit the changes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ cp javaee-tutorial/jaxrs/server/target/javaee-tutorial-jaxrs-server-1.0.0-SNAPSHOT.war tutorial/deployments
+$ cd tutorial; git commit -a -m "Initial jaxrs endpoint deployment"
+[master be5b5a3] Initial jaxrs endpoint deployment
+ 7 files changed, 0 insertions(+), 672 deletions(-)
+ create mode 100644 deployments/javaee-tutorial-jaxrs-server-1.0.0-SNAPSHOT.war
+ delete mode 100644 pom.xml
+ delete mode 100644 src/main/java/.gitkeep
+ delete mode 100644 src/main/resources/.gitkeep
+ delete mode 100644 src/main/webapp/WEB-INF/web.xml
+ delete mode 100644 src/main/webapp/health.jsp
+ delete mode 100644 src/main/webapp/images/jbosscorp_logo.png
+ delete mode 100644 src/main/webapp/index.html
+ delete mode 100644 src/main/webapp/snoop.jsp
+
+$ git push origin
+Counting objects: 6, done.
+...
+remote: Starting application...Done</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now use curl or your browser to see the Jakarta RESTful Web Services endpoint in
+action. The following URL lists the books that are currently registered
+in the library.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ curl http://tutorial-tdiesler.rhcloud.com/jaxrs-sample/library/books
+[
+{"title":"The Judgment","isbn":"001"},
+{"title":"The Stoker","isbn":"002"},
+{"title":"Jackals and Arabs","isbn":"003"},
+{"title":"The Refusal","isbn":"004"}
+]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="building-the-mobile-client"><a class="anchor" href="#building-the-mobile-client"></a>1.7. Building the mobile client</h3>
+<div class="paragraph">
+<p>The source associated with this tutorial contains a fully working mobile
+client application for the Android framework. If not done so already
+please follow steps described in
+<a href="http://developer.android.com/sdk/installing.html">Installing the SDK</a>. In
+addition to the Android SDK, I recommend installing the
+<a href="http://m2eclipse.sonatype.org/installing-m2eclipse.html">m2eclipse</a> and
+the <a href="http://www.eclipse.org/egit/download/">EGit</a> plugin to
+<a href="http://www.eclipse.org/downloads/packages/eclipse-classic-37/indigor">Eclipse</a>.</p>
+</div>
+<div class="paragraph">
+<p>First, go to File|Import&#8230;&#8203; and choose "Existing Maven Projects" to
+import the tutorial sources</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/ImportExistingMavenProject.png" alt="images/jaxrs/ImportExistingMavenProject.png"></span></p>
+</div>
+<div class="paragraph">
+<p>You project view should look like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/images/jaxrs/ProjectExplorerA.png" alt="images/jaxrs/ProjectExplorerA.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Then go to File|New|Android Project and fill out the first wizard page
+like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/NewAndroidProject.png" alt="images/jaxrs/NewAndroidProject.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Click Finish. Next, go to Project|Properties|Build Path|Libraries and
+add these external libraries to your android project.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/AndroidLibraries.png" alt="images/jaxrs/AndroidLibraries.png"></span></p>
+</div>
+<div class="paragraph">
+<p>You final project view should look like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/ProjectExplorerB.png" alt="images/jaxrs/ProjectExplorerB.png"></span></p>
+</div>
+<div class="paragraph">
+<p>To run the application in the emulator, we need an Android Virtual
+Device (AVD). Go to Window|Android SDK and AVD Manager and create a new
+AVD like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/CreateAVD_.png" alt="images/jaxrs/CreateAVD_.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Now go to Run|Configuration to create a new run configuration for the
+client app.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/RunConfiguration.png" alt="images/jaxrs/RunConfiguration.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Now you should be able to launch the application in the debugger. Right
+click on the javaee-tutorial-jaxrs-android project and select Debug
+As|Android Application. This should launch the emulator, which now goes
+though a series of boot screens until it eventually displays the Android
+home screen. This will take a minute or two if you do this for the first
+time.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/2_2_HVGA_Initial.png" alt="images/jaxrs/2_2_HVGA_Initial.png"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/2_2_HVGA_Next.png" alt="images/jaxrs/2_2_HVGA_Next.png"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/2_2_HVGA_Final.png" alt="images/jaxrs/2_2_HVGA_Final.png"></span></p>
+</div>
+<div class="paragraph">
+<p>When you unlock the home screen by dragging the little green lock to the
+right. You should see the the running Jakarta RESTful Web Services client application.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/NoBooks.png" alt="images/jaxrs/NoBooks.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Finally, you need to configure the host that the client app connects to.
+This would be the same as you used above to curl the library list. In
+the emulator click Menu|Host Settings and enter the host address of your
+OpenShift application.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/HostSettings.png" alt="images/jaxrs/HostSettings.png"></span></p>
+</div>
+<div class="paragraph">
+<p>When going back to the application using the little back arrow next to
+Menu, you should see a list of books.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/jaxrs/ListOfBooks.png" alt="images/jaxrs/ListOfBooks.png"></span></p>
+</div>
+<div class="paragraph">
+<p>You can now add, edit and delete books and switch between your browser
+and the emulator to verify that the client app is not cheating and that
+the books are in fact in the cloud on your JBossAS 7 instance.</p>
+</div>
+<div class="paragraph">
+<p>In Eclipse you can go to the Debug perspective and click on the little
+Android robot in the lower right corner. This will display the LogCat
+view, which should display log output from that Android system as well
+as from this client app</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">08-30 09:05:46.180: INFO/JaxrsSample(269): removeBook: Book [isbn=1234, title=1234]
+08-30 09:05:46.210: INFO/JaxrsSample(269): requestURI: http://tutorial-tdiesler.rhcloud.com:80/jaxrs-sample/library
+08-30 09:05:46.860: INFO/global(269): Default buffer size used in BufferedInputStream constructor. It would be better to be explicit if an 8k buffer is required.
+08-30 09:05:46.920: INFO/JaxrsSample(269): getBooks: [Book [isbn=001, title=The Judgment], Book [isbn=002, title=The Stoker], Book [isbn=003, title=Jackals and Arabs], Book [isbn=004, title=The Refusal]]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exploring-the-mobile-client"><a class="anchor" href="#exploring-the-mobile-client"></a>1.8. Exploring the mobile client</h3>
+<div class="paragraph">
+<p>There is a lot to writing high quality mobile applications. The goal of
+this little application is to get you started with JBossAS 7 / Android
+integration. There is also a portable approach to writing mobile
+applications. A popular one would be through
+<a href="http://www.phonegap.com">PhoneGap</a>. With PhoneGap you write your
+application in HTML+CSS+Java Script. It then runs in the browser of your
+mobile device. Naturally, <a href="http://www.phonegap.com/about/features">not the
+full set</a> of mobile platform APIs would be available through this
+approach.</p>
+</div>
+<div class="paragraph">
+<p>The Jakarta RESTful Web Services client application uses an annotated library client interface</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@Consumes({ "application/json" })
+@Produces({ "application/json" })
+public interface LibraryClient {
+
+    @GET
+    @Path("/books")
+    public List&lt;Book&gt; getBooks();
+
+    @GET
+    @Path("/book/{isbn}")
+    public Book getBook(@PathParam("isbn") String id);
+
+    @PUT
+    @Path("/book/{isbn}")
+    public Book addBook(@PathParam("isbn") String id, @QueryParam("title") String title);
+
+    @POST
+    @Path("/book/{isbn}")
+    public Book updateBook(@PathParam("isbn") String id, String title);
+
+    @DELETE
+    @Path("/book/{isbn}")
+    public Book removeBook(@PathParam("isbn") String id);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are two implementations of this interface available.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>LibraryHttpclient</p>
+</li>
+<li>
+<p>LibraryResteasyClient</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The first uses APIs that are available in the Android SDK natively. The
+code is much more involved, but there would be no need to add external
+libraries (i.e. RESTEasy, jackson, etc). The effect is that the total
+size of the application is considerably smaller in size (i.e. 40k)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">    @Override
+    public List&lt;Book&gt; getBooks() {
+        List&lt;Book&gt; result = new ArrayList&lt;Book&gt;();
+        String content = get("books");
+        Log.d(LOG_TAG, "Result content:" + content);
+        if (content != null) {
+            try {
+                JSONTokener tokener = new JSONTokener(content);
+                JSONArray array = (JSONArray) tokener.nextValue();
+                for (int i = 0; i &lt; array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    String title = obj.getString("title");
+                    String isbn = obj.getString("isbn");
+                    result.add(new Book(isbn, title));
+                }
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+        }
+        Log.i(LOG_TAG, "getBooks: " + result);
+        return result;
+    }
+
+    private String get(String path) {
+        try {
+            HttpGet request = new HttpGet(getRequestURI(path));
+            HttpResponse res = httpClient.execute(request);
+            String content = EntityUtils.toString(res.getEntity());
+            return content;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second implementation uses the fabulous RESTEasy client proxy to
+interact with the Jakarta RESTful Web Services endpoint. The details of Http connectivity and
+JSON data binding is transparently handled by RESTEasy. The total size
+of the application is considerably bigger in size (i.e. 400k)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">    @Override
+    public List&lt;Book&gt; getBooks() {
+        List&lt;Book&gt; result = new ArrayList&lt;Book&gt;();
+        try {
+            result = getLibraryClient().getBooks();
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        }
+        Log.i(LOG_TAG, "getBooks: " + result);
+        return result;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Stay tuned for an update on a much more optimized version of the
+RESTEasy mobile client. Feasible is also a RESTEasy JavaScript library
+that would enable the portable PhoneGap approach.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Servlet_Technology"><a class="anchor" href="#Jakarta_Servlet_Technology"></a>2. Jakarta Servlet Technology</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This guide is still under development, check back soon!
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="content-java-servlet-technology"><a class="anchor" href="#content-java-servlet-technology"></a>2.1. Content</h3>
+
+</div>
+<div class="sect2">
+<h3 id="asynchronous-support"><a class="anchor" href="#asynchronous-support"></a>2.2. Asynchronous Support</h3>
+<div class="paragraph">
+<p>[[Jakarta_Server_Faces_Technology_(Jakarta_Server_Faces)]]
+= Jakarta Server Faces Technology (Jakarta Server Faces)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Persistence_API"><a class="anchor" href="#Jakarta_Persistence_API"></a>3. Jakarta Persistence API</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Transactions"><a class="anchor" href="#Jakarta_Transactions"></a>4. Jakarta Transactions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This guide is still under development, check back soon!
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Managed_Beans"><a class="anchor" href="#Managed_Beans"></a>5. Managed Beans</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Contexts_and_Dependency_Injection"><a class="anchor" href="#Jakarta_Contexts_and_Dependency_Injection"></a>6. Jakarta Contexts and Dependency Injection</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Bean_Validation"><a class="anchor" href="#Jakarta_Bean_Validation"></a>7. Jakarta Bean Validation</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Messaging_API"><a class="anchor" href="#Jakarta_Messaging_API"></a>8. Jakarta Messaging API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This guide is still under development, check back soon!
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="configure-jbossas-for-messaging"><a class="anchor" href="#configure-jbossas-for-messaging"></a>8.1. Configure WildFly for Messaging</h3>
+<div class="paragraph">
+<p>Currently, the default configuration does not include the Jakarta Messaging subsystem.
+To enable Jakarta Messaging in the standalone server you need to add these
+configuration items to standalone.xml or simply use standalone-full.xml.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;extension module="org.jboss.as.messaging"/&gt;
+
+&lt;subsystem xmlns="urn:jboss:domain:messaging:1.0"&gt;
+    &lt;!-- Default journal file size is 10Mb, reduced here to 100k for faster first boot --&gt;
+    &lt;journal-file-size&gt;102400&lt;/journal-file-size&gt;
+    &lt;journal-min-files&gt;2&lt;/journal-min-files&gt;
+    &lt;journal-type&gt;NIO&lt;/journal-type&gt;
+    &lt;!-- disable messaging persistence --&gt;
+    &lt;persistence-enabled&gt;false&lt;/persistence-enabled&gt;
+
+    &lt;connectors&gt;
+       &lt;netty-connector name="netty" socket-binding="messaging" /&gt;
+       &lt;netty-connector name="netty-throughput" socket-binding="messaging-throughput"&gt;
+          &lt;param key="batch-delay" value="50"/&gt;
+       &lt;/netty-connector&gt;
+       &lt;in-vm-connector name="in-vm" server-id="0" /&gt;
+    &lt;/connectors&gt;
+
+    &lt;acceptors&gt;
+       &lt;netty-acceptor name="netty" socket-binding="messaging" /&gt;
+       &lt;netty-acceptor name="netty-throughput" socket-binding="messaging-throughput"&gt;
+          &lt;param key="batch-delay" value="50"/&gt;
+          &lt;param key="direct-deliver" value="false"/&gt;
+       &lt;/netty-acceptor&gt;
+        &lt;acceptor name="stomp-acceptor"&gt;
+         &lt;factory-class&gt;org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory&lt;/factory-class&gt;
+         &lt;param key="protocol" value="stomp" /&gt;
+         &lt;param key="port" value="61613" /&gt;
+       &lt;/acceptor&gt;
+       &lt;in-vm-acceptor name="in-vm" server-id="0" /&gt;
+    &lt;/acceptors&gt;
+
+    &lt;security-settings&gt;
+       &lt;security-setting match="#"&gt;
+           &lt;permission type="createNonDurableQueue" roles="guest"/&gt;
+           &lt;permission type="deleteNonDurableQueue" roles="guest"/&gt;
+            &lt;permission type="consume" roles="guest"/&gt;
+            &lt;permission type="send" roles="guest"/&gt;
+       &lt;/security-setting&gt;
+    &lt;/security-settings&gt;
+
+    &lt;address-settings&gt;
+       &lt;!--default for catch all--&gt;
+       &lt;address-setting match="#"&gt;
+          &lt;dead-letter-address&gt;jms.queue.DLQ&lt;/dead-letter-address&gt;
+          &lt;expiry-address&gt;jms.queue.ExpiryQueue&lt;/expiry-address&gt;
+          &lt;redelivery-delay&gt;0&lt;/redelivery-delay&gt;
+          &lt;max-size-bytes&gt;10485760&lt;/max-size-bytes&gt;
+          &lt;message-counter-history-day-limit&gt;10&lt;/message-counter-history-day-limit&gt;
+          &lt;address-full-policy&gt;BLOCK&lt;/address-full-policy&gt;
+       &lt;/address-setting&gt;
+    &lt;/address-settings&gt;
+
+    &lt;!--JMS Stuff--&gt;
+   &lt;jms-connection-factories&gt;
+      &lt;connection-factory name="InVmConnectionFactory"&gt;
+         &lt;connectors&gt;
+            &lt;connector-ref connector-name="in-vm"/&gt;
+         &lt;/connectors&gt;
+         &lt;entries&gt;
+            &lt;entry name="java:/ConnectionFactory"/&gt;
+         &lt;/entries&gt;
+      &lt;/connection-factory&gt;
+      &lt;connection-factory name="RemoteConnectionFactory"&gt;
+         &lt;connectors&gt;
+            &lt;connector-ref connector-name="netty"/&gt;
+         &lt;/connectors&gt;
+         &lt;entries&gt;
+            &lt;entry name="RemoteConnectionFactory"/&gt;
+         &lt;/entries&gt;
+      &lt;/connection-factory&gt;
+      &lt;pooled-connection-factory name="hornetq-ra"&gt;
+         &lt;transaction mode="xa"/&gt;
+         &lt;connectors&gt;
+            &lt;connector-ref connector-name="in-vm"/&gt;
+         &lt;/connectors&gt;
+         &lt;entries&gt;
+            &lt;entry name="java:/JmsXA"/&gt;
+            &lt;!-- Global JNDI entry used to provide a default JMS Connection factory to EE application --&gt;
+            &lt;entry name="java:jboss/DefaultJMSConnectionFactory"/&gt;
+         &lt;/entries&gt;
+      &lt;/pooled-connection-factory&gt;
+   &lt;/jms-connection-factories&gt;
+
+   &lt;jms-destinations&gt;
+      &lt;jms-queue name="testQueue"&gt;
+         &lt;entry name="queue/test"/&gt;
+      &lt;/jms-queue&gt;
+      &lt;jms-topic name="testTopic"&gt;
+         &lt;entry name="topic/test"/&gt;
+      &lt;/jms-topic&gt;
+   &lt;/jms-destinations&gt;
+&lt;/subsystem&gt;
+
+&lt;socket-binding name="messaging" port="5445" /&gt;
+&lt;socket-binding name="messaging-throughput" port="5455"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively run the server using the 'full' or 'full-ha' configuration</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ bin/standalone.sh --server-config=standalone-full.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-the-message-destinations"><a class="anchor" href="#adding-the-message-destinations"></a>8.2. Adding the message destinations</h3>
+<div class="paragraph">
+<p>For this tutorial we use two message destinations</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>BidQueue - The queue that receives the client bids</p>
+</li>
+<li>
+<p>AuctionTopic - The topic that publishes the start of a new auction</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can either add the message destinations by using the Command Line
+Interface (CLI)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">$ bin/jboss-cli.sh --connect
+Connected to standalone controller at localhost:9999
+[standalone@localhost:9999 /] jms-queue add --queue-address=BidQueue --entries=queue/bid
+[standalone@localhost:9999 /] jms-topic add --topic-address=AuctionTopic --entries=topic/auction
+[standalone@localhost:9999 /] exit
+Closed connection to localhost:9999</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or by adding them to the subsytem configuration as shown above.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Connectors_Architecture"><a class="anchor" href="#Jakarta_Connectors_Architecture"></a>9. Jakarta Connectors Architecture</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Mail"><a class="anchor" href="#Jakarta_Mail"></a>10. Jakarta Mail</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Java_Authorization_Contract_for_Containers_JACC"><a class="anchor" href="#Java_Authorization_Contract_for_Containers_JACC"></a>11. Java Authorization Contract for Containers (JACC)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to register your own JACC Module, you&#8217;ll need to create a
+server module containing the required classes, and then set three system
+properties for WildFly to take it. Such a module would depend on the
+"javax.api" and "javaee.api" modules.</p>
+</div>
+<div class="paragraph">
+<p>An example module.xml for such a module could be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;module xmlns="urn:jboss:module:1.1" name="com.example.customjacc"&gt;
+  &lt;resources&gt;
+    &lt;resource-root path="customjacc.jar"/&gt;
+  &lt;/resources&gt;
+  &lt;dependencies&gt;
+    &lt;module name="javax.api"/&gt;
+    &lt;module name="javaee.api"/&gt;
+  &lt;/dependencies&gt;
+&lt;/module&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The specified JAR needs to contain at least two classes, as mandated by
+the JACC spec:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <code>PolicyProvider</code> implementation: in our example, it&#8217;ll be
+<code>com.example.customjacc.CustomPolicy.</code></p>
+</li>
+<li>
+<p>A <code>PolicyConfigurationFactory</code> implementation:
+<code>com.example.customjacc.CustomPolicyConfigurationFactory</code> in our case.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The spec requires two system properties to be set for the server to
+register the JACC Module.</p>
+</div>
+<div class="paragraph">
+<p>For a server running in standalone mode, put the following commands in
+the JBoss CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">[standalone@localhost:9990 /] /system-property=javax.security.jacc.policy.provider:add(value=com.example.customjacc.CustomPolicy)
+[standalone@localhost:9990 /] /system-property=javax.security.jacc.PolicyConfigurationFactory.provider:add(value=com.example.customjacc.CustomPolicyConfigurationFactory)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another property is needed to make WildFly know where to load the
+classes from:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">[standalone@localhost:9990 /] /system-property=org.jboss.as.security.jacc-module:add(value=com.example.customjacc)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Authorization Contract for Containers (JACC) refer to the Jakarta Authorization unless otherwise noted
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Authentication"><a class="anchor" href="#Jakarta_Authentication"></a>12. Jakarta Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>JASPI is not available by default for deployments, and a specific
+Security Domain must be created to use it. For a simplified developer
+experience, a default JASPI Domain is already bundled, called
+<code>jaspitest</code>.</p>
+</div>
+<div class="paragraph">
+<p>To make use of it, a Web Application only needs to specifiy the desired
+security domain in the <code>jboss-web.xml</code> deployment descriptor. This file
+should be located under the <code>WEB-INF</code> directory. An example
+<code>jboss-web.xml</code> enabling the default JASPI domain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;?xml version="1.0"?&gt;
+&lt;jboss-web xmlns="http://www.jboss.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-web_10_0.xsd"
+    version="10.0"&gt;
+    &lt;security-domain&gt;jaspitest&lt;/security-domain&gt;
+&lt;/jboss-web&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For EAR deployments, a <code>jboss-app.xml</code> like the following should be used
+instead, placed under the root META-INF directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;jboss-app xmlns="http://www.jboss.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    version="7.0"&gt;
+    &lt;security-domain&gt;jaspitest&lt;/security-domain&gt;
+&lt;/jboss-app&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Enterprise_Beans"><a class="anchor" href="#Jakarta_Enterprise_Beans"></a>13. Jakarta Enterprise Beans</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section we&#8217;ll look at the two main types of beans (Session Beans
+and Message Driven Beans), the methods to access and the packaging
+possibilities of beans.</p>
+</div>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This guide is still under development, check back soon!
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="session-beans"><a class="anchor" href="#session-beans"></a>13.1. Session Beans</h3>
+<div class="sect3">
+<h4 id="stateful-session-beans"><a class="anchor" href="#stateful-session-beans"></a>13.1.1. Stateful Session Beans</h4>
+
+</div>
+<div class="sect3">
+<h4 id="stateless-session-beans"><a class="anchor" href="#stateless-session-beans"></a>13.1.2. Stateless Session Beans</h4>
+
+</div>
+<div class="sect3">
+<h4 id="singleton-session-beans"><a class="anchor" href="#singleton-session-beans"></a>13.1.3. Singleton Session Beans</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="message-driven-beans"><a class="anchor" href="#message-driven-beans"></a>13.2. Message Driven Beans</h3>
+
+</div>
+<div class="sect2">
+<h3 id="how-can-enterprise-javabeans-can-be-accessed"><a class="anchor" href="#how-can-enterprise-javabeans-can-be-accessed"></a>13.3. How can Enterprise JavaBeans can be accessed?</h3>
+<div class="sect3">
+<h4 id="remote-call-invocation"><a class="anchor" href="#remote-call-invocation"></a>13.3.1. Remote call invocation</h4>
+
+</div>
+<div class="sect3">
+<h4 id="local-call-invocation"><a class="anchor" href="#local-call-invocation"></a>13.3.2. Local call invocation</h4>
+
+</div>
+<div class="sect3">
+<h4 id="web-services"><a class="anchor" href="#web-services"></a>13.3.3. Web Services</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="packaging"><a class="anchor" href="#packaging"></a>13.4. Packaging</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_XML_Web_Services"><a class="anchor" href="#Jakarta_XML_Web_Services"></a>14. Jakarta XML Web Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>JBossWS uses the JBoss Application Server as its target container. The
+following examples focus on web service deployments that leverage EJB3
+service implementations and the Jakarta XML Web Services programming models. For further
+information on POJO service implementations and advanced topics you need
+consult the <a href="Developer_Guide.html#Jakarta_XML_Web_Services_User_Guide">user guide</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="developing-web-service-implementations"><a class="anchor" href="#developing-web-service-implementations"></a>14.1. Developing web service implementations</h3>
+<div class="paragraph">
+<p>Jakarta XML Web Services does leverage annotations in order to express web service meta
+data on Java components and to describe the mapping between Java data
+types and XML. When developing web service implementations you need to
+decide whether you are going to start with an abstract contract (WSDL)
+or a Java component.</p>
+</div>
+<div class="paragraph">
+<p>If you are in charge to provide the service implementation, then you are
+probably going to start with the implementation and derive the abstract
+contract from it. You are probably not even getting in touch with the
+WSDL unless you hand it to 3rd party clients. For this reason we are
+going to look at a service implementation that leverages
+<a href="http://www.jcp.org/en/jsr/summary?id=181">JSR-181 annotations</a>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Even though detailed knowledge of web service meta data is not required,
+it will definitely help if you make yourself familiar with it. For
+further information see
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.jcp.org/en/jsr/summary?id=181">Web service meta data
+(JSR-181)</a></p>
+</li>
+<li>
+<p><a href="http://www.jcp.org/en/jsr/summary?id=222">Java API for XML binding
+(JAXB)</a></p>
+</li>
+<li>
+<p><a href="http://www.jcp.org/en/jsr/summary?id=224">Java API for XML-Based Web
+Services</a></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="the-service-implementation-class"><a class="anchor" href="#the-service-implementation-class"></a>14.1.1. The service implementation class</h4>
+<div class="paragraph">
+<p>When starting from Java you must provide the service implementation. A
+valid endpoint implementation class must meet the following
+requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It <em>must</em> carry a <code>javax.jws.WebService</code> annotation (see JSR 181)</p>
+</li>
+<li>
+<p>All method parameters and return types <em>must</em> be compatible with the
+JAXB 2.0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at a sample EJB3 component that is going to be exposed as a
+web service.</p>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t be confused with the EJB3 annotation <code>@Stateless</code>. We concentrate
+on the <code>@WebService</code> annotation for now.</p>
+</div>
+<div class="sect4">
+<h5 id="implementing-the-service"><a class="anchor" href="#implementing-the-service"></a>Implementing the service</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">package org.jboss.test.ws.jaxws.samples.retail.profile;
+
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.soap.SOAPBinding;
+
+@Stateless                                                             (1)
+@WebService(                                                           (2)
+   name="ProfileMgmt",
+   targetNamespace = "http://org.jboss.ws/samples/retail/profile",
+   serviceName = "ProfileMgmtService")
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)         (3)
+public class ProfileMgmtBean {
+
+   @WebMethod                                                          (4)
+   public DiscountResponse getCustomerDiscount(DiscountRequest request) {
+      return new DiscountResponse(request.getCustomer(), 10.00);
+   }
+}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1. We are using a stateless session bean implementation
+2. Exposed a web service with an explicit namespace
+3. It's a doc/lit bare endpoint
+4. And offers an 'getCustomerDiscount' operation</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="what-about-the-payload"><a class="anchor" href="#what-about-the-payload"></a>What about the payload?</h5>
+<div class="paragraph">
+<p>The method parameters and return values are going to represent our XML
+payload and thus require being compatible with JAXB2. Actually you
+wouldn&#8217;t need any JAXB annotations for this particular example, because
+JAXB relies on meaningful defaults. For the sake of documentation we put
+the more important ones here.</p>
+</div>
+<div class="paragraph">
+<p>Take a look at the request parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">package org.jboss.test.ws.jaxws.samples.retail.profile;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+import org.jboss.test.ws.jaxws.samples.retail.Customer;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(                                                  (1)
+  name = "discountRequest",
+  namespace="http://org.jboss.ws/samples/retail/profile",
+  propOrder = { "customer" }
+)
+public class DiscountRequest {
+
+   protected Customer customer;
+
+   public DiscountRequest() {
+   }
+
+   public DiscountRequest(Customer customer) {
+      this.customer = customer;
+   }
+
+   public Customer getCustomer() {
+      return customer;
+   }
+
+   public void setCustomer(Customer value) {
+      this.customer = value;
+   }
+
+}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1. In this case we use @XmlType to specify an XML complex type name and override the namespace.</pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If you have more complex mapping problems you need to consult the
+<a href="http://java.sun.com/webservices/jaxb/">JAXB documentation</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deploying-service-implementations"><a class="anchor" href="#deploying-service-implementations"></a>14.1.2. Deploying service implementations</h4>
+<div class="paragraph">
+<p>Service deployment basically depends on the implementation type. As you
+may already know web services can be implemented as EJB3 components or
+plain old Java objects. This quick start leverages EJB3 components,
+that&#8217;s why we are going to look at this case in the next sections.</p>
+</div>
+<div class="sect4">
+<h5 id="ejb3-services"><a class="anchor" href="#ejb3-services"></a>EJB3 services</h5>
+<div class="paragraph">
+<p>Simply wrap up the service implementation class, the endpoint interface
+and any custom data types in a JAR and drop them in the <em>deployment</em>
+directory. No additional deployment descriptors required. Any meta data
+required for the deployment of the actual web service is taken from the
+annotations provided on the implementation class and the service
+endpoint interface. JBossWS will intercept that EJB3 deployment (the
+bean will also be there) and create an HTTP endpoint at deploy-time.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="the-jar-package-structure"><a class="anchor" href="#the-jar-package-structure"></a>The JAR package structure</h5>
+<div class="paragraph">
+<p>jar -tf jaxws-samples-retail.jar</p>
+</div>
+<div class="paragraph">
+<p>org/jboss/test/ws/jaxws/samples/retail/profile/DiscountRequest.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/DiscountResponse.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/ObjectFactory.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/ProfileMgmt.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/ProfileMgmtBean.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/ProfileMgmtService.class<br>
+org/jboss/test/ws/jaxws/samples/retail/profile/package-info.class</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If the deployment was successful you should be able to see your endpoint
+in the application server management console.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="consuming-web-services"><a class="anchor" href="#consuming-web-services"></a>14.2. Consuming web services</h3>
+<div class="paragraph">
+<p>When creating web service clients you would usually start from the WSDL.
+JBossWS ships with a set of tools to generate the required Jakarta XML Web Services
+artefacts to build client implementations. In the following section we
+will look at the most basic usage patterns. For a more detailed
+introduction to web service client please consult the user guide.</p>
+</div>
+<div class="sect3">
+<h4 id="creating-the-client-artifacts"><a class="anchor" href="#creating-the-client-artifacts"></a>14.2.1. Creating the client artifacts</h4>
+<div class="sect4">
+<h5 id="using-wsconsume"><a class="anchor" href="#using-wsconsume"></a>Using wsconsume</h5>
+<div class="paragraph">
+<p>The <em>wsconsume</em> tool is used to consume the abstract contract (WSDL) and
+produce annotated Java classes (and optionally sources) that define it.
+We are going to start with the WSDL from our retail example
+(ProfileMgmtService.wsdl). For a detailed tool reference you need to
+consult the user guide.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>wsconsume is a command line tool that generates
+portable Jakarta XML Web Services artifacts from a WSDL file.
+
+usage: org.jboss.ws.tools.jaxws.command.wsconsume [options] &lt;wsdl-url&gt;
+
+options:
+    -h, --help                  Show this help message
+    -b, --binding=&lt;file&gt;        One or more Jakarta XML Web Services or JAXB binding files
+    -k, --keep                  Keep/Generate Java source
+    -c  --catalog=&lt;file&gt;        Oasis XML Catalog file for entity resolution
+    -p  --package=&lt;name&gt;        The target package for generated source
+    -w  --wsdlLocation=&lt;loc&gt;    Value to use for @WebService.wsdlLocation
+    -o, --output=&lt;directory&gt;    The directory to put generated artifacts
+    -s, --source=&lt;directory&gt;    The directory to put Java source
+    -q, --quiet                 Be somewhat more quiet
+    -t, --show-traces           Show full exception stack traces</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try it on our sample:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>~./wsconsume.sh -k -p org.jboss.test.ws.jaxws.samples.retail.profile ProfileMgmtService.wsdl  (1)
+
+org/jboss/test/ws/jaxws/samples/retail/profile/Customer.java
+org/jboss/test/ws/jaxws/samples/retail/profile/DiscountRequest.java
+org/jboss/test/ws/jaxws/samples/retail/profile/DiscountResponse.java
+org/jboss/test/ws/jaxws/samples/retail/profile/ObjectFactory.java
+org/jboss/test/ws/jaxws/samples/retail/profile/ProfileMgmt.java
+org/jboss/test/ws/jaxws/samples/retail/profile/ProfileMgmtService.java
+org/jboss/test/ws/jaxws/samples/retail/profile/package-info.java</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>As you can see we did use the <code>-p</code> switch to specify the package
+name of the generated sources.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="the-generated-artifacts-explained"><a class="anchor" href="#the-generated-artifacts-explained"></a>The generated artifacts explained</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ProfileMgmt.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service Endpoint Interface</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Customer.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom data type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discount*.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom data type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ObjectFactory.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JAXB XML Registry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">package-info.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holder for JAXB package annotations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ProfileMgmtService.java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service factory</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Basically <em>wsconsume</em> generates all custom data types (JAXB annotated
+classes), the service endpoint interface and a service factory class. We
+will look at how these artifacts can be used the build web service
+client implementations in the next section.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="constructing-a-service-stub"><a class="anchor" href="#constructing-a-service-stub"></a>14.2.2. Constructing a service stub</h4>
+<div class="paragraph">
+<p>Web service clients make use of a service stubs that hide the details of
+a remote web service invocation. To a client application a WS invocation
+just looks like an invocation of any other business component. In this
+case the service endpoint interface acts as the business interface.
+Jakarta XML Web Services does use a service factory class to construct this as particular
+service stub:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">import javax.xml.ws.Service;
+[...]
+Service service = Service.create(                                 (1)
+new URL("http://example.org/service?wsdl"),
+new QName("MyService")
+);
+ProfileMgmt profileMgmt = service.getPort(ProfileMgmt.class);     (2)
+
+// do something with the service stub here...                     (3)</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a service factory using the WSDL location and the service
+name</p>
+</li>
+<li>
+<p>Use the tool created service endpoint interface to build the service
+stub</p>
+</li>
+<li>
+<p>Use the stub like any other business interface</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="appendix"><a class="anchor" href="#appendix"></a>14.2.3. Appendix</h4>
+<div class="sect4">
+<h5 id="sample-wsdl-contract"><a class="anchor" href="#sample-wsdl-contract"></a>Sample wsdl contract</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">&lt;definitions
+    name='ProfileMgmtService'
+    targetNamespace='http://org.jboss.ws/samples/retail/profile'
+    xmlns='http://schemas.xmlsoap.org/wsdl/'
+    xmlns:ns1='http://org.jboss.ws/samples/retail'
+    xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+    xmlns:tns='http://org.jboss.ws/samples/retail/profile'
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'&gt;
+
+   &lt;types&gt;
+
+      &lt;xs:schema targetNamespace='http://org.jboss.ws/samples/retail'
+                 version='1.0' xmlns:xs='http://www.w3.org/2001/XMLSchema'&gt;
+         &lt;xs:complexType name='customer'&gt;
+            &lt;xs:sequence&gt;
+               &lt;xs:element minOccurs='0' name='creditCardDetails' type='xs:string'/&gt;
+               &lt;xs:element minOccurs='0' name='firstName' type='xs:string'/&gt;
+               &lt;xs:element minOccurs='0' name='lastName' type='xs:string'/&gt;
+            &lt;/xs:sequence&gt;
+         &lt;/xs:complexType&gt;
+      &lt;/xs:schema&gt;
+
+      &lt;xs:schema
+          targetNamespace='http://org.jboss.ws/samples/retail/profile'
+          version='1.0'
+          xmlns:ns1='http://org.jboss.ws/samples/retail'
+          xmlns:tns='http://org.jboss.ws/samples/retail/profile'
+          xmlns:xs='http://www.w3.org/2001/XMLSchema'&gt;
+
+         &lt;xs:import namespace='http://org.jboss.ws/samples/retail'/&gt;
+         &lt;xs:element name='getCustomerDiscount'
+                     nillable='true' type='tns:discountRequest'/&gt;
+         &lt;xs:element name='getCustomerDiscountResponse'
+                     nillable='true' type='tns:discountResponse'/&gt;
+         &lt;xs:complexType name='discountRequest'&gt;
+            &lt;xs:sequence&gt;
+               &lt;xs:element minOccurs='0' name='customer' type='ns1:customer'/&gt;
+
+            &lt;/xs:sequence&gt;
+         &lt;/xs:complexType&gt;
+         &lt;xs:complexType name='discountResponse'&gt;
+            &lt;xs:sequence&gt;
+               &lt;xs:element minOccurs='0' name='customer' type='ns1:customer'/&gt;
+               &lt;xs:element name='discount' type='xs:double'/&gt;
+            &lt;/xs:sequence&gt;
+         &lt;/xs:complexType&gt;
+      &lt;/xs:schema&gt;
+
+   &lt;/types&gt;
+
+   &lt;message name='ProfileMgmt_getCustomerDiscount'&gt;
+      &lt;part element='tns:getCustomerDiscount' name='getCustomerDiscount'/&gt;
+   &lt;/message&gt;
+   &lt;message name='ProfileMgmt_getCustomerDiscountResponse'&gt;
+      &lt;part element='tns:getCustomerDiscountResponse'
+            name='getCustomerDiscountResponse'/&gt;
+   &lt;/message&gt;
+   &lt;portType name='ProfileMgmt'&gt;
+      &lt;operation name='getCustomerDiscount'
+                 parameterOrder='getCustomerDiscount'&gt;
+
+         &lt;input message='tns:ProfileMgmt_getCustomerDiscount'/&gt;
+         &lt;output message='tns:ProfileMgmt_getCustomerDiscountResponse'/&gt;
+      &lt;/operation&gt;
+   &lt;/portType&gt;
+   &lt;binding name='ProfileMgmtBinding' type='tns:ProfileMgmt'&gt;
+      &lt;soap:binding style='document'
+                    transport='http://schemas.xmlsoap.org/soap/http'/&gt;
+      &lt;operation name='getCustomerDiscount'&gt;
+         &lt;soap:operation soapAction=''/&gt;
+         &lt;input&gt;
+
+            &lt;soap:body use='literal'/&gt;
+         &lt;/input&gt;
+         &lt;output&gt;
+            &lt;soap:body use='literal'/&gt;
+         &lt;/output&gt;
+      &lt;/operation&gt;
+   &lt;/binding&gt;
+   &lt;service name='ProfileMgmtService'&gt;
+      &lt;port binding='tns:ProfileMgmtBinding' name='ProfileMgmtPort'&gt;
+
+         &lt;soap:address
+             location='http://&lt;HOST&gt;:&lt;PORT&gt;/jaxws-samples-retail/ProfileMgmtBean'/&gt;
+      &lt;/port&gt;
+   &lt;/service&gt;
+&lt;/definitions&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

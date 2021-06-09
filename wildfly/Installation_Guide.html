@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Installation Guide :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/Installation_Guide.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/Installation_Guide.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Installation Guide</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#169; 2020 The original authors.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Installation Guide</div>
+<ul class="sectlevel1">
+<li><a href="#_wildfly_or_wildfly_preview">1. WildFly or WildFly Preview</a></li>
+<li><a href="#Zipped_Installation">2. Installing WildFly from a zipped distribution</a></li>
+<li><a href="#Galleon_Provisioning">3. Installing WildFly with Galleon</a></li>
+<li><a href="#Bootable_JAR">4. WildFly Bootable JAR</a></li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="#Zipped_Installation">Zipped distribution</a>,
+<a href="#Galleon_Provisioning">Galleon provisioning</a> or <a href="#Bootable_JAR">bootable JAR</a>, this guide helps you identify the
+installation strategy that best fits your application requirements.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wildfly_or_wildfly_preview"><a class="anchor" href="#_wildfly_or_wildfly_preview"></a>1. WildFly or WildFly Preview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The WildFly project now produces two appserver variants, <a href="WildFly_and_WildFly_Preview.html">standard WildFly and WildFly Preview</a>,
+so you&#8217;ll want to decide which is right for you. For most users the standard WildFly variant is the right choice,
+but if you&#8217;d like a technical preview look at what&#8217;s coming in the future, try out WildFly Preview.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Zipped_Installation"><a class="anchor" href="#Zipped_Installation"></a>2. Installing WildFly from a zipped distribution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://www.wildfly.org/downloads">Downloading the WildFly release zip</a> and unzipping it is the traditional way to install
+a complete WildFly server with support for both standalone and managed domain operating modes. A WildFly distribution
+contains a large number of default configurations allowing you to select the server features and operating modes.</p>
+</div>
+<div class="paragraph">
+<p>A WildFly distribution based installation is well suited when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You want to rely on a traditional Jakarta EE application deployment.</p>
+</li>
+<li>
+<p>You want a Jakarta EE or MicroProfile platform compliant server that offers all Jakarta EE or MicroProfile features.</p>
+</li>
+<li>
+<p>You are not (yet) concerned by server installation size and memory footprint.</p>
+</li>
+<li>
+<p>You are not yet sure of the kind of operating mode and application you are targeting.</p>
+</li>
+<li>
+<p>Your server instances will contain one or more application deployments.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If that is the kind of installation you are aiming at, the guides that you should read next are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="Getting_Started_Guide.html">Getting Started Guide</a> shows you
+how to install, start and configure the server.</p>
+</li>
+<li>
+<p>The <a href="Getting_Started_Developing_Applications_Guide.html">Getting
+Started Developing Applications Guide</a> shows you how to build Jakarta EE
+applications and deploy them to WildFly.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Galleon_Provisioning"><a class="anchor" href="#Galleon_Provisioning"></a>3. Installing WildFly with Galleon</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Galleon provisioning tooling allows you to construct a customized WildFly installation according to your application needs.
+Some applications don&#8217;t need a fully featured server supporting all operating modes and containing all Jakarta EE capabilities.
+Galleon tooling allows you to select the server capabilities you want to see installed.</p>
+</div>
+<div class="paragraph">
+<p>A WildFly server provisioned with Galleon is well suited when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You want to rely on a traditional Jakarta EE application deployment.</p>
+</li>
+<li>
+<p>You want to easily update an installation to the latest WildFly version.</p>
+</li>
+<li>
+<p>Your application requires only a subset of the Jakarta EE or MicroProfile platform APIs
+(although Galleon can provision a server that supports the full set of Jakarta EE and MicroProfile platform APIs).</p>
+</li>
+<li>
+<p>You are concerned by server installation size and memory footprint.</p>
+</li>
+<li>
+<p>You are only using standalone operating mode (with support for High Availability or not).</p>
+</li>
+<li>
+<p>Your server instances will contain one or more application deployments.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If that is the kind of installation you are aiming at, the guides that you should read next are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="Galleon_Guide.html">Galleon Provisioning Guide</a> shows you how to
+provision customized WildFly server using Galleon.</p>
+</li>
+<li>
+<p>The <a href="Getting_Started_Developing_Applications_Guide.html">Getting
+Started Developing Applications Guide</a> shows you how to build Jakarta EE
+applications and deploy them to WildFly.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Bootable_JAR"><a class="anchor" href="#Bootable_JAR"></a>4. WildFly Bootable JAR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A bootable JAR contains both a customized WildFly server and your deployment. Such a JAR can
+then run with a simple java command such as <code>java -jar myapp-bootable.jar</code></p>
+</div>
+<div class="paragraph">
+<p>A bootable JAR is built using Maven. You need to integrate the
+<a href="https://github.com/wildfly-extras/wildfly-jar-maven-plugin">bootable JAR Maven plugin</a>
+in the Maven project of your application.</p>
+</div>
+<div class="paragraph">
+<p>A Bootable JAR is well suited when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You want to leverage your existing WildFly applications.</p>
+</li>
+<li>
+<p>You want to build a microservice composed of a server and a single application deployment.</p>
+</li>
+<li>
+<p>You are concerned by JAR size and memory footprint.</p>
+</li>
+<li>
+<p>You are only using standalone operating mode (with support for High Availability or not).</p>
+</li>
+<li>
+<p>You are building your application using Maven.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If that is the kind of installation you are aiming at, the guide that you should read next is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="Bootable_Guide.html">Bootable JAR Guide</a> shows you how to package your application and the WildFly server
+into a bootable JAR.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

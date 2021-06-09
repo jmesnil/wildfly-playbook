@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>WildFly Client Configuration :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/Client_Guide.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/Client_Guide.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">WildFly Client Configuration</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div id="toc" class="toc">
+<div id="toctitle" class="title">WildFly Client Configuration Guide</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li><a href="#_wildfly_config_xml_discovery">2. wildfly-config.xml Discovery</a></li>
+<li><a href="#_configuration_sections">3. Configuration Sections</a>
+<ul class="sectlevel2">
+<li><a href="#authentication-client">3.1. &lt;authentication-client /&gt; - WildFly Elytron</a></li>
+<li><a href="#jboss-ejb-client">3.2. jboss-ejb-client</a></li>
+<li><a href="#Remoting_Client_Configuration">3.3. Remoting Client Configuration</a></li>
+<li><a href="#XNIO_Client_Configuration">3.4. XNIO Client Configuration</a></li>
+<li><a href="#webservices-client">3.5. webservices-client</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As of WildFly 11 a common configuration framework has been introduced for use by the client libraries to define configuration, this allows for the configuration to be shared across multiple clients rather than relying on their own configuration files.  As an example the configuration used by a Jakarta Enterprise Beans client can be shared with the JBoss CLI, if both of these required SSL configuration this can now be defined once and re-used.</p>
+</div>
+<div class="paragraph">
+<p>Programmatic APIs are also available for many of the options however this document is focusing on the configuration available within the common <code>wildfly-config.xml</code> configuration file.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wildfly_config_xml_discovery"><a class="anchor" href="#_wildfly_config_xml_discovery"></a>2. wildfly-config.xml Discovery</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At the time a client requires access to its configuration, the class path is scanned for a <code>wildfly-config.xml</code> or <code>META-INF/wildfly-config.xml</code> file. Once the file is located the configuration will be parsed to be made available for that client.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, the <code>wildfly.config.url</code> system property can also be specified to identify the location of the configuration that should be used.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_sections"><a class="anchor" href="#_configuration_sections"></a>3. Configuration Sections</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="authentication-client"><a class="anchor" href="#authentication-client"></a>3.1. &lt;authentication-client /&gt; - WildFly Elytron</h3>
+<div class="paragraph">
+<p>The <em>&lt;authentication-client/&gt;</em> element can be added to the wildfly-config.xml configuration to define configuration in relation to authentication configuration for outbound connections and SSL configuration for outbound connections e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+       ...
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Note: A single wildfly-config.xml could be used by multiple projects using multiple versions of WildFly Elytron, newer versions of WildFly Elytron will introduce new configuration using later namespace versions however they will still continue to support the previously released schemas until advertised otherwise.  For the configuration to be compatible with this either use a schema and namespace compatible with all the versions in use, or multiple authentication-client elements can be added, these should be added ordered by namespace youngest to oldest.  If a configuration with a later namespace is discovered by a newer WildFly Elytron client it will be used and parsing will not look for an older version as well.</em></p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;authentication-client /&gt;</em> configuration can contain the following sections: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;credential-stores /&gt;</dt>
+<dd>
+<p>Definitions of credential stores to be referenced from elsewhere in the configuration.</p>
+</dd>
+<dt class="hdlist1">&lt;key-stores /&gt;</dt>
+<dd>
+<p>Definitions of KeyStores to be referenced elsewhere in the configuration.</p>
+</dd>
+<dt class="hdlist1">&lt;authentication-rules /&gt;</dt>
+<dd>
+<p>Rules to be applied for outbound connections to match against an appropriate authentication configuration.</p>
+</dd>
+<dt class="hdlist1">&lt;authentication-configurations /&gt;</dt>
+<dd>
+<p>The individual authentication configurations that will be matched by the authentication rules.</p>
+</dd>
+<dt class="hdlist1">&lt;net-authenticator /&gt;</dt>
+<dd>
+<p>Flag to enable integration with the [java.net.Authenticator|https://docs.oracle.com/javase/8/docs/api/java/net/Authenticator.html].</p>
+</dd>
+<dt class="hdlist1">&lt;ssl-context-rules /&gt;</dt>
+<dd>
+<p>Rules to be applied for outbound connections to match against an appropriate SSL context configuration.</p>
+</dd>
+<dt class="hdlist1">&lt;ssl-contexts /&gt;</dt>
+<dd>
+<p>Individual SSL context definitions that will be matched by the ssl context rules.</p>
+</dd>
+<dt class="hdlist1">&lt;providers/&gt;</dt>
+<dd>
+<p>Definition of how [java.security.Provider|https://docs.oracle.com/javase/8/docs/api/java/security/Provider.html] instances will be discovered.</p>
+</dd>
+</dl>
+</div>
+<div class="sect3">
+<h4 id="_credential_stores"><a class="anchor" href="#_credential_stores"></a>3.1.1. &lt;credential-stores /&gt;</h4>
+<div class="paragraph">
+<p>The &lt;credential-stores /&gt;  element can be used to define individual named credential stores that can subsequently be used elsewhere in the configuration to reference stored credentials as an alternative to the credentials being embedded in the configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;credential-stores&gt;
+            &lt;credential-store name="..." type="..." provider="..." &gt;
+                &lt;attributes&gt;
+                    &lt;attribute name="..." value="..." /&gt;
+                &lt;/attributes&gt;
+                &lt;protection-parameter-credentials&gt;...&lt;/protection-parameter-credentials&gt;
+            &lt;/credential-store&gt;
+        &lt;/credential-stores&gt;
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to the name an individual &lt;credential-store /&gt; definition can contain the following optional attributes: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">type</dt>
+<dd>
+<p>The type of the credential store, e.g.KeyStoreCredentialStore.</p>
+</dd>
+<dt class="hdlist1">provider</dt>
+<dd>
+<p>The name of the [java.security.Provider|https://docs.oracle.com/javase/8/docs/api/java/security/Provider.html] to use to load the credential store.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following child elements can also be added to configure the credential store.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;attributes .&gt;</dt>
+<dd>
+<p>Definition of configuration attributes used to initialise the credential store.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;attributes&gt;
+    &lt;attribute name="..." value="..." /&gt;
+&lt;/attributes&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The &lt;attribute/&gt; element can be repeated as many times as is required for the configuration.</p>
+</div>
+<div id="client-credentials-type" class="dlist">
+<dl>
+<dt class="hdlist1">&lt;protection-parameter-credentials /&gt;</dt>
+<dd>
+<p>One or more credentials to be assembled into a protection parameter when initialising the credential store.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The &lt;protection-paramter-credentials /&gt; element can contain one more more child elements, which of these are actually supported will depend on the credential store implementation: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;protection-parameter-credentials&gt;
+    &lt;key-store-reference&gt;...&lt;/key-store-reference&gt;
+    &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+    &lt;clear-password password="..." /&gt;
+    &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+    &lt;key-pair&gt;
+        &lt;public-key-pem&gt;...&lt;/public-key-pem&gt;
+        &lt;private-key-pem&gt;...&lt;/public-key-pem&gt;
+        &lt;openssh-private-key pem="..."&gt;
+            &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+            &lt;clear-password password="..." /&gt;
+            &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+        &lt;/openssh-private-key&gt;
+    &lt;/key-pair&gt;
+    &lt;certificate private-key-pem="..." pem="..." /&gt;
+    &lt;public-key-pem&gt;...&lt;/public-key-pem&gt;
+    &lt;bearer-token value="..." /&gt;
+    &lt;oauth2-bearer-token token-endpoint-uri="..."&gt;...&lt;/oauth2-bearer-token&gt;
+&lt;/protection-parameter-credentials&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The potential child elements of &lt;protection-parameter-credentials /&gt; are: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;key-store-reference&gt;</dt>
+<dd>
+<p>Defines a reference to an entry within a KeyStore for an entry to use.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The overall structure of this element is: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;key-store-reference key-store-name="..." alias="..."&gt;
+   &lt;key-store-clear-password password="..." /&gt;
+   &lt;key-store-masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+   &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+   &lt;key-store-credential&gt;...&lt;/key-store-credential&gt;
+&lt;/key-store-reference&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This structure is identical to the structure use in [&lt;key-store-credential /&gt;|#key-store-credential].</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;credential-store-reference store="&#8230;&#8203;" alias="&#8230;&#8203;" clear-text="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Reference to a credential stored in a credential store.</p>
+</dd>
+<dt class="hdlist1">&lt;clear-password password="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A password specified in the clear.</p>
+</dd>
+<dt class="hdlist1">&lt;masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
+</dd>
+<dt class="hdlist1">&lt;key-pair public-key-pem="&#8230;&#8203;" private-key-pem="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A public and private key pair.</p>
+</dd>
+<dt class="hdlist1">* &lt;certificate private-key-pem="&#8230;&#8203;" pem="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A pem encoded private key and corresponding certificate.</p>
+</dd>
+<dt class="hdlist1">&lt;public-key-pem&gt;&#8230;&#8203;&lt;/public-key-pem&gt;</dt>
+<dd>
+<p>A pem encoded public key.</p>
+</dd>
+<dt class="hdlist1">* &lt;bearer-token value="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A bearer token</p>
+</dd>
+<dt class="hdlist1">&lt;oauth2-bearer-token&gt;&#8230;&#8203;&lt;/oauth2-bearer-token&gt;</dt>
+<dd>
+<p>An oath2 bearer token.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The full structure of this element is: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;oauth2-bearer-token token-endpoint-uri="..."&gt;
+    &lt;client-credentials client-id="..." client-secret="..." /&gt;
+    &lt;masked-client-credentials client-id="..."&gt;
+        &lt;masked-client-secret algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+    &lt;/masked-client-credentials&gt;
+    &lt;resource-owner-credentials name="..." password="..." /&gt;
+    &lt;masked-resource-owner-credentials name="..."&gt;
+            &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+    &lt;/masked-resource-owner-credentials &gt;
+&lt;/oauth2-bearer-token&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_key_stores"><a class="anchor" href="#_key_stores"></a>3.1.2. &lt;key-stores /&gt;</h4>
+<div class="paragraph">
+<p>The &lt;key-stores /&gt; element can be used to define individual key-store definitions that can subsequently be referenced from alternative locations within the configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;key-stores&gt;
+            &lt;key-store name="..."&gt;
+               &lt;!-- One of the following to specify where to load the KeyStore from. --&gt;
+               &lt;file-name name="..." /&gt;
+               &lt;load-from uri-"..." /&gt;
+               &lt;resource name="..." /&gt;
+               &lt;!-- One of the following to specify the protection parameter to unlock the KeyStore. --&gt;
+               &lt;key-store-clear-password password="..." /&gt;
+               &lt;key-store-masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+               &lt;key-store-credential&gt;...&lt;/key-store-credential&gt;
+            &lt;/key-store&gt;
+        &lt;/key-stores&gt;
+       ...
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An individual &lt;key-store /&gt; definition must contain exactly one of the following elements to define where to load the store from.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;file name="&#8230;&#8203;" /&gt;*</dt>
+<dd>
+<p>Load from file where 'name' is the name of the file.</p>
+</dd>
+<dt class="hdlist1">&lt;load-from uri="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Load the file from the URI specified.</p>
+</dd>
+<dt class="hdlist1">&lt;resource name="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Load as a resource from the Thread context classloader where 'name' is the name of the resource to load.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Exactly one of the following elements must also be present to specify the protection parameter for initialisation of the KeyStore.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;key-store-clear-password password="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A password specified in the clear.</p>
+</dd>
+<dt class="hdlist1">&lt;key-store-masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
+</dd>
+<dt class="hdlist1">&lt;key-store-credential&gt;&#8230;&#8203;&lt;/key-store-credential&gt;</dt>
+<dd>
+<p>A reference to another KeyStore to obtain an Entry to use as the protection parameter to access this KeyStore.</p>
+</dd>
+</dl>
+</div>
+<div id="key-store-credential" class="paragraph">
+<p>The structure of the &lt;key-store-credential /&gt; element is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;key-store-credential key-store-name="..." alias="..."&gt;
+   &lt;key-store-clear-password password="..." /&gt;
+   &lt;key-store-masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+   &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+   &lt;key-store-credential&gt;...&lt;/key-store-credential&gt;
+&lt;/key-store-credential&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This element contains two attributes: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">key-store-name</dt>
+<dd>
+<p><em>(Mandatory)</em> - Name of the KeyStore being referenced to load the entry from.</p>
+</dd>
+<dt class="hdlist1">alias</dt>
+<dd>
+<p><em>(Optional)</em> - The alias of the entry to load from the referenced KeyStore, this can only be omitted for KeyStores that contain only a single entry.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Java KeyStores also make use of a protection parameter when accessing a single entry in addition to the protection parameter to load the KeyStore, exactly one of the following elements must be present to specify the protection parameter of the entry being loaded.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;key-store-clear-password password="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A password specified in the clear.</p>
+</dd>
+<dt class="hdlist1">&lt;key-store-masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
+</dd>
+<dt class="hdlist1">&lt;credential-store-reference store="&#8230;&#8203;" alias="&#8230;&#8203;" clear-text="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Reference to a credential stored in a credential store.</p>
+</dd>
+<dt class="hdlist1">&lt;key-store-credential&gt;&#8230;&#8203;&lt;/key-store-credential&gt;</dt>
+<dd>
+<p>A reference to another KeyStore to obtain an Entry to use as the protection parameter to access the alias.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The &lt;key-store-credential /&gt; is exactly the same, this means theoretically a chain of references could be used to lead to the unlocking of the required alias.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Rules"><a class="anchor" href="#Rules"></a>3.1.3. &lt;authentication-rules /&gt; and &lt;ssl-context-rules /&gt;</h4>
+<div class="paragraph">
+<p>When either an authentication-configuration or an ssl-context is required the URI of the resources being accessed as well as an optional abstract type and abstract type authority and matched against the rules defined in the configuration to identify which authentication-configuration or ssl-context should be used.</p>
+</div>
+<div class="paragraph">
+<p>The rules to match &lt;authentication-configuration /&gt; instances are defined within the &lt;authentication-rules /&gt; element.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;authentication-rules&gt;
+            &lt;rule use-configuration="..."&gt;
+                ...
+            &lt;/rule&gt;
+        &lt;/authentication-rules&gt;
+       ...
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The rules to match against the &lt;ssl-context /&gt; definitions are contains within the &lt;ssl-context-rules /&gt; element.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;ssl-context-rules&gt;
+            &lt;rule use-ssl-context="..."&gt;
+                ...
+            &lt;/rule&gt;
+        &lt;/ssl-context-rules&gt;
+       ...
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Overall this means that authentication configuration matching is independent of SSLContext matching.  By separating the rules from the configurations is means multiple rules can be defined that match against the same configuration.</p>
+</div>
+<div class="paragraph">
+<p>The rules applied so first match wins and not most specific match wins, to achieve a most specific match wins configuration place the most specific rules at the beginning leaving the more general matches towards the end.</p>
+</div>
+<div class="paragraph">
+<p>For both the &lt;authentication-rules /&gt;  and the &lt;ssl-context-rules /&gt; the structure of the rules is identical other than one references an authentication configuration and the other references an SSLContext.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;rule use-configuration|use-ssl-context="..."&gt;
+    &lt;!-- At most one of the following two can be defined. --&gt;
+    &lt;match-no-user /&gt;
+    &lt;match-user name="..." /&gt;
+    &lt;!-- Each of the following can be defined at most once. --&gt;
+    &lt;match-protocol name="..." /&gt;
+    &lt;match-host name="..." /&gt;
+    &lt;match-path name="..." /&gt;
+    &lt;match-port number="..." /&gt;
+    &lt;match-urn name="..." /&gt;
+    &lt;match-domain name="..." /&gt;
+    &lt;match-abstract-type name="..." authority="..." /&gt;
+&lt;/rule&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where multiple matches are defined within a rule they must all match for the rule to apply.  If a rule is defined with no match elements then it becomes a match all rule and will match anything, these can be useful at the end of the configuration to ensure something matches.</p>
+</div>
+<div class="paragraph">
+<p>The individual match elements are: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;match-no-user /&gt;</dt>
+<dd>
+<p>user-info can be embedded within a URI, this rule matches when there is no user-info.
+&lt;match-user name="&#8230;&#8203;" /&gt; - Matches when the user-info embedded in the URI matches the name specified within this element.
+&lt;match-protocol name="&#8230;&#8203;" /&gt; - Matches the protocol within the URI against the name specified in this match element.
+&lt;match-host-name name="&#8230;&#8203;" /&gt; - Matches the host name from within the URI against the name specified in this match element.
+&lt;match-path name="&#8230;&#8203;" /&gt; - Matches the path from the URI against the name specified in this match element.
+&lt;match-port number="&#8230;&#8203;" /&gt; - Matches the port number specified within the URI against the number in this match element.  This only matches against the number specified within the URI and not against any default derrived from the protocol.
+&lt;match-urn name="&#8230;&#8203;" /&gt;" - Matches the scheme specific part of the URI against the name specified within this element.</p>
+</dd>
+<dt class="hdlist1">* &lt;match-domain-name name="&#8230;&#8203;"/&gt;</dt>
+<dd>
+<p>Matches where the protocol of the URI is 'domain' and the scheme specific part of the URI is the name specified within this match element.</p>
+</dd>
+<dt class="hdlist1">&lt;match-abstract-type name="&#8230;&#8203;" authority="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Matches the abstract type and/or authority against the values specified within this match element.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_authentication_configurations"><a class="anchor" href="#_authentication_configurations"></a>3.1.4. &lt;authentication-configurations /&gt;</h4>
+<div class="paragraph">
+<p>The &lt;authentication-configurations /&gt; element contains named configurations that can then be matched from the &lt;authentication-rules /&gt;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;authentication-configurations&gt;
+            &lt;configuration name="..."&gt;
+                &lt;!-- Destination Overrides. --&gt;
+                &lt;set-host name="..." /&gt;
+                &lt;set-port number="..." /&gt;
+                &lt;set-protocol name="..." /&gt;
+                &lt;!-- At most one of the following two elements. --&gt;
+                &lt;set-user-name name="..." /&gt;
+                &lt;set-anonymous /&gt;
+                &lt;set-mechanism-realm name="..." /&gt;
+                &lt;rewrite-user-name-regex pattern="..." replacement="..." /&gt;
+                &lt;sasl-mechanism-selector selector="..." /&gt;
+                &lt;set-mechanism-properties&gt;
+                   &lt;property key="..." value="..." /&gt;
+                &lt;/set-mechanism-properties&gt;
+                &lt;credentials&gt;...&lt;/credentials&gt;
+                &lt;set-authorization-name name="..." /&gt;
+                &lt;providers&gt;...&lt;/providers&gt;
+                &lt;!-- At most one of the following two elements. --&gt;
+                &lt;use-provider-sasl-factory /&gt;
+                &lt;use-service-loader-sasl-factory module-name="..." /&gt;
+            &lt;/configuration&gt;
+        &lt;/authentication-configurations&gt;
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The elements within the &lt;configuration /&gt; element provide the following features: -</p>
+</div>
+<div class="paragraph">
+<p>The first three elements override the destination.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;set-host-name name="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Override the host name for the authenticated call.</p>
+</dd>
+<dt class="hdlist1">&lt;set-port-number number="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Override the port number for the authenticated call.</p>
+</dd>
+<dt class="hdlist1">&lt;set-protocol name="&#8230;&#8203;"/&gt;</dt>
+<dd>
+<p>Override the protocol for the authenticated call.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The next two are mutually exclusive and can be used to set the name for authentication or switch to anonymous authentication.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;set-user-name name="&#8230;&#8203;"/&gt;</dt>
+<dd>
+<p>Set the user name to use for authentication.</p>
+</dd>
+<dt class="hdlist1">&lt;set-anonymous /&gt;</dt>
+<dd>
+<p>Switch to anonymous authentication.</p>
+</dd>
+<dt class="hdlist1">&lt;set-mechanism-realm-name name="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Specify the name of the realm that will be selected by the SASL mechanism if required.</p>
+</dd>
+<dt class="hdlist1">&lt;rewrite-user-name-regex pattern="&#8230;&#8203;" replacement="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A regular expression pattern and replacement to re-write the user name used for authentication.</p>
+</dd>
+<dt class="hdlist1">&lt;sasl-mechanism-selector selector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A SASL mechanism selector using the syntax from [org.wildfly.security.sasl.SaslMechanismSelector,fromString()|https://github.com/wildfly-security/wildfly-elytron/blob/1.1.4.Final/src/main/java/org/wildfly/security/sasl/SaslMechanismSelector.java#L544]</p>
+</dd>
+<dt class="hdlist1">&lt;set-mechanism-properties&gt;&#8230;&#8203;&lt;/set-mechanism-properties&gt;</dt>
+<dd>
+<p>One or more properties defined as &lt;property key="&#8230;&#8203;" value="&#8230;&#8203;" /&gt; to be passed to the authentication mechanisms.</p>
+</dd>
+<dt class="hdlist1">&lt;credentials&gt;&#8230;&#8203;&lt;/credentials&gt;</dt>
+<dd>
+<p>One or more credentials available for use during authentication.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The content of this element is the same as documented for [&lt;protection-parameter-credentials /&gt;|#client-credentials-type]</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;credentials&gt;
+    &lt;key-store-reference&gt;...&lt;/key-store-reference&gt;
+    &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+    &lt;clear-password password="..." /&gt;
+    &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+    &lt;key-pair&gt;
+        &lt;public-key-pem&gt;...&lt;/public-key-pem&gt;
+        &lt;private-key-pem&gt;...&lt;/public-key-pem&gt;
+        &lt;openssh-private-key pem="..."&gt;
+            &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+            &lt;clear-password password="..." /&gt;
+            &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+        &lt;/openssh-private-key&gt;
+    &lt;/key-pair&gt;
+    &lt;ssh-credential ssh-directory="..." private-key-file="..." known-hosts-file="..."&gt;
+        &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+        &lt;clear-password password="..." /&gt;
+        &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+    &lt;/ssh-credential&gt;
+    &lt;certificate private-key-pem="..." pem="..." /&gt;
+    &lt;public-key-pem&gt;...&lt;/public-key-pem&gt;
+    &lt;bearer-token value="..." /&gt;
+    &lt;oauth2-bearer-token token-endpoint-uri="..."&gt;...&lt;/oauth2-bearer-token&gt;
+&lt;/credentials&gt;</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;set-authorization-name name="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Specify the name that should be used for authorization if different from the authentication identity.</p>
+</dd>
+<dt class="hdlist1">&lt;providers/&gt;</dt>
+<dd>
+<p>This element is described in more detail within [&lt;providers /&gt;|#Providers] and overrides the default or inherited provider discovery with a definition specific to this authentication configuration definition.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The final two elements are mutually exclusive and define how the SASL mechanism factories will be discovered for authentication.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;use-provider-sasl-factory /&gt;</dt>
+<dd>
+<p>The [java.security.Provider|https://docs.oracle.com/javase/8/docs/api/java/security/Provider.html] instances either inherited or defined in this configuration will be used to locate the available SASL client factories.</p>
+</dd>
+<dt class="hdlist1">&lt;use-service-loader-sasl-factory module-name="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>SASL client factories will be discovered using service loader discovery on the specified module or if not specified using the ClassLoader loading the configuration.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_net_authenticator"><a class="anchor" href="#_net_authenticator"></a>3.1.5. &lt;net-authenticator /&gt;</h4>
+<div class="paragraph">
+<p>This element contains no specific configuration, however if present the [org.wildfly.security.auth.util.ElytronAuthenticator|http://wildfly-security.github.io/wildfly-elytron/1.1.x/org/wildfly/security/auth/util/ElytronAuthenticator.html] will be registered with [java.net.Authenticator.setDefault(Authenticator)|https://docs.oracle.com/javase/8/docs/api/java/net/Authenticator.html#setDefault-java.net.Authenticator-] meaning that the WildFly Elytron authentication client configuration can be used for authentication where the JDK APIs are used for HTTP calls which require authentication.</p>
+</div>
+<div class="paragraph">
+<p>There are some limitations within this integration as the JDK will cache the authentication JVM wide from the first call so is better used in stand alone processes that don&#8217;t require different credentials for different calls to the same URI,</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="SSLContexts"><a class="anchor" href="#SSLContexts"></a>3.1.6. &lt;ssl-contexts /&gt;</h4>
+<div class="paragraph">
+<p>The &lt;ssl-contexts /&gt; element holds individual names SSLContext definitions that can subsequently be matched by the  [&lt;ssl-context-rules /&gt;|#Rules].</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.4"&gt;
+        &lt;ssl-contexts&gt;
+            &lt;default-ssl-context name="..."/&gt;
+            &lt;ssl-context name="..."&gt;
+                &lt;key-store-ssl-certificate&gt;...&lt;/key-store-ssl-certificate&gt;
+                &lt;trust-store key-store-name="..." /&gt;
+                &lt;cipher-suite selector="..." names="..." /&gt;
+                &lt;protocol names="... ..." /&gt;
+                &lt;provider-name name="..." /&gt;
+                &lt;providers&gt;...&lt;/providers&gt;
+                &lt;certificate-revocation-list path="..." maximum-cert-path="..." /&gt;
+            &lt;/ssl-context&gt;
+        &lt;/ssl-contexts&gt;
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The element &lt;default-ssl-context name="&#8230;&#8203;" /&gt; simply takes the SSLContext obtainable from [javax.net.ssl.SSLContext.getDefault()|https://docs.oracle.com/javase/8/docs/api/javax/net/ssl/SSLContext.html#getDefault--] and assigns it a name so it can referenced from the [&lt;ssl-context-rules /&gt;|#Rules].  This element can be repeated meaning the default SSLContext can be referenced using different names.</p>
+</div>
+<div class="paragraph">
+<p>The element &lt;ssl-context /&gt; is used to define a named configured SSLContext, each of the child elements is optional and can be specified at most once to build up the configuration of the SSLContext.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;key-store-ssl-certificate&gt;</dt>
+<dd>
+<p>Defines a reference to an entry within a KeyStore for the key and certificate to use in this SSLContext.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The overall structure of this element is: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;key-store-ssl-certificate key-store-name="..." alias="..." provider-name="..." algorithm="..."&gt;
+   &lt;key-store-clear-password password="..." /&gt;
+   &lt;key-store-masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+   &lt;credential-store-reference store="..." alias="..." clear-text="..." /&gt;
+   &lt;key-store-credential&gt;...&lt;/key-store-credential&gt;
+&lt;/key-store-ssl-certificate&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This structure is identical to the structure use in [&lt;key-store-credential /&gt;|#key-store-credential], but it is to obtain the entry for the key and certificate. The nested elements however remain the protection parameter to unlock the entry. In comparison with the key-store-credential the key-store-ssl-certificate allows to configure also the TrustManager: -</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">provider-name</dt>
+<dd>
+<p>- Name of the provider used to obtain the KeyManagerFactory.</p>
+</dd>
+<dt class="hdlist1">algorithm</dt>
+<dd>
+<p>- The algorithm name of the KeyManagerFactory to obtain.</p>
+</dd>
+<dt class="hdlist1">&lt;trust-store-key-store-name /&gt;</dt>
+<dd>
+<p>A reference to a KeyStore that will be used to initialise the TrustManager.</p>
+</dd>
+<dt class="hdlist1">&lt;cipher-suite selector="&#8230;&#8203;" names="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>Configuration to filter the enabled cipher suites. This element must contain at least one of the following two attributes: -</p>
+</dd>
+<dt class="hdlist1">selector</dt>
+<dd>
+<p><em>(Optional)</em> Used to configure the enabled cipher suites for TLSv1.2 and below. The format of the <code>selector</code> attribute is described in detail
+in <a href="http://wildfly-security.github.io/wildfly-elytron/master/org/wildfly/security/ssl/CipherSuiteSelector.html#fromString-java.lang.String-">org.wildfly.security.ssl.CipherSuiteSelector.fromString(selector)</a>.
+The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and excludes any cipher suites that have no authentication.</p>
+</dd>
+<dt class="hdlist1">names</dt>
+<dd>
+<p><em>(Optional)</em> Used to configure the enabled cipher suites for TLSv1.3. The format of the <code>names</code> attribute is a simple colon (":")
+separated list of TLSv1.3 cipher suite names (e.g., <code>TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256</code>).
+This attribute must be specified in order for TLSv1.3 to be enabled.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following example configuration specifies that the default filtering should be used for TLSv1.2 and below and specifies that the
+<code>TLS_AES_128_CCM_8_SHA256</code> and <code>TLS_AES_256_GCM_SHA384</code> cipher suites should be used for TLSv1.3.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;cipher-suite selector="DEFAULT" names="TLS_AES_128_CCM_8_SHA256:TLS_AES_256_GCM_SHA384"/&gt;</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;protocol names="&#8230;&#8203;"/&gt;</dt>
+<dd>
+<p>Used to define a space separated list of the protocols to be supported. The default value is <code>TLSv1 TLSv1.1 TLSv1.2 TLSv1.3</code>. Note that the TLSv1.3 protocol will only be usable when running against JDK 11 or higher.</p>
+</dd>
+<dt class="hdlist1">&lt;provider-name /&gt;</dt>
+<dd>
+<p>Once the available providers have been identified only the provider with the name defined on this element will be used.</p>
+</dd>
+<dt class="hdlist1">&lt;providers/&gt;</dt>
+<dd>
+<p>This element is described in more detail within [&lt;providers /&gt;|#Providers] and overrides the default or inherited provider discovery with a definition specific to this SSLContext definition.</p>
+</dd>
+<dt class="hdlist1">&lt;certificate-revocation-list /&gt;</dt>
+<dd>
+<p>The presence of this element enabled checking the peer&#8217;s certificate against a certificate revocation list, this element defines both a path to the certificate revocation list and also specifies the maximum number of non-self-issued intermediate certificates that may exist in a certification path</p>
+</dd>
+<dt class="hdlist1">&lt;certificate-revocation-lists /&gt;</dt>
+<dd>
+<p>This element enables checking the peer&#8217;s certificate against multiple certificate revocation lists. This element defines a list of certificate revocation list objects which define a path to the certificate revocation list,
+and also the base path of the certificate revocation list file.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The certificate-revocation-list element can be substituted by a certificate-revocation-lists element which in turn allows the
+configuration of multiple certificate revocation lists as follows.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.4"&gt;
+        &lt;ssl-contexts&gt;
+            &lt;default-ssl-context name="..."/&gt;
+            &lt;ssl-context name="..."&gt;
+                ...
+                &lt;certificate-revocation-lists&gt;
+                    &lt;certificate-revocation-list path="..." relative-to="..." /&gt;
+                    &lt;certificate-revocation-list path="..." relative-to="..." /&gt;
+                &lt;/certificate-revocation-lists&gt;
+            &lt;/ssl-context&gt;
+        &lt;/ssl-contexts&gt;
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Providers"><a class="anchor" href="#Providers"></a>3.1.7. &lt;providers /&gt;</h4>
+<div class="paragraph">
+<p>The <em>&lt;providers /&gt;</em> element is used to define how [java.security.Provider|https://docs.oracle.com/javase/8/docs/api/java/security/Provider.html] instances are located when required.  The other configuration sections of <em>&lt;authentication-client /&gt;</em> are independent of each other, the <em>&lt;providers /&gt;</em> configuration however applies to the current element and it&#8217;s children unless overridden, this configuration can be specified in the following locations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+    &lt;authentication-client xmlns="urn:elytron:1.0"&gt;
+        &lt;providers /&gt;
+        ...
+        &lt;credential-stores&gt;
+            &lt;credential-store name=".."&gt;
+                ...
+                &lt;providers /&gt;
+            &lt;/credential-store&gt;
+        &lt;credential-stores&gt;
+        ...
+        &lt;authentication-configurations&gt;
+            &lt;authentication-configuration name="..."&gt;
+                ...
+                &lt;providers /&gt;
+            &lt;/authentication-configuration&gt;
+        &lt;/authentication-configurations&gt;
+        ...
+        &lt;ssl-contexts&gt;
+            &lt;ssl-context name="..."&gt;
+                ...
+                &lt;providers /&gt;
+            &lt;/ssl-context&gt;
+        &lt;/ssl-contexts&gt;
+    &lt;/authentication-client&gt;
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If an individual &lt;credential-store /&gt;, &lt;authentication-configuration /&gt;, or &lt;ssl-context /&gt; contains a &lt;providers /&gt; definition that that definition will apply specifically to that instance.  If a configured item does not contain a &lt;providers /&gt; definition but a top level &lt;providers /&gt; is defined within &lt;authentication-configuration /&gt; then that will be used instead.</p>
+</div>
+<div class="paragraph">
+<p>The &lt;providers /&gt; element can be defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;providers&gt;
+    &lt;global /&gt;
+    &lt;use-service-loader module-name="..." /&gt;
+&lt;/providers&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both the child elements are optional, can appear in any order and can be repeated although repeating &lt;global /&gt; would not really be beneficial.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;global /&gt;</dt>
+<dd>
+<p>The providers from [java.security.Security.getProviders()|https://docs.oracle.com/javase/8/docs/api/java/security/Security.html#getProviders--]</p>
+</dd>
+<dt class="hdlist1">&lt;credential-stores /&gt;</dt>
+<dd>
+<p>Providers loaded using service loader discovery from the module specified, if no module is specified the ClassLoader which loaded the authentication client is used.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Where no &lt;provider /&gt; configuration exists the default behaviour is the equivalent of: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;providers&gt;
+    &lt;use-service-loader /&gt;
+    &lt;global /&gt;
+&lt;/providers&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This gives the WildFly Elytron Provider priority over any globally registered Providers but also allows for the globally registered providers to be used.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="MaskedPasswords"><a class="anchor" href="#MaskedPasswords"></a>3.1.8. Masked Password Types</h4>
+<div class="paragraph">
+<p>The authentication client supports the following masked password types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+&lt;key-store-masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+
+&lt;!--In oauth2-bearer-token!--&gt;
+&lt;masked-resource-owner-credentials name="..."&gt;
+        &lt;masked-password algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+&lt;/masked-resource-owner-credentials &gt;
+&lt;masked-client-credentials client-id="..."&gt;
+    &lt;masked-client-secret algorithm="..." key-material="..." iteration-count="..." salt="..." masked-password="..." initialization-vector="..." /&gt;
+&lt;/masked-client-credentials&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following attributes are used to define the masked password:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>algorithm</code></dt>
+<dd>
+<p>The algorithm that was used to encrypt the password. If this attribute is not specified, the default value is "masked-MD5-DES".
+A list of the supported algorithm types can be found in
+<a href="https://github.com/wildfly/wildfly/blob/master/docs/src/main/asciidoc/_elytron/Passwords.adoc#masked-password-types">Masked Password Type</a></p>
+</dd>
+<dt class="hdlist1"><code>key-material</code></dt>
+<dd>
+<p>The initial key material that was used to encrypt the password. If this attribute is not specified, the default value is "somearbitrarycrazystringthatdoesnotmatter".</p>
+</dd>
+<dt class="hdlist1"><code>iteration-count</code></dt>
+<dd>
+<p>The iteration count that was used to encrypt the password. This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>salt</code></dt>
+<dd>
+<p>The salt that was used to encrypt the password. This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>masked-password</code></dt>
+<dd>
+<p>The base64 encrypted password (without the "MASK-" prefix). This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>initialization-vector</code></dt>
+<dd>
+<p>The initialization vector that was used to encrypt the password. This attribute is optional.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jboss-ejb-client"><a class="anchor" href="#jboss-ejb-client"></a>3.2. jboss-ejb-client</h3>
+<div class="paragraph">
+<p>The jboss-ejb-client.xml can be used to conifure EJB client from within a deployment. The file
+should be located in jar&#8217;s <code>META-INF</code> directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;jboss-ejb-client xmlns="urn:jboss:ejb-client:1.4"&gt;
+    &lt;client-context invocation-timeout="1000" deployment-node-selector="org.foo.DeploymentNodeSelector" default-compression="5"&gt;
+        &lt;ejb-receivers exclude-local-receiver="false" local-receiver-pass-by-value="true"&gt;
+            &lt;remoting-ejb-receiver outbound-connection-ref="connection" connection-timeout="3000"/&gt;
+        &lt;/ejb-receivers&gt;
+        &lt;http-connections&gt;
+            &lt;http-connection uri="http://localhost:8180/wildfly-services"/&gt;
+        &lt;/http-connections&gt;
+        &lt;profile name="test-profile"/&gt;
+    &lt;/client-context&gt;
+&lt;/jboss-ejb-client&gt;</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client-context"><a class="anchor" href="#client-context"></a>3.2.1. &lt;client-context&gt;</h4>
+<div class="paragraph">
+<p>Configurations that will be used to setup an EJB client context for the deployment.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>invocation-timeout</code> A timeout, in milliseconds, that will be used for EJB invocations.
+A value of zero or a negative value will imply a "wait forever" semantic where the invocation
+will never timeout and the client will wait for the invocation result indefinitely.</p>
+</li>
+<li>
+<p><code>deployment-node-selector</code> The fully qualified class name of the class which implements the
+<code>org.jboss.ejb.client.DeploymentNodeSelector</code> interface. The instance of this class will be used
+for selecting nodes, from among multiple eligible nodes within an EJB client context, which can
+handle a particular deployment.</p>
+</li>
+<li>
+<p><code>default-compression</code> Default compression level (from 0 to 9) of request and response message
+payload.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="ejb-receivers"><a class="anchor" href="#ejb-receivers"></a>&lt;ejb-receivers&gt;</h5>
+<div class="paragraph">
+<p>Configures a number of remoting based EJB receivers.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>exclude-local-receiver</code> Set to true if the local receiver which gets added to the EJB client
+context by default, has to be excluded from the context.</p>
+</li>
+<li>
+<p><code>local-receiver-pass-by-value</code> Set to false if the local receiver that&#8217;s available in the EJB
+client context, should use pass-by-reference (instead of pass-by-value) semantics for the EJB invocations.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="remoting-ejb-receiver"><a class="anchor" href="#remoting-ejb-receiver"></a>&lt;remoting-ejb-receiver&gt;</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>outbound-connection-ref</code> Reference to an outbound connection configured in the remoting subsystem.</p>
+</li>
+<li>
+<p><code>connect-timeout</code> The timeout, in milliseconds, to be used while creating a connection.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="http-connections"><a class="anchor" href="#http-connections"></a>&lt;http-connections&gt;</h5>
+<div class="paragraph">
+<p>Configures remote http-connection for EJB invocation</p>
+</div>
+<div class="sect5">
+<h6 id="http-connection"><a class="anchor" href="#http-connection"></a>&lt;http-connection&gt;</h6>
+<div class="paragraph">
+<p>HTTP Connection for EJB invocation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>uri</code> Uniform Resource Identifier for the HTTP connection should be defined.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="profile"><a class="anchor" href="#profile"></a>&lt;profile&gt;</h5>
+<div class="paragraph">
+<p>References a remoting profile configured in the remoting subsystem.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> The name of the profile.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Remoting_Client_Configuration"><a class="anchor" href="#Remoting_Client_Configuration"></a>3.3. Remoting Client Configuration</h3>
+<div class="sect3">
+<h4 id="_endpoint_remoting_client"><a class="anchor" href="#_endpoint_remoting_client"></a>3.3.1. &lt;endpoint /&gt; - Remoting Client</h4>
+<div class="paragraph">
+<p>You can use the <code>endpoint</code> element, which is in the <code>urn:jboss-remoting:5.0</code> namespace, to configure a JBoss Remoting client endpoint using the <code>wildfly-config.xml</code> file. This section describes how to configure a JBoss Remoting client using this element.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+...
+    &lt;endpoint xmlns="urn:jboss-remoting:5.0"&gt;
+       ...
+    &lt;/endpoint&gt;
+...
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This section describes the child elements and attributes that can be configured within this element.</p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;endpoint /&gt;</em>&nbsp;element contains the following optional attribute:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The endpoint name.  If not given, an endpoint name will be derived from the system&#8217;s host name, if possible.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <em>&lt;endpoint /&gt;</em>&nbsp;element can optionally contain the following two child elements, as described in the next sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>&lt;providers /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;connections /&gt;</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The configured endpoint will use the default XNIO configuration.</p>
+</div>
+<div class="sect4">
+<h5 id="_providers"><a class="anchor" href="#_providers"></a>&lt;providers /&gt;</h5>
+<div class="paragraph">
+<p>This optional element specifies transport providers for the remote endpoint. It can contain any number of <em>&lt;provider /&gt;</em>&nbsp;sub-elements.</p>
+</div>
+<div class="sect5">
+<h6 id="_provider"><a class="anchor" href="#_provider"></a>&lt;provider /&gt;</h6>
+<div class="paragraph">
+<p>This element defines a remote transport provider provider. It has the following attributes.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scheme</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The primary URI scheme which corresponds to this provider. This attribute is required.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aliases</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A space-separated list of other URI scheme names that are also recognized for this provider . This attribute is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>module</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the module that contains the provider implementation.  This attribute is optional; if not given, the class loader of JBoss Remoting itself will be searched for the provider class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the class that implements the transport provider.  This attribute is optional; if not given, the Java <code>java.util.ServiceLoader</code> facility will be used to search for the provider class.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This element has no content.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_connections"><a class="anchor" href="#_connections"></a>&lt;connections /&gt;</h5>
+<div class="paragraph">
+<p>This optional element specifies connections for the remote endpoint. It can contain any number of [#connection] elements.</p>
+</div>
+<div class="sect5">
+<h6 id="_connection"><a class="anchor" href="#_connection"></a>&lt;connection /&gt;</h6>
+<div class="paragraph">
+<p>This element defines a connection for the remote endpoint. It has the following attributes.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>destination</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The destination URI for the connection. This attribute is required.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>read-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timeout, in seconds, for read operations on the corresponding socket. This attribute is optional, however it should only be given if a <code>heartbeat-interval</code> is defined.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>write-timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timeout, in seconds, for a write operation. This attribute is optional, however it should only be given if a <code>heartbeat-interval</code> is defined..</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ip-traffic-class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the numeric IP traffic class to use for this connection&#8217;s traffic.  This attribute is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tcp-keepalive</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean setting that determines whether to use TCP keepalive. This attribute is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heartbeat-interval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The interval, in milliseconds, to use when checking for a connection heartbeat. This attribute is optional.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_remoting_client_configuration_in_the_wildfly_config_xml_file"><a class="anchor" href="#_example_remoting_client_configuration_in_the_wildfly_config_xml_file"></a>Example Remoting Client Configuration in the wildfly-config.xml File</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;configuration&gt;
+...
+    &lt;endpoint xmlns="urn:jboss-remoting:5.0"&gt;
+        &lt;connections&gt;
+            &lt;connection destination="remote+http://10.20.30.40:8080" read-timeout="50" write-timeout="50" heartbeat-interval="10000"/&gt;
+        &lt;/connections&gt;
+    &lt;/endpoint&gt;
+...
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="XNIO_Client_Configuration"><a class="anchor" href="#XNIO_Client_Configuration"></a>3.4. XNIO Client Configuration</h3>
+<div class="sect3">
+<h4 id="_worker_xnio_client"><a class="anchor" href="#_worker_xnio_client"></a>3.4.1. &lt;worker /&gt; - XNIO Client</h4>
+<div class="paragraph">
+<p>You can use the <code>worker</code> element, which is in the <code>urn:xnio:3.5</code> namespace, to configure a default XNIO worker using the <code>wildfly-config.xml</code> file. This section describes how to do this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+...
+    &lt;worker xmlns="urn:xnio:3.5"&gt;
+       ...
+    &lt;/worker&gt;
+...
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This section describes the child elements that can be configured within this root <code>worker</code> element.</p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;worker /&gt;</em> element can optionally contain the following child elements, as described in the next sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>&lt;daemon-threads /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;worker-name /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;pool-size /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;task-keepalive /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;io-threads /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;stack-size /&gt;</strong></p>
+</li>
+<li>
+<p><strong>&lt;outbound-bind-addresses /&gt;</strong></p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_daemon_threads"><a class="anchor" href="#_daemon_threads"></a>&lt;daemon-threads /&gt;</h5>
+<div class="paragraph">
+<p>This optional element takes a single required attribute:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of the setting (required).  A value of <code>true</code> indicates that worker and task threads should be daemon threads, and <code>false</code> indicates that they should not be daemon threads.  If this element is not given, a value of <code>true</code> is assumed.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This element has no content.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_worker_name"><a class="anchor" href="#_worker_name"></a>&lt;worker-name /&gt;</h5>
+<div class="paragraph">
+<p>This element defines the name of the worker.  The worker name will appear in thread dumps and in JMX.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The worker&#8217;s name (required).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This element has no content.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_pool_size"><a class="anchor" href="#_pool_size"></a>&lt;pool-size /&gt;</h5>
+<div class="paragraph">
+<p>This optional element defines the size parameters of the worker&#8217;s task thread pool.  The following attributes are allowed:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max-threads</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A positive integer which specifies the maximum number of threads that should be created (required).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_task_keepalive"><a class="anchor" href="#_task_keepalive"></a>&lt;task-keepalive /&gt;</h5>
+<div class="paragraph">
+<p>This optional element establishes the keep-alive time of task threads before they may be expired.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A positive integer which represents the minimum number of seconds to keep idle threads alive (required).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_threads"><a class="anchor" href="#_io_threads"></a>&lt;io-threads /&gt;</h5>
+<div class="paragraph">
+<p>This optional element determines how many I/O (selector) threads should be maintained.  Generally this number should be a small constant multiple of the number of available cores.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A positive integer value for the number of I/O threads (required).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_stack_size"><a class="anchor" href="#_stack_size"></a>&lt;stack-size /&gt;</h5>
+<div class="paragraph">
+<p>This optional element establishes the desired minimum thread stack size for worker threads.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A positive integer value which indicates the requested stack size, in bytes (required).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_outbound_bind_addresses"><a class="anchor" href="#_outbound_bind_addresses"></a>&lt;outbound-bind-addresses /&gt;</h5>
+<div class="paragraph">
+<p>This optional element specifies bind addresses to use for outbound connections.  Each bind address mapping consists of a destination IP address block, and a bind address and optional port number to use for connections to destinations within that block.</p>
+</div>
+<div class="sect5">
+<h6 id="_bind_address"><a class="anchor" href="#_bind_address"></a>&lt;bind-address /&gt;</h6>
+<div class="paragraph">
+<p>This element defines an individual bind address mapping.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>match</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address block in CIDR notation to match (required).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bind-address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address to bind to if the address block matches (required).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bind-port</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A specific port number to bind to if the address block matches (optional, defaults to 0 meaning "any port").</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="webservices-client"><a class="anchor" href="#webservices-client"></a>3.5. webservices-client</h3>
+<div class="paragraph">
+<p>&lt;webservices /&gt; - Webservices Client</p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;webservices /&gt;</em> element in a <code>wildfly-config.xml</code> file can be used to specify Web Services Client configuration that will apply during <a href="https://docs.jboss.org/author/display/JBWS/Predefined+client+and+endpoint+configurations">assigning of configurations</a> when building a client. This element is from the “urn:elytron:client:1.5” namespace. Below is the example of use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;configuration&gt;
+...
+    &lt;webservices&gt;
+       ...
+    &lt;/webservices&gt;
+...
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;webservices /&gt;</em> element can optionally contain the following child elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>&lt;set-http-mechanism name="BASIC"/&gt;</strong> This element is used to specify an HTTP mechanism that WS client should use to authenticate. Currently only the HTTP Basic authentication is supported and used as default.</p>
+</li>
+<li>
+<p><strong>&lt;set-ws-security-type name="UsernameToken"/&gt;</strong> This element is used to specify WS-Security type that WS client will use to authenticate with the server. Currently only Username Token Profile can be configured.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These elements will take effect only if both username and password are configured in Elytron client.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

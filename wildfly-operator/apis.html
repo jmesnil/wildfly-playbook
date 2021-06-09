@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>WildFly Operator - API Documentation :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly-operator/apis.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly-operator" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="user-guide.html">Kubernetes Operator for WildFly</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="user-guide.html">WildFly Operator - User Documentation</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="apis.html">WildFly Operator - API Documentation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Kubernetes Operator for WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly/index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../wildfly/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="user-guide.html">Kubernetes Operator for WildFly</a></li>
+    <li><a href="apis.html">WildFly Operator - API Documentation</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly-operator/edit/antora/doc/modules/ROOT/pages/apis.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">WildFly Operator - API Documentation</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#wildflyserver"><code>WildFlyServer</code></a></li>
+<li><a href="#wildflyservelist"><code>WildFlyServerList</code></a></li>
+<li><a href="#wildflyserverspec"><code>WildFlyServerSpec</code></a></li>
+<li><a href="#storagespec"><code>StorageSpec</code></a></li>
+<li><a href="#standaloneconfigmapspec"><code>StandaloneConfigMapSpec</code></a></li>
+<li><a href="#wildflyserverstatus"><code>WildFlyServerStatus</code></a></li>
+<li><a href="#podstatus"><code>PodStatus</code></a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document describes the types introduced by the WildFly Operator to be consumed by users.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildflyserver"><a class="anchor" href="#wildflyserver"></a><code>WildFlyServer</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>WildFlyServer</code> defines a custom WildFly resource.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard object’s metadata (<a href="https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata">more info</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#objectmeta-v1-meta">metav1.ObjectMeta</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spec</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specification of the desired behaviour of the WildFly deployment (<a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">more info</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#wildflyserverspec"><code>WildFlyServerSpec</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Most recent observed status of the WildFly deployment. Read-only. (<a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status#spec-and-status">more info</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#wildflyserverstatus"><code>WildFlyServerStatus</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildflyservelist"><a class="anchor" href="#wildflyservelist"></a><code>WildFlyServerList</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>WildFlyServerList</code> defines a list of WildFly deployments</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>metadata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard list&#8217;s metadata (<a href="https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata">more info</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#listmeta-v1-meta">metav1.ListMeta</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of <code>WildFlyServer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]<a href="#wildflyserver"><code>WildFlyServer</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildflyserverspec"><a class="anchor" href="#wildflyserverspec"></a><code>WildFlyServerSpec</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>WildFlyServerSpec</code> is a specification of the desired behavior of the WildFly resource.</p>
+</div>
+<div class="paragraph">
+<p>It uses a <code>StatefulSet</code> with a pod spec that mounts the volume specified by <code>storage</code> on <code>/opt/jboss/wildfly/standalone/data</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>applicationImage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the application image to be deployed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replicas</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replicas is the desired number of replicas for the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bootableJar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BootableJar specifies whether the application image is using WildFly S2I Builder/Runtime images or Bootable Jar. If omitted,
+it defaults to false (application image is expected to use WildFly S2I Builder/Runtime images)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>standaloneConfigMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spec to specify how standalone configuration can be read from a <code>ConfigMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">*<a href="#standaloneconfigmapspec"><code>StandaloneConfigMapSpec</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>storage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage spec to specify how storage should be used. If omitted, an <code>EmptyDir</code> is used (that will not persist data across pod restart)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">*<a href="#storagespec"><code>StorageSpec</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serviceAccountName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the ServiceAccount to use to run the WildFlyServer Pods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>envFrom</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of environment variable present in the containers from source (either <code>ConfigMap</code> or <code>Secret</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#envfromsource-v1-core">corev1.EnvFromSource</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>env</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of environment variable present in the containers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#envvar-v1-core">corev1.EnvVar</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>secrets</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of secret names to mount as volumes in the containers. Each secret is mounted as a read-only volume under <code>/etc/secrets/&lt;secret name&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>configMaps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of ConfigMap names to mount as volumes in the containers. Each config map is mounted as a read-only volume under <code>/etc/configmaps/&lt;config map name&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>disableHTTPRoute</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disable the creation a route to the HTTP port of the application service (false if omitted)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sessionAffinity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If connections from the same client IP are passed to the same WildFlyServer instance/pod each time (false if omitted)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="storagespec"><a class="anchor" href="#storagespec"></a><code>StorageSpec</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>StorageSpec</code> defines the configured storage for a <code>WildFlyServer</code> resource. If neither an <code>emptyDir</code> nor a <code>volumeClaimTemplate</code> is defined,
+a default <code>EmptyDir</code> will be used.</p>
+</div>
+<div class="paragraph">
+<p>The Operator will configure the <code>StatefulSet</code> using information from this <code>StorageSpec</code> to mount a volume dedicated to the <code>standalone/data</code> directory
+used by WildFly to persist its own data (e.g. transaction log). If an <code>EmptyDir</code> is used, the data will not survive a pod restart. If the application deployed on WildFly relies on
+transaction, make sure to specify a <code>volumeClaimTemplate</code> that so that the same persistent volume can be reused upon pod restarts.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>emptyDir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EmptyDirVolumeSource to be used by the WildFly <code>StatefulSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#emptydirvolumesource-v1-core">*corev1.EmptyDirVolumeSource</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>volumeClaimTemplate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A PersistentVolumeClaim spec to configure <code>Resources</code> requirements to store WildFly standalone data directory. The name of the template is derived from the <code>WildFlyServer</code> name. The corresponding volume will be mounted in <code>ReadWriteOnce</code> access mode.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#persistentvolumeclaim-v1-core">corev1.PersistentVolumeClaim</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="standaloneconfigmapspec"><a class="anchor" href="#standaloneconfigmapspec"></a><code>StandaloneConfigMapSpec</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>StandaloneConfigMapSpec</code> defines how WildFly standalone configuration can be read from a <code>ConfigMap</code>. If omitted, WildFly uses its <code>standalone.xml</code> configuration from its image.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the <code>ConfigMap</code> containing the standalone configuration XML file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key of the ConfigMap whose value is the standalone configuration XML file. If omitted, the spec will look for the <code>standalone.xml</code> key.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildflyserverstatus"><a class="anchor" href="#wildflyserverstatus"></a><code>WildFlyServerStatus</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>WildFlyServerStatus</code> is the most recent observed status of the WildFly deployment. Read-only.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replicas</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replicas is the actual number of replicas for the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hosts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts that route to the application HTTP service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pods</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status of the pods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]<a href="#podstatus"><code>PodStatus</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scalingdownPods</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of pods which are under scale down cleaning process</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="podstatus"><a class="anchor" href="#podstatus"></a><code>PodStatus</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>PodStatus</code> is the most recent observed status of a pod running the WildFly application.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Scheme</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the Pod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>podIP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IP address allocated to the pod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">State of the pod from perspective of scale down process. By default it&#8217;s active which means it serves requests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

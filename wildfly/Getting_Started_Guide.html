@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Getting Started Guide :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/Getting_Started_Guide.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/Getting_Started_Guide.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Getting Started Guide</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#169; 2017 The original authors.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Getting Started Guide</div>
+<ul class="sectlevel1">
+<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly {wildflyVersion}</a></li>
+<li><a href="#requirements">2. Requirements</a></li>
+<li><a href="#installation-options">3. Installation Options</a>
+<ul class="sectlevel2">
+<li><a href="#download">3.1. Download</a></li>
+<li><a href="#installation">3.2. Installation</a></li>
+</ul>
+</li>
+<li><a href="#wildfly---a-quick-tour">4. WildFly - A Quick Tour</a>
+<ul class="sectlevel2">
+<li><a href="#wildfly-directory-structure">4.1. WildFly Directory Structure</a>
+<ul class="sectlevel3">
+<li><a href="#standalone-directory-structure">4.1.1. Standalone Directory Structure</a></li>
+<li><a href="#domain-directory-structure">4.1.2. Domain Directory Structure</a></li>
+</ul>
+</li>
+<li><a href="#wildfly-configurations">4.2. WildFly {wildflyVersion} Configurations</a>
+<ul class="sectlevel3">
+<li><a href="#standalone-server-configurations">4.2.1. Standalone Server Configurations</a></li>
+<li><a href="#domain-server-configurations">4.2.2. Domain Server Configurations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#starting-wildfly-10">5. Starting WildFly {wildflyVersion}</a>
+<ul class="sectlevel2">
+<li><a href="#starting-wildfly-with-an-alternate-configuration">5.1. Starting WildFly with an Alternate Configuration</a></li>
+<li><a href="#test-your-installation">5.2. Test Your Installation</a></li>
+</ul>
+</li>
+<li><a href="#managing-your-wildfly-10">6. Managing your WildFly {wildflyVersion}</a>
+<ul class="sectlevel2">
+<li><a href="#_authentication">6.1. Authentication</a></li>
+<li><a href="#administration-console">6.2. Administration Console</a></li>
+<li><a href="#command-line-interface">6.3. Command-Line Interface</a></li>
+<li><a href="#deploying-an-application">6.4. Deploying an Application</a></li>
+<li><a href="#modifying-the-example-datasource">6.5. Modifying the Example DataSource</a></li>
+<li><a href="#configure-logging-in-wildfly">6.6. Configure Logging in WildFly</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started-with-wildfly"><a class="anchor" href="#getting-started-with-wildfly"></a>1. Getting Started with WildFly {wildflyVersion}</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WildFly {wildflyVersion} is the latest release in a series of JBoss open-source
+application server offerings. WildFly {wildflyVersion} is an exceptionally fast,
+lightweight and powerful implementation of the Jakarta
+Platform specifications. The state-of-the-art architecture built on the
+Modular Service Container enables services on-demand when your
+application requires them. The table below lists the technologies available in WildFly {wildflyVersion}
+server configuration profiles.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Jakarta EE Platform Technology</th>
+<th class="tableblock halign-left valign-top">Jakarta EE Full Platform</th>
+<th class="tableblock halign-left valign-top">Jakarta EE Web
+Profile</th>
+<th class="tableblock halign-left valign-top">WildFly {wildflyVersion} Full Platform</th>
+<th class="tableblock halign-left valign-top">WildFly {wildflyVersion} Web Profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta WebSocket</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta JSON Processing 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta JSON Binding Specification 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Servlet 4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Server Faces 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Expression Language 3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Server Pages 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Standard Tag Library 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Batch 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Concurrency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Contexts and Dependency Injection 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Dependency Injection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Bean Validation 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Enterprise Beans 3.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XCMP 2.0Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X(Lite)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XCMP
+2.0Not Available</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X(Lite)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Interceptors 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Connectors 1.7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Persistence 2.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Annotations 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Messaging 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Transactions 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Mail 1.6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta RESTful Web Services 2.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Enterprise Web Services 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Web Services Specification 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Web Services Metadata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML RPC 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta SOAP with Attachments 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Registries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Binding Specification 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Authentication 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Authorization 1.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta EE Application Deployment 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Management 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Debugging Support for Other Languages 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Security 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Missing ActiveMQ Artemis and Jakarta Messaging?</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+WildFly&#8217;s default configuration provides Jakarta EE Web Profile support and thus
+doesn&#8217;t include Jakarta Messaging (provided by ActiveMQ Artemis). As noted in the
+<a href="#wildfly-configurations">WildFly Configurations</a> section, other configuration
+profiles do provide all features required by the Jakarta EE Full Platform. If you
+want to use messaging, make sure you
+<a href="#starting-wildfly-with-an-alternate-configuration">start the server using an alternate configuration</a>
+that provides the Jakarta EE Full Platform.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This document provides a quick overview on how to download and get
+started using WildFly {wildflyVersion} for your application development. For in-depth
+content on administrative features, refer to the WildFly {wildflyVersion} <a href="Admin_Guide.html">Admin Guide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="requirements"><a class="anchor" href="#requirements"></a>2. Requirements</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Java SE 8 or later. We recommend that you use the latest available update
+of the current long-term support Java release.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation-options"><a class="anchor" href="#installation-options"></a>3. Installation Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a number of ways you can install WildFly, including unzipping our traditional download zip, provisioning a
+custom installation using Galleon, or building a bootable jar. The <a href="Installation_Guide.html">Installation Guide</a>
+helps you identify the kind of WildFly installation that best fits your application&#8217;s deployment needs. In this guide
+we&#8217;ll focus on the common approach of installing the download zip.</p>
+</div>
+<div class="sect2">
+<h3 id="download"><a class="anchor" href="#download"></a>3.1. Download</h3>
+<div class="paragraph">
+<p>WildFly {wildflyVersion} distributions can be obtained from:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.wildfly.org/downloads/">wildfly.org/downloads</a></p>
+</div>
+<div class="paragraph">
+<p>WildFly {wildflyVersion} provides a single distribution available in zip or tar file
+formats.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>wildfly-{wildflyVersion}.0.0.Final.zip</strong></p>
+</li>
+<li>
+<p><strong>wildfly-{wildflyVersion}.0.0.Final.tar.gz</strong></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installation"><a class="anchor" href="#installation"></a>3.2. Installation</h3>
+<div class="paragraph">
+<p>Simply extract your chosen download to the directory of your choice. You
+can install WildFly {wildflyVersion} on any operating system that supports the zip or
+tar formats. Refer to the Release Notes for additional information
+related to the release.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly---a-quick-tour"><a class="anchor" href="#wildfly---a-quick-tour"></a>4. WildFly - A Quick Tour</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you&#8217;ve downloaded WildFly {wildflyVersion}, the next thing to discuss is the
+layout of the distribution and explore the server directory structure,
+key configuration files, log files, user deployments and so on. It&#8217;s
+worth familiarizing yourself with the layout so that you&#8217;ll be able to
+find your way around when it comes to deploying your own applications.</p>
+</div>
+<div class="sect2">
+<h3 id="wildfly-directory-structure"><a class="anchor" href="#wildfly-directory-structure"></a>4.1. WildFly Directory Structure</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">DIRECTORY</th>
+<th class="tableblock halign-left valign-top">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">appclient</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files, deployment content, and writable areas
+used by the application client container run from this installation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start up scripts, start up configuration files and various command
+line utilities like Vault, add-user and Java diagnostic reportavailable
+for Unix and Windows environments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bin/client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains a client jar for use by non-maven based clients.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">docs/schema</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XML schema definition files</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">docs/examples/configs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example configuration files representing
+specific use cases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files, deployment content, and writable areas
+used by the domain mode processes run from this installation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">modules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WildFly is based on a modular classloading architecture.
+The various modules used in the server are stored here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">standalone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files, deployment content, and writable areas
+used by the single standalone server run from this installation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">welcome-content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default Welcome Page content</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="standalone-directory-structure"><a class="anchor" href="#standalone-directory-structure"></a>4.1.1. Standalone Directory Structure</h4>
+<div class="paragraph">
+<p>In " <strong><em>standalone</em></strong> " mode each WildFly {wildflyVersion} server instance is an
+independent process (similar to previous JBoss AS versions; e.g., 3, 4,
+5, or 6). The configuration files, deployment content and writable areas
+used by the single standalone server run from a WildFly installation are
+found in the following subdirectories under the top level "standalone"
+directory:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">DIRECTORY</th>
+<th class="tableblock halign-left valign-top">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files for the standalone server that runs
+off of this installation. All configuration information for the running
+server is located here and is the single place for configuration
+modifications for the standalone server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Persistent information written by the server to survive a restart
+of the server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deployments</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End user deployment content can be placed in this
+directory for automatic detection and deployment of that content into
+the server&#8217;s runtime.NOTE: The server&#8217;s management API is recommended
+for installing deployment content. File system based deployment scanning
+capabilities remain for developer convenience.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lib/ext</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location for installed library jars referenced by applications
+using the Extension-List mechanism</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">standalone server log files</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tmp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location for temporary files written by the server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tmp/auth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Special location used to exchange authentication tokens with
+local clients so they can confirm that they are local to the running AS
+process.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="domain-directory-structure"><a class="anchor" href="#domain-directory-structure"></a>4.1.2. Domain Directory Structure</h4>
+<div class="paragraph">
+<p>A key feature of WildFly {wildflyVersion} is the managing multiple servers from a
+single control point. A collection of multiple servers are referred to
+as a " <strong><em>domain</em></strong> ". Domains can span multiple physical (or virtual)
+machines with all WildFly instances on a given host under the control of
+a Host Controller process. The Host Controllers interact with the Domain
+Controller to control the lifecycle of the WildFly instances running on
+that host and to assist the Domain Controller in managing them. The
+configuration files, deployment content and writeable areas used by
+domain mode processes run from a WildFly installation are found in the
+following subdirectories under the top level "domain" directory:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">DIRECTORY</th>
+<th class="tableblock halign-left valign-top">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files for the domain and for the Host
+Controller and any servers running off of this installation. All
+configuration information for the servers managed wtihin the domain is
+located here and is the single place for configuration information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">an internal working area for the Host Controller that controls
+this installation. This is where it internally stores deployment
+content. This directory is not meant to be manipulated by end users.Note
+that "domain" mode does not support deploying content based on scanning
+a file system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lib/ext</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location for installed library jars referenced by applications
+using the Extension-List mechanism</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location where the Host Controller process writes its logs. The
+Process Controller, a small lightweight process that actually spawns the
+other Host Controller process and any Application Server processes also
+writes a log here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">servers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writable area used by each Application Server instance that
+runs from this installation. Each Application Server instance will have
+its own subdirectory, created when the server is first started. In each
+server&#8217;s subdirectory there will be the following subdirectories:data&#8201;&#8212;&#8201;information written by the server that needs to survive a restart of the
+serverlog&#8201;&#8212;&#8201;the server&#8217;s log filestmp&#8201;&#8212;&#8201;location for temporary files
+written by the server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tmp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location for temporary files written by the server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tmp/auth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Special location used to exchange authentication tokens with
+local clients so they can confirm that they are local to the running AS
+process.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wildfly-configurations"><a class="anchor" href="#wildfly-configurations"></a>4.2. WildFly {wildflyVersion} Configurations</h3>
+<div class="sect3">
+<h4 id="standalone-server-configurations"><a class="anchor" href="#standalone-server-configurations"></a>4.2.1. Standalone Server Configurations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>standalone.xml (<em>default</em>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jakarta web profile certified configuration with
+the required technologies plus those noted in the table above.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>standalone-ha.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jakarta web profile certified configuration with
+high availability</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>standalone-full.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jakarta Full Platform certified configuration
+including all the required technologies</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>standalone-full-ha.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jakarta Full Platform certified configuration with
+high availability</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>standalone-microprofile.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A configuration oriented toward microservices, providing our
+MicroProfile platform implementations combined with Jakarta RESTful Web Services and
+technologies Jakarta RESTful Web Services applications commonly use to integrate with
+external services.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>standalone-microprofile-ha.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A configuration oriented toward microservices, similar to
+<em>standalone-microprofile.xml</em> but with support for high availability
+web sessions and distributed Hibernate second level caching.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain-server-configurations"><a class="anchor" href="#domain-server-configurations"></a>4.2.2. Domain Server Configurations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>domain.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jakarta full and web profiles available with or
+without high availability</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Important to note is that the <strong><em>domain</em></strong> and <strong><em>standalone</em></strong> modes
+determine how the servers are managed not what capabilities they
+provide.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="starting-wildfly-10"><a class="anchor" href="#starting-wildfly-10"></a>5. Starting WildFly {wildflyVersion}</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To start WildFly {wildflyVersion} using the default web profile configuration in "
+<em>standalone</em>" mode, change directory to $JBOSS_HOME/bin.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./standalone.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To start the default web profile configuration using domain management
+capabilities,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./domain.sh</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="starting-wildfly-with-an-alternate-configuration"><a class="anchor" href="#starting-wildfly-with-an-alternate-configuration"></a>5.1. Starting WildFly with an Alternate Configuration</h3>
+<div class="paragraph">
+<p>If you choose to start your server with one of the other provided
+configurations, they can be accessed by passing the --server-config
+argument with the server-config file to be used.</p>
+</div>
+<div class="paragraph">
+<p>To use the Full Platform with clustering capabilities, use the following
+syntax from $JBOSS_HOME/bin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./standalone.sh --server-config=standalone-full-ha.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly to start an alternate configuration in <em>domain</em> mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./domain.sh --domain-config=my-domain-configuration.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can create your own selecting the additional
+subsystems you want to add, remove, or modify.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="test-your-installation"><a class="anchor" href="#test-your-installation"></a>5.2. Test Your Installation</h3>
+<div class="paragraph">
+<p>After executing one of the above commands, you should see output similar
+to what&#8217;s shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>=========================================================================
+
+  JBoss Bootstrap Environment
+
+  JBOSS_HOME: /opt/wildfly-10.0.0.Final
+
+  JAVA: java
+
+  JAVA_OPTS:  -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=com.yourkit,org.jboss.byteman -Djava.awt.headless=true
+
+=========================================================================
+
+11:46:11,161 INFO  [org.jboss.modules] (main) JBoss Modules version 1.5.1.Final
+11:46:11,331 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
+11:46:11,391 INFO  [org.jboss.as] (MSC service thread 1-6) WFLYSRV0049: WildFly Full 10.0.0.Final (WildFly Core 2.0.10.Final) starting
+&lt;snip&gt;
+11:46:14,300 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 10.0.0.Final (WildFly Core 2.0.10.Final) started in 1909ms - Started 267 of 553 services (371 services are lazy, passive or on-demand)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As with previous WildFly releases, you can point your browser to
+<strong><em><a href="http://localhost:8080" class="bare">http://localhost:8080</a></em></strong> (if using the default configured http port)
+which brings you to the Welcome Screen:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/wildfly.png" alt="images/wildfly.png"></span></p>
+</div>
+<div class="paragraph">
+<p>From here you can access links to the WildFly community documentation
+set, stay up-to-date on the latest project information, have a
+discussion in the user forum and access the enhanced web-based
+Administration Console. Or, if you uncover a defect while using WildFly,
+report an issue to inform us (attached patches will be reviewed). This
+landing page is recommended for convenient access to information about
+WildFly {wildflyVersion} but can easily be replaced with your own if desired.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing-your-wildfly-10"><a class="anchor" href="#managing-your-wildfly-10"></a>6. Managing your WildFly {wildflyVersion}</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WildFly {wildflyVersion} offers two administrative mechanisms for managing your
+running instance:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a web-based Administration Console</p>
+</li>
+<li>
+<p>a command-line interface</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <a href="Admin_Guide.html">Admin Guide</a> covers the details on managing your WildFly
+installation. Here we&#8217;ll just touch on some of the basics.</p>
+</div>
+<div class="sect2">
+<h3 id="_authentication"><a class="anchor" href="#_authentication"></a>6.1. Authentication</h3>
+<div class="paragraph">
+<p>By default WildFly {wildflyVersion} is distributed with security enabled for the
+management interfaces. This means that before you connect using the
+administration console or remotely using the CLI you will need to add a
+new user. This can be achieved simply by using the <em>add-user.sh</em> script
+in the bin folder.</p>
+</div>
+<div class="paragraph">
+<p>After starting the script you will be guided through the process to add
+a new user: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./add-user.sh
+What type of user do you wish to add?
+ a) Management User (mgmt-users.properties)
+ b) Application User (application-users.properties)
+(a):</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case a new user is being added for the purpose of managing the
+servers so select option a.</p>
+</div>
+<div class="paragraph">
+<p>You will then be prompted to enter the details of the new user being
+added: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>Enter the details of the new user to add.
+Realm (ManagementRealm) :
+Username :
+Password :
+Re-enter Password :</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is important to leave the name of the realm as 'ManagementRealm' as
+this needs to match the name used in the server&#8217;s configuration. For the
+remaining fields enter the new username, password and password
+confirmation.</p>
+</div>
+<div class="paragraph">
+<p>Users can be associated with arbitrary groups of your choosing, so you will be prompted if you would like
+to do this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Groups can be useful for simplified administration of things like access permissions, but for simply getting
+started, leaving this blank is fine.</p>
+</div>
+<div class="paragraph">
+<p>Provided there are no errors in the values entered you will then be
+asked to confirm that you want to add the user, the user will be written
+to the properties files used for authentication and a confirmation
+message will be displayed.</p>
+</div>
+<div class="paragraph">
+<p>The modified time of the properties files are inspected at the time of
+authentication and the files reloaded if they have changed. For this
+reason you do not need to re-start the server after adding a new user.</p>
+</div>
+<div class="paragraph">
+<p>Finally, you will be asked whether the account you&#8217;ve added is going to be to used
+to identify one WildFly process to another, typically in a WildFly managed domain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>Is this new user going to be used for one AS process to connect to another AS process?
+e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server Jakarta Enterprise Beans calls.
+yes/no?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The answer for this should be <code>no</code>; the account you are adding here is for use by a human administrator.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="administration-console"><a class="anchor" href="#administration-console"></a>6.2. Administration Console</h3>
+<div class="paragraph">
+<p>To access the web-based Administration Console, simply follow the link
+from the Welcome Screen. To directly access the Management Console,
+point your browser at:</p>
+</div>
+<div class="paragraph">
+<p><strong><em><a href="http://localhost:9990/console" class="bare">http://localhost:9990/console</a></em></strong></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+port 9990 is the default port configured.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;management-interfaces&gt;
+   &lt;native-interface security-realm="ManagementRealm"&gt;
+      &lt;socket-binding native="management-native"/&gt;
+   &lt;/native-interface&gt;
+   &lt;http-interface security-realm="ManagementRealm"&gt;
+      &lt;socket-binding http="management-http"/&gt;
+   &lt;/http-interface&gt;
+&lt;/management-interfaces&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you modify the <em>management-http</em> socket binding in your running
+configuration: adjust the above command accordingly. If such
+modifications are made, then the link from the Welcome Screen will also
+be inaccessible.</p>
+</div>
+<div class="paragraph">
+<p>If you have not yet added at least one management user an error page
+will be displayed asking you to add a new user, after a user has been
+added you can click on the 'Try Again' link at the bottom of the error
+page to try connecting to the administration console again.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="command-line-interface"><a class="anchor" href="#command-line-interface"></a>6.3. Command-Line Interface</h3>
+<div class="paragraph">
+<p>If you prefer to manage your server from the command line (or batching),
+the <em>jboss-cli.sh</em> script provides the same capabilities available via
+the web-based UI. This script is accessed from $JBOSS_HOME/bin
+directory; e.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>$JBOSS_HOME/bin/jboss-cli.sh --connect
+Connected to standalone controller at localhost:9990</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice if no host or port information provided, it will default to
+localhost:9990.</p>
+</div>
+<div class="paragraph">
+<p>When running locally to the WildFly process the CLI will silently
+authenticate against the server by exchanging tokens on the file system,
+the purpose of this exchange is to verify that the client does have
+access to the local file system. If the CLI is connecting to a remote
+WildFly installation then you will be prompted to enter the username and
+password of a user already added to the realm.</p>
+</div>
+<div class="paragraph">
+<p>Once connected you can add, modify, remove resources and deploy or
+undeploy applications. For a complete list of commands and command
+syntax, type <strong><em>help</em></strong> once connected.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deploying-an-application"><a class="anchor" href="#deploying-an-application"></a>6.4. Deploying an Application</h3>
+<div class="paragraph">
+<p>WildFly provides a number of ways you can deploy your application into the server.
+These are covered in detail in the <a href="Admin_Guide.html#application-deployment">Admin Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you are running a standalone WildFly server, the simplest way to deploy
+your application is to copy the application archive (war/ear/jar) into the <code>$JBOSS_HOME/standalone/deployments</code>
+directory in the server installation. The server&#8217;s <code>deployment-scanner</code> subsystem will detect
+the new file and deploy it.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you are running a WildFly managed domain, the <code>deployment-scanner</code> subsystem is not
+available so you will need to use the CLI or web console to deploy your application. For more,
+see the <a href="Admin_Guide.html#application-deployment">Admin Guide</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="modifying-the-example-datasource"><a class="anchor" href="#modifying-the-example-datasource"></a>6.5. Modifying the Example DataSource</h3>
+<div class="paragraph">
+<p>As with previous JBoss application server releases, a default data
+source, <strong><em>ExampleDS</em></strong> , is configured using the embedded H2 database for
+developer convenience. There are two ways to define datasource
+configurations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>as a module</p>
+</li>
+<li>
+<p>as a deployment</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the provided configurations, H2 is configured as a module. The module
+is located in the $JBOSS_HOME/modules/com/h2database/h2 directory. The
+H2 datasource configuration is shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;subsystem xmlns="urn:jboss:domain:datasources:1.0"&gt;
+    &lt;datasources&gt;
+        &lt;datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS"&gt;
+            &lt;connection-url&gt;jdbc:h2:mem:test;DB_CLOSE_DELAY=-1&lt;/connection-url&gt;
+            &lt;driver&gt;h2&lt;/driver&gt;
+            &lt;pool&gt;
+                &lt;min-pool-size&gt;10&lt;/min-pool-size&gt;
+                &lt;max-pool-size&gt;20&lt;/max-pool-size&gt;
+                &lt;prefill&gt;true&lt;/prefill&gt;
+            &lt;/pool&gt;
+            &lt;security&gt;
+                &lt;user-name&gt;sa&lt;/user-name&gt;
+                &lt;password&gt;sa&lt;/password&gt;
+            &lt;/security&gt;
+        &lt;/datasource&gt;
+        &lt;xa-datasource jndi-name="java:jboss/datasources/ExampleXADS" pool-name="ExampleXADS"&gt;
+           &lt;driver&gt;h2&lt;/driver&gt;
+           &lt;xa-datasource-property name="URL"&gt;jdbc:h2:mem:test&lt;/xa-datasource-property&gt;
+           &lt;xa-pool&gt;
+                &lt;min-pool-size&gt;10&lt;/min-pool-size&gt;
+                &lt;max-pool-size&gt;20&lt;/max-pool-size&gt;
+                &lt;prefill&gt;true&lt;/prefill&gt;
+           &lt;/xa-pool&gt;
+           &lt;security&gt;
+                &lt;user-name&gt;sa&lt;/user-name&gt;
+                &lt;password&gt;sa&lt;/password&gt;
+           &lt;/security&gt;
+        &lt;/xa-datasource&gt;
+        &lt;drivers&gt;
+            &lt;driver name="h2" module="com.h2database.h2"&gt;
+                &lt;xa-datasource-class&gt;org.h2.jdbcx.JdbcDataSource&lt;/xa-datasource-class&gt;
+            &lt;/driver&gt;
+        &lt;/drivers&gt;
+  &lt;/datasources&gt;
+&lt;/subsystem&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The datasource subsystem is provided by the
+<a href="http://www.jboss.org/ironjacamar">IronJacamar</a> project. For a detailed
+description of the available configuration properties, please consult
+the project documentation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>IronJacamar homepage: <a href="http://www.jboss.org/ironjacamar" class="bare">http://www.jboss.org/ironjacamar</a></p>
+</li>
+<li>
+<p>Project Documentation: <a href="http://www.jboss.org/ironjacamar/docs" class="bare">http://www.jboss.org/ironjacamar/docs</a></p>
+</li>
+<li>
+<p>Schema description:
+<a href="http://docs.jboss.org/ironjacamar/userguide/1.0/en-US/html/deployment.html#deployingds_descriptor" class="bare">http://docs.jboss.org/ironjacamar/userguide/1.0/en-US/html/deployment.html#deployingds_descriptor</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configure-logging-in-wildfly"><a class="anchor" href="#configure-logging-in-wildfly"></a>6.6. Configure Logging in WildFly</h3>
+<div class="paragraph">
+<p>WildFly logging can be configured with the web console or the command
+line interface. You can get more detail on the <a href="Admin_Guide.html#Logging">Logging
+Configuration</a> page.</p>
+</div>
+<div class="paragraph">
+<p>Turn on debugging for a specific category with the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>/subsystem=logging/logger=org.jboss.as:add(level=DEBUG)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above the <code>org.jboss.as</code> log category was configured. Use a different value
+for the <code>logger</code> key to configure a different log category.</p>
+</div>
+<div class="paragraph">
+<p>By default the <code>server.log</code> is configured to include all levels in its
+log output. In the above example we changed the console to also display
+debug messages.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,3276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>WildFly Testsuite :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/Testsuite.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/Testsuite.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">WildFly Testsuite</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#169; 2017 The original authors.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">WildFly testsuite</div>
+<ul class="sectlevel1">
+<li><a href="#WildFly_Testsuite_Overview">1. WildFly Testsuite Overview</a>
+<ul class="sectlevel2">
+<li><a href="#test-suite-organization">1.1. Test Suite Organization</a></li>
+<li><a href="#profiles">1.2. Profiles</a></li>
+<li><a href="#_integration_tests">1.3. Integration tests</a>
+<ul class="sectlevel3">
+<li><a href="#smoke--dts.smoke--dts.nosmoke">1.3.1. Smoke <code>-Dts.smoke</code></a></li>
+<li><a href="#basic--dts.basic">1.3.2. Basic <code>-Dts.basic</code></a></li>
+<li><a href="#cluster--dts.clustering">1.3.3. Clustering <code>-Dts.clustering</code></a></li>
+<li><a href="#iiop--dts.iiop">1.3.4. IIOP <code>-Dts.iiop</code></a></li>
+<li><a href="#xts--dts.xts">1.3.5. XTS <code>-Dts.XTS</code></a></li>
+<li><a href="#multinode--dts.multinode">1.3.6. Multinode <code>-Dts.multinode</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#WildFly_Integration_Testsuite_User_Guide">2. WildFly Integration Testsuite User Guide</a>
+<ul class="sectlevel2">
+<li><a href="#running-the-testsuite">2.1. Running the testsuite</a>
+<ul class="sectlevel3">
+<li><a href="#supported-maven-phases">2.1.1. Supported Maven phases</a></li>
+<li><a href="#testsuite-structure">2.1.2. Testsuite structure</a></li>
+<li><a href="#test-groups">2.1.3. Test groups</a></li>
+</ul>
+</li>
+<li><a href="#examples">2.2. Examples</a>
+<ul class="sectlevel3">
+<li><a href="#output-to-console">2.2.1. Output to console</a></li>
+<li><a href="#other-options">2.2.2. Other options</a></li>
+<li><a href="#timeouts">2.2.3. Timeouts</a></li>
+<li><a href="#running-a-single-test-or-specified-tests">2.2.4. Running a single test (or specified tests)</a></li>
+<li><a href="#running-against-existing-as-copy-not-the-one-from-buildtargetjboss-as-">2.2.5. Running against existing AS copy (not the one from</a></li>
+<li><a href="#running-with-a-debugger">2.2.6. Running with a debugger</a></li>
+<li><a href="#running-tests-with-custom-database">2.2.7. Running tests with custom database</a></li>
+<li><a href="#running-tests-with-ipv6">2.2.8. Running tests with IPv6</a></li>
+<li><a href="#running-tests-with-security-manager-custom-security-policy">2.2.9. Running tests with security manager / custom security policy</a></li>
+<li><a href="#creating-test-reports">2.2.10. Creating test reports</a></li>
+<li><a href="#creating-coverage-reports">2.2.11. Creating coverage reports</a></li>
+<li><a href="#cleaning-the-project">2.2.12. Cleaning the project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#WildFly_Testsuite_Harness_Developer_Guide">3. WildFly Testsuite Harness Developer Guide</a>
+<ul class="sectlevel2">
+<li><a href="#testsuite-requirements">3.1. Testsuite requirements</a></li>
+<li><a href="#adding-a-new-maven-plugin">3.2. Adding a new maven plugin</a></li>
+<li><a href="#shortened-maven-run-overview">3.3. Shortened Maven run overview</a></li>
+<li><a href="#how-the-as-instance-is-built">3.4. How the AS instance is built</a></li>
+<li><a href="#properties-and-their-propagation">3.5. Properties and their propagation</a>
+<ul class="sectlevel3">
+<li><a href="#jboss-as-instance-dir">3.5.1. JBoss AS instance dir</a></li>
+<li><a href="#server-jvm-arguments">3.5.2. Server JVM arguments</a></li>
+<li><a href="#ip-settings">3.5.3. IP settings</a></li>
+<li><a href="#testsuite-directories">3.5.4. Testsuite directories</a></li>
+<li><a href="#clustering-properties">3.5.5. Clustering properties</a></li>
+</ul>
+</li>
+<li><a href="#_debug_parameters_propagation">3.6. Debug parameters propagation</a></li>
+</ul>
+</li>
+<li><a href="#How_the_server_is_built_and_configured_for_testsuite_modules">4. How the WildFly is built and configured for testsuite modules.</a>
+<ul class="sectlevel2">
+<li><a href="#arquillian-config-file-location">4.1. Arquillian config file location</a></li>
+</ul>
+</li>
+<li><a href="#Plugin_executions_matrix">5. Plugin executions matrix</a></li>
+<li><a href="#Shortened_Maven_Run_Overview">6. Shortened Maven Run Overview</a>
+<ul class="sectlevel2">
+<li><a href="#how-to-get-it">6.1. How to get it</a></li>
+<li><a href="#how-its-done">6.2. How it&#8217;s done</a></li>
+<li><a href="#example-output-with-comments.">6.3. Example output with comments.</a></li>
+<li><a href="#example-output-unchanged">6.4. Example output, unchanged</a></li>
+</ul>
+</li>
+<li><a href="#WildFly_Testsuite_Test_Developer_Guide">7. WildFly Testsuite Test Developer Guide</a>
+<ul class="sectlevel2">
+<li><a href="#pre-requisites">7.1. Pre-requisites</a></li>
+<li><a href="#arquillian-container-configuration">7.2. Arquillian container configuration</a></li>
+<li><a href="#managementclient-and-modelnode-usage-example">7.3. ManagementClient and ModelNode usage example</a></li>
+<li><a href="#arquillian-features-available-in-tests">7.4. Arquillian features available in tests</a></li>
+<li><a href="#properties-available-in-tests">7.5. Properties available in tests</a>
+<ul class="sectlevel3">
+<li><a href="#directories">7.5.1. Directories</a></li>
+<li><a href="#networking">7.5.2. Networking</a></li>
+<li><a href="#time-related-coefficients-ratios">7.5.3. Time-related coefficients (ratios)</a></li>
+</ul>
+</li>
+<li><a href="#negative-tests">7.6. Negative tests</a></li>
+<li><a href="#clustering-tests-wfly-616">7.7. Clustering tests (WFLY-616)</a></li>
+<li><a href="#how-to-get-the-tests-to-master">7.8. How to get the tests to master</a></li>
+</ul>
+</li>
+<li><a href="#How_to_Add_a_Test_Case">8. How to Add a Test Case</a>
+<ul class="sectlevel2">
+<li><a href="#create-a-test-case.">8.1. 1) Create a test case.</a></li>
+<li><a href="#push-your-test-case-to-github-and-create-a-pull-request.">8.2. 2) Push your test case to GitHub and create a pull request.</a></li>
+<li><a href="#wait-for-the-outcome.">8.3. 3) Wait for the outcome.</a></li>
+</ul>
+</li>
+<li><a href="#Pre-requisites_-_test_quality_standards">9. Before you add a test</a>
+<ul class="sectlevel2">
+<li><a href="#_verify_the_test_belongs_in_wildfly">9.1. Verify the test belongs in WildFly</a></li>
+<li><a href="#_only_add_correct_and_understandable_tests">9.2. Only add CORRECT and UNDERSTANDABLE tests</a></li>
+<li><a href="#_do_not_add_duplicate_tests">9.3. Do not add duplicate tests</a></li>
+<li><a href="#_dont_name_tests_after_jiras">9.4. Don&#8217;t name tests after JIRAs</a></li>
+<li><a href="#_tests_should_contain_javadoc_that_explains_what_is_being_tested">9.5. Tests should contain javadoc that explains what is being tested</a></li>
+<li><a href="#_prefer_expanding_an_existing_test_over_a_new_test_class">9.6. Prefer expanding an EXISTING test over a new test class</a></li>
+<li><a href="#_organize_tests_by_subsystem">9.7. Organize tests by subsystem</a></li>
+<li><a href="#_explain_non_obvious_spec_behavior_in_comments">9.8. Explain non-obvious spec behavior in comments</a></li>
+<li><a href="#_put_integration_test_resources_in_the_source_directory_of_the_test">9.9. Put integration test resources in the source directory of the test</a></li>
+<li><a href="#_do_not_hard_code_values_likely_to_need_configuration_urls_ports">9.10. Do not hard-code values likely to need configuration (URLs, ports, &#8230;&#8203;)</a></li>
+<li><a href="#_follow_best_committing_practices">9.11. Follow best committing practices</a></li>
+<li><a href="#_do_not_use_blind_timeouts">9.12. Do not use blind timeouts</a></li>
+<li><a href="#_provide_messages_in_assert_and_fail_calls">9.13. Provide messages in assert*() and fail() calls</a></li>
+<li><a href="#_provide_configuration_properties_hints_in_exceptions">9.14. Provide configuration properties hints in exceptions</a></li>
+<li><a href="#_clean_up">9.15. Clean up</a></li>
+<li><a href="#_keep_the_tests_configurable">9.16. Keep the tests configurable</a></li>
+</ul>
+</li>
+<li><a href="#Shared_Test_Classes_and_Resources">10. Shared Test Classes and Resources</a>
+<ul class="sectlevel2">
+<li><a href="#among-testsuite-modules">10.1. Among Testsuite Modules</a></li>
+<li><a href="#between-components-and-testsuite-modules">10.2. Between Components and Testsuite Modules</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="WildFly_Testsuite_Overview"><a class="anchor" href="#WildFly_Testsuite_Overview"></a>1. WildFly Testsuite Overview</h2>
+<div class="sectionbody">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This section has not been updated for a long time and some sections are out of date. Contributions are welcome.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This document will detail the implementation of the testsuite
+integration submodule as it guides you on adding your own test cases.</p>
+</div>
+<div class="paragraph">
+<p>The WildFly integration test suite has been designed with the following
+goals:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>support execution of all identified test case use cases</p>
+</li>
+<li>
+<p>employ a design/organization which is scalable and maintainable</p>
+</li>
+<li>
+<p>provide support for the automated measurement of test suite quality
+(generation of feature coverage reports, code coverage reports)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In addition, these requirements were considered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>identifying distinct test case runs of the same test case with a
+different set of client side parameters and server side parameters</p>
+</li>
+<li>
+<p>separately maintaining server side execution results (e.g. logs, the
+original server configuration) for post-execution debugging</p>
+</li>
+<li>
+<p>running the testsuite in conjunction with a debugger</p>
+</li>
+<li>
+<p>the execution of a single test (for debugging purposes)</p>
+</li>
+<li>
+<p>running test cases against different container modes (managed in the
+main, but also remote and embedded)</p>
+</li>
+<li>
+<p>configuring client and server JVMs separately (e.g., IPv6 testing)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="test-suite-organization"><a class="anchor" href="#test-suite-organization"></a>1.1. Test Suite Organization</h3>
+<div class="paragraph">
+<p>The testsuite module has a few submodules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>benchmark</strong> - holds all benchmark tests intended to assess relative
+performance of specific feature</p>
+</li>
+<li>
+<p><strong>domain</strong> - holds all domain management tests</p>
+</li>
+<li>
+<p><strong>integration</strong> - holds all integration tests</p>
+</li>
+<li>
+<p><strong>stress</strong> - holds all stress tests</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is expected that test contributions fit into one of these categories.</p>
+</div>
+<div class="paragraph">
+<p>The <code>pom.xml</code> file located in the testsuite module is inherited by all
+submodules and is used to do the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>set defaults for common testsuite system properties (which can then be
+overridden on the command line)</p>
+</li>
+<li>
+<p>define dependencies common to all tests (Arquillian, junit or testng,
+and container type)</p>
+</li>
+<li>
+<p>provide a workaround for <code>@Resource(lookup=&#8230;&#8203;)</code> which requires
+libraries in jbossas/endorsed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It should not:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>define module-specific server configuration build steps</p>
+</li>
+<li>
+<p>define module-specific surefire executions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These elements should be defined in logical profiles associated with
+each logical grouping of tests; e.g., in the pom for the module which
+contains the tests. The submodule poms contain additional details of
+their function and purpose as well as expanded information as shown in
+this document.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="profiles"><a class="anchor" href="#profiles"></a>1.2. Profiles</h3>
+<div class="paragraph">
+<p>You should not activate the abovementioned profiles by -P, because that
+disables other profiles which are activated by default.</p>
+</div>
+<div class="paragraph">
+<p>Instead, you should always use activating properties, which are in
+parentheses in the lists below.</p>
+</div>
+<div class="paragraph">
+<p>Testsuite profiles are used to group tests into logical groups.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>all-modules.module.profile (all-modules)</p>
+</li>
+<li>
+<p>integration.module.profile (integration.module)</p>
+</li>
+<li>
+<p>compat.module.profile (compat.module)</p>
+</li>
+<li>
+<p>domain.module.profile (domain.module)</p>
+</li>
+<li>
+<p>benchmark.module.profile (benchmark.module)</p>
+</li>
+<li>
+<p>stress.module.profile (stress.module)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>They also prepare WildFly instances and resources for respective
+testsuite submodules.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jpda.profile - sets surefire.jpda.args (debug)</p>
+</li>
+<li>
+<p>ds.profile - sets database properties and prepares the datasource (ds=&lt;db id&gt;)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Has related database-specific profiles, like mysql51.profile etc.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Integration testsuite profiles configure surefire executions.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>smoke.integration.tests.profile</p>
+</li>
+<li>
+<p>basic.integration.tests.profile</p>
+</li>
+<li>
+<p>clustering.integration.tests.profile</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_tests"><a class="anchor" href="#_integration_tests"></a>1.3. Integration tests</h3>
+<div class="sect3">
+<h4 id="smoke--dts.smoke--dts.nosmoke"><a class="anchor" href="#smoke--dts.smoke--dts.nosmoke"></a>1.3.1. Smoke <code>-Dts.smoke</code></h4>
+<div class="paragraph">
+<p>Contains smoke tests.</p>
+</div>
+<div class="paragraph">
+<p>Runs by default; use <code>-Dts.noSmoke</code> to prevent running.</p>
+</div>
+<div class="paragraph">
+<p>Tests should execute quickly.</p>
+</div>
+<div class="paragraph">
+<p>Divided into two Surefire executions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One with full platform</p>
+</li>
+<li>
+<p>Second with web profile (majority of tests).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="basic--dts.basic"><a class="anchor" href="#basic--dts.basic"></a>1.3.2. Basic <code>-Dts.basic</code></h4>
+<div class="paragraph">
+<p>Basic integration tests - those which do not need a special configuration
+like cluster.</p>
+</div>
+<div class="paragraph">
+<p>Divided into three Surefire executions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One with full platform,</p>
+</li>
+<li>
+<p>Second with web profile (majority of tests).</p>
+</li>
+<li>
+<p>Third with web profile, but needs to be run after server restart to
+check whether persistent data are really persisted.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cluster--dts.clustering"><a class="anchor" href="#cluster--dts.clustering"></a>1.3.3. Clustering <code>-Dts.clustering</code></h4>
+<div class="paragraph">
+<p>Contains all tests relating to clustering aspects of the application server, such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>web session clustering,</p>
+</li>
+<li>
+<p>Jakarta Enterprise Beans session clustering,</p>
+</li>
+<li>
+<p>command dispatcher,</p>
+</li>
+<li>
+<p>web session affinity handling,</p>
+</li>
+<li>
+<p>and other areas.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Tests should leverage shared testing logic by extending <code>org.jboss.as.test.clustering.cluster.AbstractClusteringTestCase</code>.
+The test case contract is that before executing the test method, all specified servers are started and all specified
+deployments are deployed. This allows Arquillian resource injection into the test case.</p>
+</div>
+<div class="paragraph">
+<p>There are four WildFly server instances, one load-balancer (Undertow) and one datagrid (Infinispan server) available
+for the tests.</p>
+</div>
+<div class="sect4">
+<h5 id="_maven_profiles_and_parallelization"><a class="anchor" href="#_maven_profiles_and_parallelization"></a>Maven profiles and Parallelization</h5>
+<div class="paragraph">
+<p>There are maven profiles that might come in handy for testing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ts.clustering.common.profile</code> prepares server configurations used by test execution profiles</p>
+</li>
+<li>
+<p><code>ts.clustering.cluster.ha.profile</code> runs tests against <code>standalone-ha.xml</code> profile</p>
+</li>
+<li>
+<p><code>ts.clustering.cluster.fullha.profile</code> runs tests which require <code>standalone-full-ha.xml</code> profile; e.g. tests requiring JMS subsystem</p>
+</li>
+<li>
+<p><code>ts.clustering.cluster.ha-infinispan-server.profile</code> runs tests against <code>standalone-ha.xml</code> profile with Infinispan Server provisioned via <code>@ClassRule</code></p>
+</li>
+<li>
+<p><code>ts.clustering.single.profile</code> runs clustering tests that are using a non-HA server profile</p>
+</li>
+<li>
+<p><code>ts.clustering.byteman.profile</code> runs clustering tests that require installation of byteman rules</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For instance, to only run tests that run against full-ha profile, activate clustering tests with <code>-Dts.clustering</code> and exclude
+the other profiles with <code>-P</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./integration-tests.sh clean install -Dts.noSmoke -Dts.clustering -P \!ts.clustering.cluster.ha.profile,\!ts.clustering.single.profile,\!ts.clustering.byteman.profile</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the testsuite can be run on multiple runners in parallel, the main execution (which takes the majority of the execution time)
+can be split by packages using <code>-Dts.surefire.clustering.ha.additionalExcludes</code> property.
+This property feeds a regular expression to exclude sub-packages of the <code>org.jboss.as.test.clustering.cluster</code> package.
+The sub-packages at the time of writing are <code>affinity</code>, <code>cdi</code>, <code>dispatcher</code>, <code>ejb</code>, <code>ejb2</code>, <code>group</code>, <code>jms</code>, <code>jpa</code>,
+<code>jsf</code>, <code>provider</code>, <code>registry</code>, <code>singleton</code>, <code>sso</code>, <code>web</code>, and <code>xsite</code>.
+For instance, to parallelize testsuite execution on two machines (e.g. when using GitHub actions scripting or alike) the following commands
+could be used to split the clustering tests into two executions of similar execution time, the first node can run the first half of the tests in sub-packages, e.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./integration-tests.sh clean install -Dts.noSmoke -Dts.clustering -P \!ts.clustering.cluster.fullha.profile,\!ts.clustering.single.profile,\!ts.clustering.byteman.profile -Dts.surefire.clustering.ha.additionalExcludes=affinity\|cdi\|dispatcher\|ejb\|ejb2\|group\|jms\|jpa</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>while another node can concurrently run all the other profiles and the other half of sub-packages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./integration-tests.sh clean install -Dts.noSmoke -Dts.clustering -Dts.surefire.clustering.ha.additionalExcludes=jsf\|provider\|registry\|singleton\|sso\|web\|xsite</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the test packages get out of sync with the excludes this will result in a test running multiple times, rather than tests being omitted.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_running_a_single_test"><a class="anchor" href="#_running_a_single_test"></a>Running a single test</h5>
+<div class="paragraph">
+<p>To run a single test, specifying <code>-Dtest=foo</code> is the standard way to do this. However, this overrides the includes/excludes
+section of the surefire maven plugin execution. So, in case of the clustering testsuite, the profile which this test belongs
+to needs to be specified as well. For instance, to run a single test from the 'single' tests execution, exclude the other
+test profiles:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ./integration-tests.sh clean install -Dts.noSmoke -Dts.clustering -P \!ts.clustering.cluster.ha.profile,\!ts.clustering.cluster.fullha.profile,\!ts.clustering.byteman.profile -Dtest=org.jboss.as.test.clustering.single.dispatcher.CommandDispatcherTestCase</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_skipping_clustering_tests"><a class="anchor" href="#_skipping_clustering_tests"></a>Skipping clustering tests</h5>
+<div class="paragraph">
+<p>To skip execution of all clustering tests use <code>-Dts.noClustering</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iiop--dts.iiop"><a class="anchor" href="#iiop--dts.iiop"></a>1.3.4. IIOP <code>-Dts.iiop</code></h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This section is open for contributions.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="xts--dts.xts"><a class="anchor" href="#xts--dts.xts"></a>1.3.5. XTS <code>-Dts.XTS</code></h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This section is open for contributions.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="multinode--dts.multinode"><a class="anchor" href="#multinode--dts.multinode"></a>1.3.6. Multinode <code>-Dts.multinode</code></h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This section is open for contributions.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="WildFly_Integration_Testsuite_User_Guide"><a class="anchor" href="#WildFly_Integration_Testsuite_User_Guide"></a>2. WildFly Integration Testsuite User Guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>See also:</strong> <a href="#WildFly_Testsuite_Test_Developer_Guide">WildFly
+Testsuite Test Developer Guide</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Target Audience:</strong> Those interested in running the testsuite or a subset
+thereof, with various configuration options.</p>
+</div>
+<div class="sect2">
+<h3 id="running-the-testsuite"><a class="anchor" href="#running-the-testsuite"></a>2.1. Running the testsuite</h3>
+<div class="paragraph">
+<p>The tests can be run using:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>build.sh</code> or <code>build.bat</code>, as a part of WildFly build.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>By default, only smoke tests are run. To run all tests, run build.sh
+install -DallTests.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>integration-tests.sh</code> or <code>integration-tests.bat</code>, a convenience
+script which uses bundled Maven (currently 3.0.3), and runs all parent
+testsuite modules (which configure the AS server).</p>
+</li>
+<li>
+<p>pure maven run, using <code>mvn install</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scripts are wrappers around Maven-based build. Their arguments are
+passed to Maven (with few exceptions described below). This means you
+can use:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>build.sh (defaults to install)</p>
+</li>
+<li>
+<p>build.sh install</p>
+</li>
+<li>
+<p>build.sh clean install</p>
+</li>
+<li>
+<p>integration-tests.sh install</p>
+</li>
+<li>
+<p>&#8230;&#8203;etc.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="supported-maven-phases"><a class="anchor" href="#supported-maven-phases"></a>2.1.1. Supported Maven phases</h4>
+<div class="paragraph">
+<p>Testsuite actions are bounds to various Maven phases up to <code>verify</code>.
+Running the build with earlier ﻿phases may fail in the submodules due to
+missed configuration steps. Therefore, the only Maven phases you may
+safely run, are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>clean</p>
+</li>
+<li>
+<p>install</p>
+</li>
+<li>
+<p>site</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>test</code> phase is not recommended to be used for scripted jobs as we
+are planning to switch to the <code>failsafe</code> plugin bound to the
+<code>integration-test</code> and <code>verify</code> phases. See
+<a href="https://issues.redhat.com/browse/WFLY-625">WFLY-625</a> and
+<a href="https://issues.redhat.com/browse/WFLY-228">WFLY-228</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="testsuite-structure"><a class="anchor" href="#testsuite-structure"></a>2.1.2. Testsuite structure</h4>
+<div class="paragraph">
+<p>testsuite<br>
+integration<br>
+smoke<br>
+basic<br>
+clust<br>
+iiop<br>
+multinode<br>
+xts<br>
+compat<br>
+domain<br>
+mixed-domain<br>
+stress<br>
+benchmark</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="test-groups"><a class="anchor" href="#test-groups"></a>2.1.3. Test groups</h4>
+<div class="paragraph">
+<p>To define groups of tests to be run, these properties are available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-DallTests</code> - Runs all subgroups.</p>
+</li>
+<li>
+<p><code>-DallInteg</code> - Runs all integration tests. Same as
+<code>cd testsuite/integration; mvn clean install -DallTests</code></p>
+</li>
+<li>
+<p><code>-Dts.integ</code> - Basic integration + clustering tests.</p>
+</li>
+<li>
+<p><code>-Dts.clust</code> - Clustering tests.</p>
+</li>
+<li>
+<p><code>-Dts.iiop</code> - IIOP tests.</p>
+</li>
+<li>
+<p>`-Dts.multinode `- Tests with many nodes.</p>
+</li>
+<li>
+<p><code>-Dts.manualmode</code> - Tests with manual mode Arquillian containers.</p>
+</li>
+<li>
+<p><code>-Dts.bench</code> - Benchmark tests.</p>
+</li>
+<li>
+<p><code>-Dts.stress</code> - Stress tests.</p>
+</li>
+<li>
+<p><code>-Dts.domain</code> - Domain mode tests.</p>
+</li>
+<li>
+<p><code>-Dts.compat</code> - Compatibility tests.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="examples"><a class="anchor" href="#examples"></a>2.2. Examples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>integration-tests.sh [install] ` `</code> <code>-- Runs smoke tests.</code></p>
+</li>
+<li>
+<p><code>integration-tests.sh clean install&#8201;&#8212;&#8201;Cleans the target directory, then runs smoke tests.</code></p>
+</li>
+<li>
+<p><code>integration-tests.sh install -Dts.smoke ` `</code> <code>-- Same as above.</code></p>
+</li>
+<li>
+<p><code>integration-tests.sh install -DallTests ` `</code>
+<code>-- Runs all testsuite tests.</code></p>
+</li>
+<li>
+<p><code>integration-tests.sh install -Dts.stress&#8201;&#8212;&#8201;Runs smoke tests and stress tests.</code></p>
+</li>
+<li>
+<p><code>integration-tests.sh install -Dts.stress -Dts.noSmoke&#8201;&#8212;&#8201;Runs stress tests only.</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Pure maven</strong> - if you prefer not to use scripts, you may achieve the
+same result with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mvn &#8230;&#8203; -rf testsuite</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>-rf &#8230;&#8203;</code> parameter stands for "resume from" and causes Maven to run
+the specified module <em>and all successive</em>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s possible to run only a single module (provided the ancestor modules
+were already run to create the AS copies) :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mvn &#8230;&#8203; -pl testsuite/integration/cluster</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>-pl &#8230;&#8203;</code> parameter stands for "project list" and causes Maven to
+run the specified module <em>only</em>.</p>
+</div>
+<div class="sect3">
+<h4 id="output-to-console"><a class="anchor" href="#output-to-console"></a>2.2.1. Output to console</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">-DtestLogToFile</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="other-options"><a class="anchor" href="#other-options"></a>2.2.2. Other options</h4>
+<div class="paragraph">
+<p><code>-DnoWebProfile</code> - Run all tests with the <em>full</em> profile (
+<code>standalone-full.xml</code>). By default, most tests are run under <em>web</em>
+profile ( <code>standalone.xml</code>).</p>
+</div>
+<div class="paragraph">
+<p><code>-Dts.skipTests</code> - Skip testsuite&#8217;s tests. Defaults to the value of
+<code>-DskipTests</code>, which defaults to <code>false</code>. To build AS, skip unit tests
+and run testsuite, use <code>-DskipTests -Dts.skipTests=false</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="timeouts"><a class="anchor" href="#timeouts"></a>2.2.3. Timeouts</h4>
+<div class="sect4">
+<h5 id="surefire-execution-timeout"><a class="anchor" href="#surefire-execution-timeout"></a>Surefire execution timeout</h5>
+<div class="paragraph">
+<p>Unfortunatelly, no math can be done in Maven, so instead of applying a
+timeout ratio, you need to specify timeout manually for Surefire.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">-Dsurefire.forked.process.timeout=900</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="in-test-timeout-ratios"><a class="anchor" href="#in-test-timeout-ratios"></a>In-test timeout ratios</h5>
+<div class="paragraph">
+<p>Ratio in prercent - 100 = default, 200 = two times longer timeouts for
+given category.</p>
+</div>
+<div class="paragraph">
+<p>Currently we have five different ratios. Later, it could be replaced
+with just one generic, one for database and one for deployment
+operations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">-Dtimeout.ratio.fsio=100
+-Dtimeout.ratio.netio=100
+-Dtimeout.ratio.memio=100
+-Dtimeout.ratio.proc=100
+-Dtimeout.ratio.db=100</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-a-single-test-or-specified-tests"><a class="anchor" href="#running-a-single-test-or-specified-tests"></a>2.2.4. Running a single test (or specified tests)</h4>
+<div class="paragraph">
+<p>Single test is run using <strong>-Dtest=&#8230;&#8203;</strong> . Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>./integration-tests.sh install -Dtest='</code> <code><strong></code> <code>Clustered</code> <code></strong></code>
+<code>' -Dintegration.module</code> <code>-Dts.clust</code></p>
+</li>
+<li>
+<p><code>./integration-tests.sh clean install -Dtest=org</code> <code>/</code> <code>jboss</code> <code>/</code> <code>as</code>
+<code>/</code> <code>test</code> <code>/</code> <code>integration</code> <code>/</code> <code>ejb/async/*TestCase.java</code>
+<code>-Dintegration.module</code> <code>-Dts.basic</code></p>
+</li>
+<li>
+<p><code>cd testsuite; mvn install</code> <code>-Dtest='</code> <code><strong>Clustered</code> <code></strong></code> <code>'</code>
+<code>-Dts.basic #</code>
+<code>No need for -Dintegration.module - integration module is active by default.</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The same shortcuts listed in "Test groups" may be used to activate the
+module and group profile.</p>
+</div>
+<div class="paragraph">
+<p>Note that <code>-Dtest=</code> overrides <code>&lt;includes&gt;</code> and <code>&lt;exludes&gt;</code> defined in
+pom.xml, so do not rely on them when using wildcards - all compiled test
+classes matching the wildcard will be run.</p>
+</div>
+<div class="paragraph">
+<p><strong>Which Surefire execution is used?</strong></p>
+</div>
+<div class="paragraph">
+<p>Due to Surefire&#8217;s design flaw, tests run multiple times if there are
+multiple surefire executions.<br>
+To prevent this, if <code>-Dtest=</code>&#8230;&#8203; is specified, non-default executions
+are disabled, and standalone-full is used for all tests.<br>
+If you need it other way, you can overcome that need:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>basic-integration-web.surefire with standalone.xml - Configure standalone.xml to be used as server config.</code></p>
+</li>
+<li>
+<p><code>basic-integration-non-web.surefire - For tests included here, technically nothing changes.</code></p>
+</li>
+<li>
+<p><code>basic-integration-2nd.surefire - Simply run the second test in another invocation of Maven.</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-against-existing-as-copy-not-the-one-from-buildtargetjboss-as-"><a class="anchor" href="#running-against-existing-as-copy-not-the-one-from-buildtargetjboss-as-"></a>2.2.5. Running against existing AS copy (not the one from</h4>
+<div class="paragraph">
+<p>build/target/jboss-as-*)</p>
+</div>
+<div class="paragraph">
+<p><strong>-Djboss.dist=&lt;path/to/jboss-as&gt;</strong> will tell the testsuite to copy that
+AS into submodules to run the tests against.</p>
+</div>
+<div class="paragraph">
+<p>For example, you might want to run the testsuite against AS located in
+<code>/opt/wildfly-8</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/wildfly-8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The difference between jboss.dist and jboss.home:</p>
+</div>
+<div class="paragraph">
+<p>jboss.dist is the location of the tested binaries. It gets copied to
+testsuite submodules.</p>
+</div>
+<div class="paragraph">
+<p>jboss.home is internally used and points to those copied AS instances
+(for multinode tests, may be even different for each AS started by
+Arquillian).</p>
+</div>
+<div class="sect4">
+<h5 id="running-against-a-running-jboss-as-instance"><a class="anchor" href="#running-against-a-running-jboss-as-instance"></a>Running against a running JBoss AS instance</h5>
+<div class="paragraph">
+<p>Arquillian&#8217;s WildFly 14 container adapter allows specifying
+<code>allowConnectingToRunningServer</code> in <code>arquillian.xml</code>, which makes it
+check whether AS is listening at <code>managementAddress:managementPort</code>, and
+if so, it uses that server instead of launching a new one, and doesn&#8217;t
+shut it down at the end.</p>
+</div>
+<div class="paragraph">
+<p>All arquillian.xml&#8217;s in the testsuite specify this parameter. Thus, if
+you have a server already running, it will be re-used.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="running-against-jboss-enterprise-application-platform-eap-6.0"><a class="anchor" href="#running-against-jboss-enterprise-application-platform-eap-6.0"></a>Running against JBoss Enterprise Application Platform (EAP) 6.0</h5>
+<div class="paragraph">
+<p>To run the testsuite against AS included JBoss Enterprise Application
+Platform 6.x (EAP), special steps are needed.</p>
+</div>
+<div class="paragraph">
+<p>Assuming you already have the sources available, and the distributed EAP
+maven repository unzipped in e.g. <code>/opt/jboss/eap6-maven-repo/</code> :</p>
+</div>
+<div class="paragraph">
+<p>1) Configure maven in settings.xml to use only the EAP repository. This
+repo contains all artifacts necessary for building EAP, including maven
+plugins.<br>
+The build (unlike running testsuite) may be done offline.<br>
+The recommended way of configuring is to use special settings.xml, not
+your local one (typically in .m2/settings.xml).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">   &lt;mirror&gt;
+      &lt;id&gt;eap6-mirror-setting&lt;/id&gt;
+      &lt;mirrorOf&gt;
+         *,!central-eap6,!central-eap6-plugins,!jboss-public-eap6,!jboss-public-eap6-plugins
+      &lt;/mirrorOf&gt;
+      &lt;name&gt;Mirror Settings for EAP 6 build&lt;/name&gt;
+      &lt;url&gt;file:///opt/jboss/eap6-maven-repo&lt;/url&gt;
+    &lt;/mirror&gt;
+  &lt;/mirrors&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>\2) Build EAP. You won&#8217;t use the resulting EAP build, though. The
+purpose is to get the artifacts which the testsuite depends on.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">mvn clean install -s settings.xml -Dmaven.repo.local=local-repo-eap</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>\3) Run the testsuite. Assuming that EAP is located in <code>/opt/eap6</code>, you
+would run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/eap6</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For further information on building EAP and running the testsuite
+against it, see the official EAP documentation (link to be added)
+<a href="https://docspace.corp.redhat.com/docs/DOC-86875">.</a></p>
+</div>
+<div class="paragraph">
+<p>How-to for EAP QA can be found
+<a href="https://docspace.corp.redhat.com/docs/DOC-89200">here</a> (Red Hat internal
+only).</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-with-a-debugger"><a class="anchor" href="#running-with-a-debugger"></a>2.2.6. Running with a debugger</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Argument</th>
+<th class="tableblock halign-left valign-top">What will start with debugger</th>
+<th class="tableblock halign-left valign-top">Default port</th>
+<th class="tableblock halign-left valign-top">Port change arg.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Ddebug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AS instances run by Arquillian</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8787</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Das.debug.port=&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Djpda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alias for -Ddebug</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-DdebugClient</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test JVMs (currently Surefire)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Ddebug.port.surefire=&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-DdebugCLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AS CLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5051</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Ddebug.port.cli=&#8230;&#8203;</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="examples-1"><a class="anchor" href="#examples-1"></a>Examples</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">./integration-tests.sh install -DdebugClient -Ddebug.port.surefire=4040
+
+...
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Listening for transport dt_socket at address: 4040</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./integration-tests.sh install -DdebugClient -Ddebug.port.surefire
+
+...
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Listening for transport dt_socket at address: 5050</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">./integration-tests.sh install -Ddebug</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">./integration-tests.sh install -Ddebug -Das.debug.port=5005</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+JBoss AS is started by Arquillian, when the first test which requires
+given instance is run. Unless you pass <strong>-DtestLogToFile=false,</strong> <strong>there&#8217;s
+(currently) no challenge text in the console</strong>; it will look like the
+first test is stuck. This is being solved in
+<a href="http://jira.codehaus.org/browse/SUREFIRE-781" class="bare">http://jira.codehaus.org/browse/SUREFIRE-781</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Depending on which test group(s) you run, multiple AS instances may be
+started. In that case, you need to attach the debugger multiple times.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-tests-with-custom-database"><a class="anchor" href="#running-tests-with-custom-database"></a>2.2.7. Running tests with custom database</h4>
+<div class="paragraph">
+<p>To run with different database, specify the <code>-Dds</code> and use these
+properties (with the following defaults):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">-Dds.jdbc.driver=
+-Dds.jdbc.driver.version=
+-Dds.jdbc.url=
+-Dds.jdbc.user=test
+-Dds.jdbc.pass=test
+-Dds.jdbc.driver.jar=${ds.db}-jdbc-driver.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>driver</code> is JDBC driver class. JDBC <code>url</code>, <code>user</code> and <code>pass</code> is as
+expected.</p>
+</div>
+<div class="paragraph">
+<p><code>driver.version</code> is used for automated JDBC driver downloading. Users
+can set up internal Maven repository hosting JDBC drivers, with
+artifacts with</p>
+</div>
+<div class="paragraph">
+<p>GAV = <code>jdbcdrivers:${ds.db}:${ds.jdbc.driver.version</code>}</p>
+</div>
+<div class="paragraph">
+<p>Internally, JBoss has such repo at
+<a href="http://nexus.qa.jboss.com:8081/nexus/content/repositories/thirdparty/jdbcdrivers/" class="bare">http://nexus.qa.jboss.com:8081/nexus/content/repositories/thirdparty/jdbcdrivers/</a>
+.</p>
+</div>
+<div class="paragraph">
+<p>The <code>ds.db</code> value is set depending on ds. E.g. <code>-Dds=mssql2005</code> sets
+<code>ds.db=mssql</code> (since they have the same driver). <code>-Dds.db</code> may be
+overriden to use different driver.</p>
+</div>
+<div class="paragraph">
+<p><strong class="line-through">In case you don&#8217;t want to use such driver, set just
+-Dds.db= (empty) and provide the driver to the AS manually.</strong><br>
+<em>Not supported; work in progress on parameter to provide JDBC Driver
+jar.</em></p>
+</div>
+<div class="sect4">
+<h5 id="default-values"><a class="anchor" href="#default-values"></a>Default values</h5>
+<div class="paragraph">
+<p>For WildFly continuous integration, there are some predefined values for
+some of databases, which can be set using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">-Dds.db=&lt;database-identifier&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where database-identifier is one of: <code>h2</code>, <code>mysql51</code></p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-tests-with-ipv6"><a class="anchor" href="#running-tests-with-ipv6"></a>2.2.8. Running tests with IPv6</h4>
+<div class="paragraph">
+<p><code>-Dipv6</code> - Runs AS with
+<code>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</code></p>
+</div>
+<div class="paragraph">
+<p>and the following defaults, overridable by respective parameter:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">IPv4 default</th>
+<th class="tableblock halign-left valign-top">IPv6 default</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dnode0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">127.0.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">::1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single-node tests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dnode1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">127.0.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">::1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two-node tests (e.g. cluster) use this for the
+2nd node.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dmcast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">230.0.0.4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ff01::1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ff01::1 is IPv6 Node-Local scope mcast
+addr.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dmcast.jgroupsDiag</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">224.0.75.75</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ff01::2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JGroups diagnostics
+multicast address.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Dmcast.modcluster</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">224.0.1.105</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ff01::3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mod_cluster multicast
+address.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Values are set in AS configuration XML, replaced in resources (like
+ejb-jar.xml) and used in tests.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-tests-with-security-manager-custom-security-policy"><a class="anchor" href="#running-tests-with-security-manager-custom-security-policy"></a>2.2.9. Running tests with security manager / custom security policy</h4>
+<div class="paragraph">
+<p><code>-Dsecurity.manager</code> - Run with default policy.</p>
+</div>
+<div class="paragraph">
+<p><code>-Dsecurity.policy=&lt;path&gt;</code> - Run with the given policy.</p>
+</div>
+<div class="paragraph">
+<p><code>-Dsecurity.manager.other=&lt;set of Java properties&gt;</code> - Run with the given
+properties. Whole set is included in all server startup parameters.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./integration-tests.sh clean install -Dintegration.module -DallTests \
+\"-Dsecurity.manager.other=-Djava.security.manager \
+-Djava.security.policy==$(pwd)/testsuite/shared/src/main/resources/secman/permitt_all.policy \
+-Djava.security.debug=access:failure \"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the \" quotes delimiting the whole <code>-Dsecurity.manager.other</code>
+property.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="creating-test-reports"><a class="anchor" href="#creating-test-reports"></a>2.2.10. Creating test reports</h4>
+<div class="paragraph">
+<p>Test reports are created in the form known from EAP 5. To create them,
+simply run the testsuite, which will create Surefire XML files.</p>
+</div>
+<div class="paragraph">
+<p>Creation of the reports is bound to the <code>site</code> Maven phase, so it must
+be run separatedly afterwards. Use one of these:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./integration-tests.sh site
+cd testsuite; mvn site
+mvn -pl testsuite site</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that it will take all test results under <code>testsuite/integration/</code> -
+the pattern is <code>**/*TestCase.xml</code>, without need to specify <code>-DallTests</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="creating-coverage-reports"><a class="anchor" href="#creating-coverage-reports"></a>2.2.11. Creating coverage reports</h4>
+<div class="paragraph">
+<p><strong>Jira:</strong> <a href="https://issues.redhat.com/browse/WFLY-585" class="bare">https://issues.redhat.com/browse/WFLY-585</a></p>
+</div>
+<div class="paragraph">
+<p>Coverage reports are created by
+<a href="http://www.eclemma.org/jacoco/trunk/index.html">JaCoCo</a>.</p>
+</div>
+<div class="paragraph">
+<p>During the integration tests, Arquillian is passed a JVM argument which
+makes it run with JaCoCo agent, which records the executions into
+<code>${basedir}/target/jacoco</code> .</p>
+</div>
+<div class="paragraph">
+<p>In the <code>site</code> phase, a HTML, XML and CSV reports are generated. That is
+done using <code>jacoco:report</code> Ant task in <code>maven-ant-plugin</code> since JaCoCo&#8217;s
+maven report goal doesn&#8217;t support getting classes outside
+target/classes.</p>
+</div>
+<div class="sect4">
+<h5 id="usage-integration-testsuite"><a class="anchor" href="#usage-integration-testsuite"></a>Usage</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./build.sh clean install -DskipTests
+./integration-tests.sh clean install -DallTests -Dcoverage
+./integration-tests.sh site -DallTests -Dcoverage ## Must run in separatedly.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternative:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>mvn clean install -DskipTests
+mvn -rf testsuite clean install -DallTests -Dcoverage
+mvn -rf testsuite site -DallTests -Dcoverage</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cleaning-the-project"><a class="anchor" href="#cleaning-the-project"></a>2.2.12. Cleaning the project</h4>
+<div class="paragraph">
+<p>To have most stable build process, it should start with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>clean target directories</p>
+</li>
+<li>
+<p>only central Maven repo configured</p>
+</li>
+<li>
+<p>clean local repository or at least:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>free of artefacts to be built</p>
+</li>
+<li>
+<p>free of dependencies to be used (especially snapshots)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To use , you may use these commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>mvn clean install -DskipTests -DallTests  ## ...to clean all testsuite modules.
+mvn dependency:purge-local-repository build-helper:remove-project-artifact -Dbuildhelper.removeAll</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case the build happens in a shared environment (e.g. network disk),
+it&#8217;s recommended to use local repository:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">cp /home/hudson/.m2/settings.xml .
+sed "s|&lt;settings&gt;|&lt;settings&gt;&lt;localRepository&gt;/home/ozizka/hudson-repos/$JOBNAME&lt;/localRepository&gt;|" -i settings.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">mvn clean install ... -Dmaven.repo.local=localrepo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See also <a href="https://issues.redhat.com/browse/WFLY-628" class="bare">https://issues.redhat.com/browse/WFLY-628</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="WildFly_Testsuite_Harness_Developer_Guide"><a class="anchor" href="#WildFly_Testsuite_Harness_Developer_Guide"></a>3. WildFly Testsuite Harness Developer Guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Audience:</strong> Whoever wants to change the testsuite harness</p>
+</div>
+<div class="paragraph">
+<p><strong>JIRA</strong>: <a href="https://issues.redhat.com/browse/WFLY-576">WFLY-576</a></p>
+</div>
+<div class="sect2">
+<h3 id="testsuite-requirements"><a class="anchor" href="#testsuite-requirements"></a>3.1. Testsuite requirements</h3>
+<div class="paragraph">
+<p><a href="http://community.jboss.org/wiki/ASTestsuiteRequirements" class="bare">http://community.jboss.org/wiki/ASTestsuiteRequirements</a> will probably be
+merged here later.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-new-maven-plugin"><a class="anchor" href="#adding-a-new-maven-plugin"></a>3.2. Adding a new maven plugin</h3>
+<div class="paragraph">
+<p>The plugin version needs to be specified in jboss-parent. See
+<a href="https://github.com/jboss/jboss-parent-pom/blob/master/pom.xml#L65" class="bare">https://github.com/jboss/jboss-parent-pom/blob/master/pom.xml#L65</a> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shortened-maven-run-overview"><a class="anchor" href="#shortened-maven-run-overview"></a>3.3. Shortened Maven run overview</h3>
+<div class="paragraph">
+<p>See <a href="#Shortened_Maven_Run_Overview">Shortened Maven Run Overview</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="how-the-as-instance-is-built"><a class="anchor" href="#how-the-as-instance-is-built"></a>3.4. How the AS instance is built</h3>
+<div class="paragraph">
+<p>See <a href="#How_the_server_is_built_and_configured_for_testsuite_modules">How the JBoss AS instance is built and configured
+for testsuite modules.</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="properties-and-their-propagation"><a class="anchor" href="#properties-and-their-propagation"></a>3.5. Properties and their propagation</h3>
+<div class="paragraph">
+<p>﻿Propagated to tests through arquillian.xml:<br>
+<code>&lt;property name="javaVmArguments"&gt;${server.jvm.args}&lt;/property&gt;</code><br>
+TBD: <a href="https://issues.redhat.com/browse/ARQ-647" class="bare">https://issues.redhat.com/browse/ARQ-647</a></p>
+</div>
+<div class="sect3">
+<h4 id="jboss-as-instance-dir"><a class="anchor" href="#jboss-as-instance-dir"></a>3.5.1. JBoss AS instance dir</h4>
+<div class="paragraph">
+<p><strong>integration/pom.xml</strong></p>
+</div>
+<div class="paragraph">
+<p>(currently nothing)</p>
+</div>
+<div class="paragraph">
+<p><strong>*-arquillian.xml</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;container qualifier="jboss" default="true"&gt;
+    &lt;configuration&gt;
+        &lt;property name="jbossHome"&gt;${basedir}/target/jbossas&lt;/property&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="server-jvm-arguments"><a class="anchor" href="#server-jvm-arguments"></a>3.5.2. Server JVM arguments</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;surefire.memory.args&gt;-Xmx512m -XX:MaxPermSize=256m&lt;/surefire.memory.args&gt;
+    &lt;surefire.jpda.args&gt;&lt;/surefire.jpda.args&gt;
+    &lt;surefire.system.args&gt;${surefire.memory.args} ${surefire.jpda.args}&lt;/surefire.system.args&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ip-settings"><a class="anchor" href="#ip-settings"></a>3.5.3. IP settings</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>${ip.server.stack</code> <strong>}</strong> - used in
+<code>&lt;systemPropertyVariables&gt; / &lt;server.jvm.args&gt;</code> which is used in
+<code>*-arquillian.xml</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="testsuite-directories"><a class="anchor" href="#testsuite-directories"></a>3.5.4. Testsuite directories</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>${jbossas.ts.integ.dir</code>}</p>
+</li>
+<li>
+<p><code>${jbossas.ts.dir</code>}</p>
+</li>
+<li>
+<p><code>${jbossas.project.dir</code>}</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="clustering-properties"><a class="anchor" href="#clustering-properties"></a>3.5.5. Clustering properties</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>node0</p>
+</li>
+<li>
+<p>node1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_debug_parameters_propagation"><a class="anchor" href="#_debug_parameters_propagation"></a>3.6. Debug parameters propagation</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;surefire.jpda.args&gt;&lt;/surefire.jpda.args&gt;       - default
+
+&lt;surefire.jpda.args&gt;-Xrunjdwp:transport=dt_socket,address=${as.debug.port},server=y,suspend=y&lt;/surefire.jpda.args&gt; - activated by -Ddebug or -Djpda
+
+
+testsuite/pom.xml:        &lt;surefire.system.args&gt;... ${surefire.jpda.args} ...&lt;/surefire.system.args&gt;
+testsuite/pom.xml:                        &lt;jboss.options&gt;${surefire.system.args}&lt;/jboss.options&gt;
+
+testsuite/integration/pom.xml:     &lt;server.jvm.args&gt;${surefire.system.args} ${jvm.args.ip.server} ${jvm.args.security} ${jvm.args.timeouts} -Dnode0=${node0} -Dnode1=
+
+
+integration/pom.xml:
+&lt;server.jvm.args&gt;${surefire.system.args} ${jvm.args.ip.server} ${jvm.args.security} ${jvm.args.timeouts} -Dnode0=${node0} -Dnode1=${node1} -DudpGroup=${udpGroup} ${jvm.args.dirs}&lt;/server.jvm.args&gt;
+
+arquillian.xml:
+&lt;property name="javaVmArguments"&gt;${server.jvm.args} -Djboss.inst=${basedir}/target/jbossas&lt;/property&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="How_the_server_is_built_and_configured_for_testsuite_modules"><a class="anchor" href="#How_the_server_is_built_and_configured_for_testsuite_modules"></a>4. How the WildFly is built and configured for testsuite modules.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Refer to <a href="#Shortened_Maven_Run_Overview">Shortened Maven Run Overview</a> to see the
+mentioned build steps.</p>
+</div>
+<div class="paragraph">
+<p>\1) AS instance is copied from <code>${jboss.dist</code>} to
+<code>testsuite/target/jbossas</code>.<br>
+Defaults to AS which is built by the project (
+<code>build/target/jboss-as-*</code>).</p>
+</div>
+<div class="paragraph">
+<p>2)</p>
+</div>
+<div class="paragraph">
+<p><strong>testsuite/pom.xml:</strong></p>
+</div>
+<div class="paragraph">
+<p>from $\{jboss.home} to ${basedir}/target/jbossas<br>
+phase generate-test-resources: resource-plugin, goal copy-resources</p>
+</div>
+<div class="paragraph">
+<p><strong>testsuite/integration/pom.xml:</strong></p>
+</div>
+<div class="paragraph">
+<p>phase process-test-resources: antrun-plugin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;ant antfile="$\{basedir}/src/test/scripts/basic-integration-build.xml"&gt;
+    &lt;target name="build-basic-integration"/&gt;
+    &lt;target name="build-basic-integration-jts"/&gt;
+&lt;/ant&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which invokes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;target name="build-basic-integration" description="Builds server configuration for basic-integration tests"&gt;
+      &lt;build-server-config name="jbossas"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which invokes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;!-- Copy the base distribution. --&gt;
+&lt;!-- We exclude modules and bundles as they are read-only and we locate the via sys props. --&gt;
+&lt;copy todir="@{output.dir}/@{name}"&gt;
+    &lt;fileset dir="@{jboss.dist}"&gt;
+        &lt;exclude name="**/modules/**"/&gt;
+        &lt;exclude name="**/bundles/**"/&gt;
+    &lt;/fileset&gt;
+&lt;/copy&gt;
+
+&lt;!-- overwrite with configs from test-configs and apply property filtering --&gt;
+&lt;copy todir="@{output.dir}/@{name}" overwrite="true" failonerror="false"&gt;
+    &lt;fileset dir="@{test.configs.dir}/@{name}"/&gt;
+    &lt;filterset begintoken="${" endtoken="}"&gt;
+        &lt;filter token="node0" value="${node0}"/&gt;
+        &lt;filter token="node1" value="${node1}"/&gt;
+        &lt;filter token="udpGroup" value="${udpGroup}"/&gt;
+        &lt;filter-elements/&gt;
+    &lt;/filterset&gt;
+&lt;/copy&gt;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arquillian-config-file-location"><a class="anchor" href="#arquillian-config-file-location"></a>4.1. Arquillian config file location</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>-Darquillian.xml=some-file-or-classpath-resource.xml</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Plugin_executions_matrix"><a class="anchor" href="#Plugin_executions_matrix"></a>5. Plugin executions matrix</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>x - runs in this module<br>
+xx - runs in this and all successive modules<br>
+x! - runs but should not.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.0909%;">
+<col style="width: 9.091%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">TS</th>
+<th class="tableblock halign-left valign-top">integ</th>
+<th class="tableblock halign-left valign-top">smoke</th>
+<th class="tableblock halign-left valign-top">basic</th>
+<th class="tableblock halign-left valign-top">clust</th>
+<th class="tableblock halign-left valign-top">iiop</th>
+<th class="tableblock halign-left valign-top">comp</th>
+<th class="tableblock halign-left valign-top">domain</th>
+<th class="tableblock halign-left valign-top">bench</th>
+<th class="tableblock halign-left valign-top">stress</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initialize</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-help-plugin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">properties-maven-plugin:write-project-properties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-antrun-plugin:1.6:run (banner)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">process-resources</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-resources-plugin:2.5:resources (default-resources)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-dependency-plugin:2.3:copy (copy-annotations-endorsed)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx!</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">compile</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-compiler-plugin:2.3.2:compile (default-compile)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">generate-test-resources</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-resources-plugin:2.5:copy-resources (build-jbossas.server)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx!</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">!</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be:</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">process-test-resources</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-resources-plugin:2.5:testResources (default-testResources)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-antrun-plugin:1.6:run (build-smoke.server)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-antrun-plugin:1.6:run (prepare-jars-basic-integration.server)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-antrun-plugin:1.6:run (build-clustering.server)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x!?</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test-compile</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-compiler-plugin:2.3.2:testCompile (default-testCompile)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xml-maven-plugin:1.0:transform (update-ip-addresses-jbossas.server)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-antrun-plugin:1.6:run (build-jars)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (smoke-full.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (smoke-web.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (default-test)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test
+(basic-integration-default-full.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test
+(basic-integration-default-web.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (basic-integration-2nd.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (tests-clust-multi-node-unm&#8230;&#8203;surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (tests-clustering-single-node.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (tests-clustering-multi-node.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-surefire-plugin:2.10:test (tests-iiop-multi-node.surefire)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">package</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-jar-plugin:2.3.1:jar (default-jar)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx!</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-source-plugin:2.1.2:jar-no-fork (attach-sources)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">install</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maven-install-plugin:2.3.1:install (default-install)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xx!</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">smoke</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">basic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clust</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iiop</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bench</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stress</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Shortened_Maven_Run_Overview"><a class="anchor" href="#Shortened_Maven_Run_Overview"></a>6. Shortened Maven Run Overview</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="how-to-get-it"><a class="anchor" href="#how-to-get-it"></a>6.1. How to get it</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="how-its-done"><a class="anchor" href="#how-its-done"></a>6.2. How it&#8217;s done</h3>
+<div class="paragraph">
+<p>Run this script on the output of the AS7 testsuite run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>##  Cat the file or stdin if no args,
+##  filter only interesting lines - plugin executions and modules separators,
+##  plus Test runs summaries,
+##  and remove the boring plugins like enforcer etc.
+
+cat $1 \
+ | egrep ' --- |Building| ---------|Tests run: | T E S T S' \
+ | grep -v 'Time elapsed'
+ | sed 's|Tests run:|                Tests run:|' \
+ | grep -v maven-clean-plugin \
+ | grep -v maven-enforcer-plugin \
+ | grep -v buildnumber-maven-plugin \
+ | grep -v maven-help-plugin \
+ | grep -v properties-maven-plugin:.*:write-project-properties \
+;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll get an overview of the run.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-output-with-comments."><a class="anchor" href="#example-output-with-comments."></a>6.3. Example output with comments.</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>ondra@ondra-redhat: ~/work/AS7/ozizka-as7 $  ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Aggregator 7.1.0.CR1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite ---
+              Copies org.jboss.spec.javax.annotation:jboss-annotations-api_1.1_spec to ${project.build.directory}/endorsed .
+              Inherited - needed for compilation of all submodules.
+
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite ---
+              Copies ${jboss.home} to target/jbossas .  TODO: Should be jboss.dist.
+
+[INFO] --- xml-maven-plugin:1.0:transform (update-ip-addresses-jbossas.server) @ jboss-as-testsuite ---
+              Changes IP addresses used in server config files -
+              applies ${xslt.scripts.dir}/changeIPAddresses.xsl on ${basedir}/target/jbossas/standalone/configuration/standalone-*.xml
+              Currently inherited, IMO should not be.
+
+[INFO] --- maven-source-plugin:2.1.2:jar-no-fork (attach-sources) @ jboss-as-testsuite ---
+              TODO: Remove
+
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite ---
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration Aggregator 7.1.0.CR1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-agg ---
+              TODO: Remove
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- xml-maven-plugin:1.0:transform (update-ip-addresses-jbossas.server) @ jboss-as-testsuite-integration-agg ---
+              TODO: Remove
+[INFO] --- maven-source-plugin:2.1.2:jar-no-fork (attach-sources) @ jboss-as-testsuite-integration-agg ---
+              TODO: Remove
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-agg ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss AS Test Suite: Integration - Smoke 7.1.0.CR1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-smoke ---
+              TODO: Remove
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- xml-maven-plugin:1.0:transform (update-ip-addresses-jbossas.server) @ jboss-as-testsuite-integration-smoke ---
+              TODO: Remove
+
+[INFO] --- maven-antrun-plugin:1.6:run (build-smoke.server) @ jboss-as-testsuite-integration-smoke ---
+     [echo] Building AS instance "smoke" from /home/ondra/work/EAP/EAP6-DR9 to /home/ondra/work/AS7/ozizka-as7/testsuite/integration/smoke/target
+              TODO: Should be running one level above!
+
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-surefire-plugin:2.10:test (smoke-full.surefire) @ jboss-as-testsuite-integration-smoke ---
+ T E S T S
+                Tests run: 4, Failures: 0, Errors: 4, Skipped: 0</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-output-unchanged"><a class="anchor" href="#example-output-unchanged"></a>6.4. Example output, unchanged</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>ondra@lenovo:~/work/AS7/ozizka-git$ ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
+SSCmeetingWestfordJan     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/smoke does not exist.
+     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/clustering-udp-0 does not exist.
+     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/clustering-udp-1 does not exist.
+     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/iiop-client does not exist.
+     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/iiop-server does not exist.
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Aggregator 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-antrun-plugin:1.6:run (banner) @ jboss-as-testsuite ---
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite ---
+[INFO] --- xml-maven-plugin:1.0:transform (update-ip-addresses-jbossas.server) @ jboss-as-testsuite ---
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-agg ---
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-agg ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration - Smoke 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-antrun-plugin:1.6:run (build-smoke.server) @ jboss-as-testsuite-integration-smoke ---
+     [echo] Building AS instance "smoke" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/target
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-smoke ---
+[INFO] --- maven-surefire-plugin:2.10:test (smoke-full.surefire) @ jboss-as-testsuite-integration-smoke ---
+ T E S T S
+                Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-surefire-plugin:2.10:test (smoke-web.surefire) @ jboss-as-testsuite-integration-smoke ---
+ T E S T S
+                Tests run: 116, Failures: 0, Errors: 0, Skipped: 6
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-integration-smoke ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/target/jboss-as-testsuite-integration-smoke-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-smoke ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration - Basic 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-antrun-plugin:1.6:run (prepare-jars-basic-integration.server) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-basic ---
+[INFO] --- maven-surefire-plugin:2.10:test (basic-integration-default-full.surefire) @ jboss-as-testsuite-integration-basic ---
+ T E S T S
+                Tests run: 323, Failures: 0, Errors: 4, Skipped: 30
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration - Clustering 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-antrun-plugin:1.6:run (build-clustering.server) @ jboss-as-testsuite-integration-clust ---
+     [echo] Building config clustering-udp-0
+     [echo] Building AS instance "clustering-udp-0" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
+     [echo] Building config clustering-udp-1
+     [echo] Building AS instance "clustering-udp-1" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-clust ---
+[INFO] --- maven-surefire-plugin:2.10:test (tests-clustering-multi-node-unmanaged.surefire) @ jboss-as-testsuite-integration-clust ---
+ T E S T S
+                Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-surefire-plugin:2.10:test (tests-clustering-single-node.surefire) @ jboss-as-testsuite-integration-clust ---
+ T E S T S
+                Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-surefire-plugin:2.10:test (tests-clustering-multi-node.surefire) @ jboss-as-testsuite-integration-clust ---
+ T E S T S
+                Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-integration-clust ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target/jboss-as-testsuite-integration-clust-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-clust ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Integration - IIOP 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-antrun-plugin:1.6:run (build-clustering.server) @ jboss-as-testsuite-integration-iiop ---
+     [echo] Building config iiop-client
+     [echo] Building AS instance "iiop-client" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
+     [echo] Building config iiop-server
+     [echo] Building AS instance "iiop-server" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-iiop ---
+[INFO] --- maven-surefire-plugin:2.10:test (tests-iiop-multi-node.surefire) @ jboss-as-testsuite-integration-iiop ---
+ T E S T S
+                Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-integration-iiop ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target/jboss-as-testsuite-integration-iiop-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-iiop ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Compatibility Tests 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-antrun-plugin:1.6:run (build-jars) @ jboss-as-testsuite-integration-compat ---
+[INFO] --- maven-surefire-plugin:2.10:test (default-test) @ jboss-as-testsuite-integration-compat ---
+ T E S T S
+                Tests run: 7, Failures: 0, Errors: 4, Skipped: 3
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Domain Mode Integration Tests 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-domain ---
+[INFO] --- maven-surefire-plugin:2.10:test (default-test) @ jboss-as-testsuite-integration-domain ---
+ T E S T S
+                Tests run: 89, Failures: 0, Errors: 0, Skipped: 4
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-integration-domain ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/domain/target/jboss-as-testsuite-integration-domain-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-integration-domain ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Benchmark Tests 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-benchmark ---
+[INFO] --- maven-surefire-plugin:2.10:test (default-test) @ jboss-as-testsuite-benchmark ---
+ T E S T S
+                Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-benchmark ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/benchmark/target/jboss-as-testsuite-benchmark-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-benchmark ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Building JBoss Application Server Test Suite: Stress Tests 7.1.0.Final-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-dependency-plugin:2.3:copy (copy-annotations-endorsed) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-resources-plugin:2.5:copy-resources (build-jbossas.server) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-stress ---
+[INFO] --- maven-surefire-plugin:2.10:test (default-test) @ jboss-as-testsuite-stress ---
+ T E S T S
+                Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ jboss-as-testsuite-stress ---
+[INFO] Building jar: /home/ondra/work/AS7/ozizka-git/testsuite/stress/target/jboss-as-testsuite-stress-7.1.0.Final-SNAPSHOT.jar
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ jboss-as-testsuite-stress ---
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="WildFly_Testsuite_Test_Developer_Guide"><a class="anchor" href="#WildFly_Testsuite_Test_Developer_Guide"></a>7. WildFly Testsuite Test Developer Guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>See also:</strong> <a href="#WildFly_Integration_Testsuite_User_Guide">WildFly
+Integration Testsuite User Guide</a></p>
+</div>
+<div class="sect2">
+<h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a>7.1. Pre-requisites</h3>
+<div class="paragraph">
+<p>Please be sure to read <a href="#Pre-requisites_-_test_quality_standards">Pre-requisites - test quality
+standards</a> and follow those guidelines.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arquillian-container-configuration"><a class="anchor" href="#arquillian-container-configuration"></a>7.2. Arquillian container configuration</h3>
+<div class="paragraph">
+<p>See
+<a href="https://docs.jboss.org/author/display/ARQ/JBoss+AS+7.1%2C+JBoss+EAP+6.0+-+Managed">AS
+7.1 managed container adapter refrence</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managementclient-and-modelnode-usage-example"><a class="anchor" href="#managementclient-and-modelnode-usage-example"></a>7.3. ManagementClient and ModelNode usage example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">final ModelNode operation = new ModelNode();
+operation.get(ModelDescriptionConstants.OP).set(ModelDescriptionConstants.READ_RESOURCE_OPERATION);
+operation.get(ModelDescriptionConstants.OP_ADDR).set(address);
+operation.get(ModelDescriptionConstants.RECURSIVE).set(true);
+
+final ModelNode result = managementClient.getControllerClient().execute(operation);
+Assert.assertEquals(ModelDescriptionConstants.SUCCESS, result.get(ModelDescriptionConstants.OUTCOME).asString());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ManagementClient can be obtained as described below.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arquillian-features-available-in-tests"><a class="anchor" href="#arquillian-features-available-in-tests"></a>7.4. Arquillian features available in tests</h3>
+<div class="paragraph">
+<p>@ServerSetup</p>
+</div>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@ContainerResource private ManagementClient managementClient;
+final ModelNode result = managementClient.getControllerClient().execute(operation);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@ArquillianResource private ManagementClient managementClient;
+ModelControllerClient client = managementClient.getControllerClient();</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@ArquillianResource ContainerController cc;
+
+@Test
+public void test() {
+    cc.setup("test", ...properties..)
+    cc.start("test")
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;arquillian&gt;
+    &lt;container qualifier="test" mode="manual" /&gt;
+&lt;/arquillian&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">// Targeted containers HTTP context.
+@ArquillianResource URL url;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">// Targeted containers HTTP context where servlet is located.
+@ArquillianResource(SomeServlet.class) URL url;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">// Targeted containers initial context.
+@ArquillianResource InitialContext|Context context;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">// The manual deployer.
+@ArquillianResource Deployer deployer;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See
+<a href="https://docs.jboss.org/author/display/ARQ/Resource+injection">Arquillian&#8217;s
+Resource Injection docs</a> for more info,
+<a href="https://github.com/arquillian/arquillian-examples" class="bare">https://github.com/arquillian/arquillian-examples</a> for examples.</p>
+</div>
+<div class="paragraph">
+<p>See also
+<a href="https://docs.jboss.org/author/display/ARQ/Reference+Guide">Arquillian
+Reference</a>.</p>
+</div>
+<div class="paragraph">
+<p>Note to @ServerSetup annotation: It works as expected only on non-manual
+containers. In case of manual mode containers it calls setup() method
+after each server start up which is right (or actually before
+deployment), but the tearDown() method is called only at AfterClass
+event, i.e. usually after your manual shutdown of the server. Which
+limits you on the ability to revert some configuration changes on the
+server and so on. I cloned the annotation and changed it to fit the
+manual mode, but it is still in my github branch :)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="properties-available-in-tests"><a class="anchor" href="#properties-available-in-tests"></a>7.5. Properties available in tests</h3>
+<div class="sect3">
+<h4 id="directories"><a class="anchor" href="#directories"></a>7.5.1. Directories</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>jbosssa.project.dir - Project&#8217;s root dir (where ./build.sh is).</p>
+</li>
+<li>
+<p>jbossas.ts.dir - Testsuite dir.</p>
+</li>
+<li>
+<p>jbossas.ts.integ.dir - Testsuite&#8217;s integration module dir.</p>
+</li>
+<li>
+<p>jboss.dist - Path to AS distribution, either built
+(build/target/jboss-as-&#8230;&#8203;) or user-provided via -Djboss.dist</p>
+</li>
+<li>
+<p>jboss.inst - (Arquillian in-container only) Path to the AS instance in
+which the test is running (until ARQ-650 is possibly done)</p>
+</li>
+<li>
+<p><strong class="line-through">jboss.home</strong> - Deprecated as it&#8217;s name is unclear and
+confusing. Use jboss.dist or jboss.inst.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="networking"><a class="anchor" href="#networking"></a>7.5.2. Networking</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>node0</p>
+</li>
+<li>
+<p>node1</p>
+</li>
+<li>
+<p>230.0.0.4</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="time-related-coefficients-ratios"><a class="anchor" href="#time-related-coefficients-ratios"></a>7.5.3. Time-related coefficients (ratios)</h4>
+<div class="paragraph">
+<p>In case some of the following causes timeouts, you may prolong the
+timeouts by setting value &gt;= 100:</p>
+</div>
+<div class="paragraph">
+<p>100 = leave as is,<br>
+150 = 50 % longer, etc.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>timeout.ratio.gen - General ratio - can be used to adjust all
+timeouts.When this and specific are defined, both apply.</p>
+</li>
+<li>
+<p>timeout.ratio.fs- Filesystem IO</p>
+</li>
+<li>
+<p>timeout.ratio.net - Network IO</p>
+</li>
+<li>
+<p>timeout.ratio.mem - Memory IO</p>
+</li>
+<li>
+<p>timeout.ratio.cpu - Processor</p>
+</li>
+<li>
+<p>timeout.ratio.db - Database</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Time ratios will soon be provided by
+<code>org.jboss.as.test.shared.time.TimeRatio.for*()</code> methods.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="negative-tests"><a class="anchor" href="#negative-tests"></a>7.6. Negative tests</h3>
+<div class="paragraph">
+<p>To test invalid deployment handling: @ShouldThrowException</p>
+</div>
+<div class="paragraph">
+<p>Currently doesn&#8217;t work due to
+<a href="https://issues.redhat.com/browse/WFLY-673">WFLY-673</a>.</p>
+</div>
+<div class="paragraph">
+<p>optionally you might be able to catch it using the manual deployer</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@Deployment(name = "X", managed = false) ...
+
+@Test
+public void shouldFail(@ArquillianResource Deployer deployer) throws Exception {
+  try {
+    deployer.deploy("X")
+  }
+  catch(Exception e) {
+   // do something
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clustering-tests-wfly-616"><a class="anchor" href="#clustering-tests-wfly-616"></a>7.7. Clustering tests (WFLY-616)</h3>
+<div class="paragraph">
+<p>You need to deploy the same thing twice, so two deployment methods that
+just return the same thing.<br>
+And then you have tests that run against each.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">@Deployment(name = "deplA", testable = false)
+    @TargetsContainer("serverB")
+    public static Archive&lt;?&gt; deployment()
+
+    @Deployment(name = "deplB", testable = false)
+    @TargetsContainer("serverA")
+    public static Archive&lt;?&gt; deployment(){ ... }
+
+    @Test
+    @OperateOnDeployment("deplA")
+    public void testA(){ ... }
+
+    @Test
+    @OperateOnDeployment("deplA")
+    public void testA() {...}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="how-to-get-the-tests-to-master"><a class="anchor" href="#how-to-get-the-tests-to-master"></a>7.8. How to get the tests to master</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>First of all, <strong>be sure to read the "Before you add a test" section</strong>.</p>
+</li>
+<li>
+<p><strong>Fetch</strong> the newest mater:
+<code>git fetch upstream # Provided you have the jbossas/jbossas GitHub repo</code>
+<code>as a remote called 'upstream'.</code></p>
+</li>
+<li>
+<p><strong>Rebase</strong> your branch: git checkout WFLY-1234-your-branch; git rebase
+upstream/master</p>
+</li>
+<li>
+<p><strong>Run</strong> <strong><em>whole</em></strong> <strong>testsuite</strong> (integration-tests -DallTests). You may
+use
+<a href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/wildfly-as-testsuite-RHEL-matrix-openJDK7/lastCompletedBuild/testReport/" class="bare">https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/wildfly-as-testsuite-RHEL-matrix-openJDK7/lastCompletedBuild/testReport/</a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If any tests fail and they do not fail in master, fix it and go back
+to the "Fetch" step.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Push</strong> to a new branch in your GitHub repo:
+<code>git push origin WFLY-1234-new-XY-tests</code></p>
+</li>
+<li>
+<p><strong>Create a pull-request</strong> on GitHub. Go to your branch and click on
+"Pull Request".</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you have a jira, start the title with it, like - WFLY-1234 New
+tests for XYZ.</p>
+</li>
+<li>
+<p>If you don&#8217;t, write some apposite title. In the description, describe
+in detail what was done and why should it be merged. Keep in mind that
+the diff will be visible under your description.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Keep the branch rebased daily</strong> until it&#8217;s merged (see the Fetch
+step). If you don&#8217;t, you&#8217;re dramatically decreasing chance to get it
+merged.</p>
+</li>
+<li>
+<p>There&#8217;s a mailing list, jbossas-pull-requests, which is notified of
+every pull-request.</p>
+</li>
+<li>
+<p>You might have someone with merge privileges to cooperate with you, so
+they know what you&#8217;re doing, and expect your pull request.</p>
+</li>
+<li>
+<p>When your pull request is reviewed and merged, you&#8217;ll be notified by
+mail from GitHub.</p>
+</li>
+<li>
+<p>You may also check if it was merged by the following:
+<code>git fetch upstream; git cherry</code> <code>&lt;branch&gt; ## Or</code> git branch
+--contains\{\{&lt;branch&gt; - see}} <code>here</code></p>
+</li>
+<li>
+<p>Your commits will appear in master. They will have the same hash as in
+your branch.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You are now safe to delete both your local and remote branches:
+<code>git branch -D WFLY-1234-your-branch; git push origin :WFLY-1234-your-branch</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="How_to_Add_a_Test_Case"><a class="anchor" href="#How_to_Add_a_Test_Case"></a>8. How to Add a Test Case</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>(Please don&#8217;t (re)move - this is a landing page from a Jira link.)</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Thank you for finding time to contribute to WildFly 14 quality.</strong><br>
+Covering corner cases found by community users with tests is very
+important to increase stability.<br>
+If you&#8217;re providing a test case to support your bug report, it&#8217;s very
+likely that your bug will be fixed much sooner.</p>
+</div>
+<div class="sect2">
+<h3 id="create-a-test-case."><a class="anchor" href="#create-a-test-case."></a>8.1. 1) Create a test case.</h3>
+<div class="paragraph">
+<p>It&#8217;s quite easy - a simple use case may even consist of one short .java
+file.</p>
+</div>
+<div class="paragraph">
+<p>Check WildFly 14
+<a href="https://github.com/wildfly/wildfly/tree/master/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration">test
+suite test cases</a> for examples.</p>
+</div>
+<div class="paragraph">
+<p>For more information, see <a href="#WildFly_Testsuite_Test_Developer_Guide">WildFly Testsuite Test
+Developer Guide</a>. Check the requirements for a test to be included in
+the testsuite.</p>
+</div>
+<div class="paragraph">
+<p>Ask for help at WildFly 14 forum or at IRC - #wildfly @ FreeNode.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="push-your-test-case-to-github-and-create-a-pull-request."><a class="anchor" href="#push-your-test-case-to-github-and-create-a-pull-request."></a>8.2. 2) Push your test case to GitHub and create a pull request.</h3>
+<div class="paragraph">
+<p>For information on how to create a GitHub account and push your code
+therein, see <a href="https://community.jboss.org/wiki/HackingOnWildFly">Hacking
+on WildFly</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re not into Git, send a diff file to JBoss forums, someone might
+pick it up.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wait-for-the-outcome."><a class="anchor" href="#wait-for-the-outcome."></a>8.3. 3) Wait for the outcome.</h3>
+<div class="paragraph">
+<p>Your test case will be reviewed and eventually added. It may take few
+days.</p>
+</div>
+<div class="paragraph">
+<p>When something happens, you&#8217;ll receive a notification e-mail.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Pre-requisites_-_test_quality_standards"><a class="anchor" href="#Pre-requisites_-_test_quality_standards"></a>9. Before you add a test</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every added test, whether ported or new should follow the same
+guidelines:</p>
+</div>
+<div class="sect2">
+<h3 id="_verify_the_test_belongs_in_wildfly"><a class="anchor" href="#_verify_the_test_belongs_in_wildfly"></a>9.1. Verify the test belongs in WildFly</h3>
+<div class="paragraph">
+<p>AS6 has a lot of tests for things that are discontinued. For example
+the<br>
+legacy JBoss Transaction Manager which was replaced by Arjuna. Also we<br>
+had tests for SPIs that no longer exist. None of these things should
+be<br>
+migrated.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_only_add_correct_and_understandable_tests"><a class="anchor" href="#_only_add_correct_and_understandable_tests"></a>9.2. Only add CORRECT and UNDERSTANDABLE tests</h3>
+<div class="paragraph">
+<p>If you don&#8217;t understand what a test is doing (perhaps too complex), or<br>
+it&#8217;s going about things in a strange way that might not be correct,
+THEN<br>
+DO NOT PORT IT. Instead we should have a simpler, understandable, and<br>
+correct test. Write a new one, ping the author, or skip it altogether.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_do_not_add_duplicate_tests"><a class="anchor" href="#_do_not_add_duplicate_tests"></a>9.3. Do not add duplicate tests</h3>
+<div class="paragraph">
+<p>Always check that the test you are adding doesn&#8217;t have coverage<br>
+elsewhere (try using "git grep"). As mentioned above we have some<br>
+overlap between 6 and 7. The 7 test version will likely be better.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dont_name_tests_after_jiras"><a class="anchor" href="#_dont_name_tests_after_jiras"></a>9.4. Don&#8217;t name tests after JIRAs</h3>
+<div class="paragraph">
+<p>A JIRA number is useless without an internet connection, and they are<br>
+hard to read. If I get a test failure thats XDGR-843534578 I have to
+dig<br>
+to figure out the context. It&#8217;s perfectly fine though to link to a
+JIRA<br>
+number in the comments of the test. Also the commit log is always
+available.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tests_should_contain_javadoc_that_explains_what_is_being_tested"><a class="anchor" href="#_tests_should_contain_javadoc_that_explains_what_is_being_tested"></a>9.5. Tests should contain javadoc that explains what is being tested</h3>
+<div class="paragraph">
+<p>This is especially critical if the test is non-trivial</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prefer_expanding_an_existing_test_over_a_new_test_class"><a class="anchor" href="#_prefer_expanding_an_existing_test_over_a_new_test_class"></a>9.6. Prefer expanding an EXISTING test over a new test class</h3>
+<div class="paragraph">
+<p>If you are looking at migrating or creating a test with similar<br>
+functionality to an exiting test, it is better to<br>
+expand upon the existing one by adding more test methods, rather than<br>
+creating a whole new test. In general each<br>
+new test class adds at least 300ms to execution time, so as long as it<br>
+makes sense it is better to add it to an<br>
+existing test case.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_organize_tests_by_subsystem"><a class="anchor" href="#_organize_tests_by_subsystem"></a>9.7. Organize tests by subsystem</h3>
+<div class="paragraph">
+<p>Integration tests should be packaged in subpackages under the relevant<br>
+subsystem (e.g org.jboss.as.test.integration.ejb.async). When a test<br>
+impacts multiple subsystems this is a bit of a judgement call, but in<br>
+general the tests should go into the package of<br>
+the spec that defines the functionality (e.g. Jakarta Contexts and Dependency Injection based constructor<br>
+injection into an Jakarta Enterprise Beans, even though this involves Jakarta Contexts and Dependency Injection and Jakarta Enterprise Beans,<br>
+the Jakarta Contexts and Dependency Injection spec defines this behaviour)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_explain_non_obvious_spec_behavior_in_comments"><a class="anchor" href="#_explain_non_obvious_spec_behavior_in_comments"></a>9.8. Explain non-obvious spec behavior in comments</h3>
+<div class="paragraph">
+<p>The EE spec is full of odd requirements. If the test is covering<br>
+behavior that is not obvious then please add something like "Verifies
+EE<br>
+X.T.Z - The widget can&#8217;t have a foobar if it is declared like blah"</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_put_integration_test_resources_in_the_source_directory_of_the_test"><a class="anchor" href="#_put_integration_test_resources_in_the_source_directory_of_the_test"></a>9.9. Put integration test resources in the source directory of the test</h3>
+<div class="paragraph">
+<p>At the moment there is not real organization of these files. It makes<br>
+sense for most apps to have this separation, however the testsuite is<br>
+different. e.g. most apps will have a single deployment descriptor of
+a<br>
+given type, for the testsuite will have hundreds, and maintaining
+mirroring<br>
+package structures is error prone.<br>
+This also makes the tests easier to understand, as all the artifacts
+in<br>
+the deployment are in one place, and that place tends to be small
+(only<br>
+a handful of files).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_do_not_hard_code_values_likely_to_need_configuration_urls_ports"><a class="anchor" href="#_do_not_hard_code_values_likely_to_need_configuration_urls_ports"></a>9.10. Do not hard-code values likely to need configuration (URLs, ports, &#8230;&#8203;)</h3>
+<div class="paragraph">
+<p>URLs hardcoded to certain address (localhost) or port (like the default
+8080 for web) prevent running the test against different address or with
+IPv6 adress.<br>
+Always use the configurable values provided by Arquillian or as a system
+property.<br>
+If you come across a value which is not configurable but you think it
+should be, file an WildFly 14 jira issue with component "Test suite".<br>
+See
+<a href="https://github.com/arquillian/arquillian/blob/master/examples/junit/src/test/java/com/acme/web/LocalRunServletTestCase.java">@ArquillianResourrce
+usage example</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_follow_best_committing_practices"><a class="anchor" href="#_follow_best_committing_practices"></a>9.11. Follow best committing practices</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Only do changes related to the topic of the jira/pull request.</p>
+</li>
+<li>
+<p>Do not clutter your pull request with e.g. reformatting, fixing typos
+spotted along the way - do another pull request for such.</p>
+</li>
+<li>
+<p>Prefer smaller changes in more pull request over one big pull request
+which are difficult to merge.</p>
+</li>
+<li>
+<p>Keep the code consistent across commits - e.g. when renaming
+something, be sure to update all references to it.</p>
+</li>
+<li>
+<p>Describe your commits properly as they will appear in master&#8217;s linear
+history.</p>
+</li>
+<li>
+<p>If you&#8217;re working on a jira issue, include it&#8217;s ID in the commit
+message(s).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_do_not_use_blind_timeouts"><a class="anchor" href="#_do_not_use_blind_timeouts"></a>9.12. Do not use blind timeouts</h3>
+<div class="paragraph">
+<p>Do not use Thread.sleep() without checking for the actual condition you
+need to be fulfilled.<br>
+You may use active waiting with a timeout, but prefer using timeouts of
+the API/SPI you test where available.</p>
+</div>
+<div class="paragraph">
+<p>Make the timeouts configurable: For a group of similar test, use a
+configurable timeout value with a default if not set.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_provide_messages_in_assert_and_fail_calls"><a class="anchor" href="#_provide_messages_in_assert_and_fail_calls"></a>9.13. Provide messages in assert*() and fail() calls</h3>
+<div class="paragraph">
+<p>Definitely, it&#8217;s better to see "File x/y/z.xml not found" instead of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">junit.framework.AssertionFailedError
+     at junit.framework.Assert.fail(Assert.java:48) [arquillian-service:]
+     at junit.framework.Assert.assertTrue(Assert.java:20) [arquillian-service:]
+     at junit.framework.Assert.assertTrue(Assert.java:27) [arquillian-service:]
+     at org.jboss.as.test.smoke.embedded.parse.ParseAndMarshalModelsTestCase.getOriginalStandaloneXml(ParseAndMarshalModelsTestCase.java:554) [bogus.jar:]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_provide_configuration_properties_hints_in_exceptions"><a class="anchor" href="#_provide_configuration_properties_hints_in_exceptions"></a>9.14. Provide configuration properties hints in exceptions</h3>
+<div class="paragraph">
+<p>If your test uses some configuration property and it fails possibly due
+to misconfiguration, note the property and it&#8217;s value in the exception:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">File jdbcJar = new File( System.getProperty("jbossas.ts.dir", "."),
+       "integration/src/test/resources/mysql-connector-java-5.1.15.jar");
+    if( !jdbcJar.exists() )
+        throw new IllegalStateException("Can't find " + jdbcJar + " using $\{jbossas.ts.dir} == " + System.getProperty("jbossas.ts.dir") );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_clean_up"><a class="anchor" href="#_clean_up"></a>9.15. Clean up</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Close sockets, connections, file descriptors;</p>
+</li>
+<li>
+<p>Don&#8217;t put much data to static fields, or clean them in a finaly {&#8230;&#8203;} block.</p>
+</li>
+<li>
+<p>Don&#8217;t alter AS config (unless you are absolutely sure that it will
+reload in a final \{&#8230;&#8203;} block or an @After* method)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_keep_the_tests_configurable"><a class="anchor" href="#_keep_the_tests_configurable"></a>9.16. Keep the tests configurable</h3>
+<div class="paragraph">
+<p>Keep these things in properties, set them at the beginning of the test:
+* Timeouts
+* Paths
+* URLs
+* Numbers (of whatever)</p>
+</div>
+<div class="paragraph">
+<p>They either will be or already are provided in form of system
+properties, or a simple testsuite until API (soon to come).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Shared_Test_Classes_and_Resources"><a class="anchor" href="#Shared_Test_Classes_and_Resources"></a>10. Shared Test Classes and Resources</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="among-testsuite-modules"><a class="anchor" href="#among-testsuite-modules"></a>10.1. Among Testsuite Modules</h3>
+<div class="paragraph">
+<p>Use the testsuite/shared module.</p>
+</div>
+<div class="paragraph">
+<p>Classes and resources in this module are available in all testsuite
+modules - i.e. in testsuite/* .</p>
+</div>
+<div class="paragraph">
+<p>Only use it if necessary - don&#8217;t put things "for future use" in there.</p>
+</div>
+<div class="paragraph">
+<p><strong>Don&#8217;t split packages across modules.</strong> <strong>Make sure the java package is
+unique in the WildFly project.</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Document your util classes</strong> (javadoc) so they can be easily found and
+reused! A generated list will be put here.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="between-components-and-testsuite-modules"><a class="anchor" href="#between-components-and-testsuite-modules"></a>10.2. Between Components and Testsuite Modules</h3>
+<div class="paragraph">
+<p>To share component&#8217;s test classes with some module in testsuite, you
+don&#8217;t need to split to submodules.
+You can create a jar with classifier using this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;test-jar&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This creates a jar with classifier "tests", so you can add it as
+dependency to a testsuite module:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-xml hljs" data-lang="xml">    &lt;dependency&gt;
+        &lt;groupId&gt;org.wildfly&lt;/groupId&gt;
+        &lt;artifactId&gt;wildfly-clustering-common&lt;/artifactId&gt;
+        &lt;classifier&gt;tests&lt;/classifier&gt;
+        &lt;version&gt;${project.version}&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bootable JAR Guide :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly/Bootable_Guide.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../wildfly-operator/user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-operator/user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly/edit/antora/docs/modules/ROOT/pages/Bootable_Guide.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Bootable JAR Guide</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#169; 2020 The original authors.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Bootable JAR Guide</div>
+<ul class="sectlevel0">
+<li><a href="#wildfly_bootable_JAR_development">WildFly bootable JAR application development</a>
+<ul class="sectlevel1">
+<li><a href="#wildfly-jar-maven-plugin-pom-configuration">1. Adding the bootable JAR Maven plugin to your pom file</a></li>
+<li><a href="#wildfly-jar-maven-plugin-galleon-configuration">2. Galleon configuration</a>
+<ul class="sectlevel2">
+<li><a href="#wildfly_layers">2.1. WildFly Layers</a>
+<ul class="sectlevel3">
+<li><a href="#wildfly_foundational_galleon_layers">2.1.1. Foundational Galleon layers</a></li>
+<li><a href="#wildfly_basic_galleon_layers">2.1.2. Basic Galleon Layers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#wildfly-jar-maven-plugin-additional-configuration">3. Additional configuration</a></li>
+<li><a href="#wildfly-jar-maven-plugin-build">4. Packaging your application</a></li>
+<li><a href="#wildfly-jar-maven-plugin-run">5. Running your application</a>
+<ul class="sectlevel2">
+<li><a href="#wildfly-bootable-jar-arguments">5.1. Bootable JAR arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<h1 id="wildfly_bootable_JAR_development" class="sect0"><a class="anchor" href="#wildfly_bootable_JAR_development"></a>WildFly bootable JAR application development</h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<p>This document details the steps to follow in order to develop a WildFly application
+packaged as a bootable JAR. A bootable JAR can be run both on bare-metal and cloud platforms.</p>
+</div>
+<div class="paragraph">
+<p>Developing an application packaged as a bootable JAR is not different from developing an application for a traditional
+WildFly server installation using Maven.
+The extra steps required to package your application inside a bootable JAR are handled by the
+<a href="https://github.com/wildfly-extras/wildfly-jar-maven-plugin"><em>org.wildfly.plugins:wildfly-jar-maven-plugin</em></a> Maven plugin.</p>
+</div>
+<div class="paragraph">
+<p>This document contains the minimal information set required to build and run a WildFly bootable JAR.
+Complete information on the Maven plugin usage can be found in the bootable JAR <a href="https://docs.wildfly.org/bootablejar/">documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly-jar-maven-plugin-pom-configuration"><a class="anchor" href="#wildfly-jar-maven-plugin-pom-configuration"></a>1. Adding the bootable JAR Maven plugin to your pom file</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is done by adding an extra build step to your application deployment Maven pom.xml file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.wildfly.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;wildfly-jar-maven-plugin&lt;/artifactId&gt;
+      &lt;configuration&gt;
+        ...
+      &lt;/configuration&gt;
+      &lt;executions&gt;
+        &lt;execution&gt;
+          &lt;goals&gt;
+            &lt;goal&gt;package&lt;/goal&gt;
+          &lt;/goals&gt;
+        &lt;/execution&gt;
+      &lt;/executions&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The next chapter covers the plugin configuration items that are required to identify the WildFly server version and content.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly-jar-maven-plugin-galleon-configuration"><a class="anchor" href="#wildfly-jar-maven-plugin-galleon-configuration"></a>2. Galleon configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Bootable JAR Maven plugin depends on <a href="https://docs.wildfly.org/galleon/">Galleon</a> to construct the WildFly server contained in the JAR file.</p>
+</div>
+<div class="paragraph">
+<p>Galleon is configured thanks to the Maven plugin <code><code>&lt;configuration&gt;</code></code> element.</p>
+</div>
+<div class="paragraph">
+<p>The first required piece of information that Galleon needs is a reference to the WildFly Galleon feature-pack.
+The WildFly Galleon feature-pack is a maven artifact that contains everything needed to dynamically provision a server.
+This feature-pack, as well as the feature-packs on which its depends,
+are deployed in public maven repositories.</p>
+</div>
+<div class="paragraph">
+<p>When the bootable JAR Maven plugin builds a JAR, WildFly feature-packs are retrieved and
+their content is assembled to create the server contained in the JAR.</p>
+</div>
+<div class="paragraph">
+<p>Once you have identified a WildFly Galleon feature-pack, you need to select a set of
+<a href="#wildfly_layers">WildFly Layers</a> that are used to compose the server.</p>
+</div>
+<div class="paragraph">
+<p>The set of Galleon layers to include is driven by the needs of the application you are developing.
+The list of <a href="#wildfly_layers">WildFly Layers</a> provides details on
+the server features that each layer brings. Make sure that the API and server features you are using (eg: Jakarta RESTful Web Services, MicroProfile Config, datasources)
+are provided by the layers you are choosing.</p>
+</div>
+<div class="paragraph">
+<p>If you decide not to specify Galleon layers, a server containing all MicroProfile subsystems is
+provisioned. (The server configuration is identical to the <code><code>standalone-microprofile.xml</code></code> configuration
+in the traditional WildFly server zip.)</p>
+</div>
+<div class="paragraph">
+<p>Maven Plugin configuration extract example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.wildfly.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;wildfly-jar-maven-plugin&lt;/artifactId&gt;
+      &lt;configuration&gt;
+        &lt;feature-pack-location&gt;wildfly@maven(org.jboss.universe:community-universe)&lt;/feature-pack-location&gt; (1)
+        &lt;layers&gt;
+          &lt;layer&gt;jaxrs-server&lt;/layer&gt; (2)
+        &lt;/layers&gt;
+      &lt;/configuration&gt;
+      &lt;executions&gt;
+        &lt;execution&gt;
+          &lt;goals&gt;
+            &lt;goal&gt;package&lt;/goal&gt;
+          &lt;/goals&gt;
+        &lt;/execution&gt;
+      &lt;/executions&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(1) In this plugin configuration extract, we are retrieving the latest WildFly Galleon feature-pack installed in the
+ <code><code>org.jboss.universe:community-universe</code></code> Galleon universe. In case you would like to provision a specific version of the server,
+you would need to specify the server version, for example <code><code>wildfly@maven(org.jboss.universe:community-universe)#21.0.0.Final</code></code></p>
+</div>
+<div class="paragraph">
+<p>(2) The <a href="#gal.jaxrs-server">jaxrs-server layer</a> and all its dependencies are provisioned.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If your project is using <a href="WildFly_and_WildFly_Preview.html">WildFly Preview</a>, the <code>feature-pack-location</code> to use
+is <code>wildfly-preview@maven(org.jboss.universe:community-universe)</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="wildfly_layers"><a class="anchor" href="#wildfly_layers"></a>2.1. WildFly Layers</h3>
+<div class="paragraph">
+<p>A Galleon layer is a name that identifies a server capability (e.g.: jaxrs,
+ejb, microprofile-config, jpa) or an aggregation of such capabilities. A layer captures a server capability in the form of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A piece of server XML configuration (e.g.: extension, configured subsystem, interfaces) that describes the capability.</p>
+</li>
+<li>
+<p>A set of modules and other filesystem content that implements the capability.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you are using a layer, it delivers these pieces of information in order for
+Galleon to assemble a server containing only the required configuration and modules.</p>
+</div>
+<div class="paragraph">
+<p>In the tables below we provide basic information about all of the layers WildFly provides.</p>
+</div>
+<div class="paragraph">
+<p>Besides the layer names and a brief description of each, the tables below detail the various dependency relationships
+between layers. If the capabilities provided by a layer A require capabilities provided by another layer B, then layer A will <em>depend on</em> layer B.
+If you ask for layer A, then Galleon will automatically provide B as well. In some cases A&#8217;s dependency on B can be <em>optional</em>; that
+is A typically comes with B, but can function without it. In this case if you ask for A by default Galleon will provide B as well,
+but you can tell Galleon to <em>exclude</em> B.</p>
+</div>
+<div class="paragraph">
+<p>Some layers are logical <em>alternatives</em> to other layers. If two layers are alternatives to each other they both provide the same general
+capabilities, but with different implementation characteristics. For example a number of layers provide the capability to cache different
+types of objects. These layers typically come in pairs of alternatives, where one alternative provides local caching, while the other provides
+distributed caching.  If a layer you want has an optional dependency on a layer that has an alternative, you can exclude that dependency
+and instead specify the alternative. If a layer has an alternative the Description column in the tables below will identify it.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the elytron layer is present, security will be handled by the elytron subsystem.
+The undertow and ejb subsystems are configured with an <em>other</em> <em>application-security-domain</em> that references the Elytron <em>ApplicationDomain</em> security domain.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="wildfly_foundational_galleon_layers"><a class="anchor" href="#wildfly_foundational_galleon_layers"></a>2.1.1. Foundational Galleon layers</h4>
+<div class="paragraph">
+<p>A single Galleon layer can provide a relatively small set of capabilities, but most users will want to start with a broader set
+of capabilities without having to spell out all the details. To help with this WildFly provides a few foundational layers
+all of which provide typical core WildFly capabilities like the logging subsystem and a secure remote management interface.</p>
+</div>
+<div class="paragraph">
+<p>You don&#8217;t have to base your WildFly installation on one of these foundational layers, but doing so may be more convenient.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Dependencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.datasources-web-server"></a>datasources-web-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A servlet container with support for datasources.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-server">core-server</a><br>
+<a href="#gal.core-tools">core-tools</a> (optional)<br>
+<a href="#gal.datasources">datasources</a> (optional)<br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs-server"></a>jaxrs-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An extension of <em>datasources-web-server</em> with support for Jakarta RESTful Web Services, CDI and JPA.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
+<a href="#gal.cdi">cdi</a> (optional)<br>
+<a href="#gal.datasources-web-server">datasources-web-server</a><br>
+<a href="#gal.jaxrs">jaxrs</a> (optional)<br>
+<a href="#gal.jpa">jpa</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.cloud-server"></a>cloud-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An extension of <em>jaxrs-server</em> to address common cloud requirements.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee-security">ee-security</a> (optional)<br>
+<a href="#gal.jaxrs-server">jaxrs-server</a><br>
+<a href="#gal.jms-activemq">jms-activemq</a> (optional)<br>
+<a href="#gal.observability">observability</a> (optional)<br>
+<a href="#gal.resource-adapters">resource-adapters</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-server"></a>core-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A typical manageable server core. This layer could serve as a base for a more
+specialized WildFly that doesn&#8217;t need the capabilities provided by the other foundational layers.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-management">core-management</a> (optional)<br>
+<a href="#gal.core-security-realms">core-security-realms</a> (optional)<br>
+<a href="#gal.jmx-remoting">jmx-remoting</a> (optional)<br>
+<a href="#gal.logging">logging</a> (optional)<br>
+<a href="#gal.management">management</a> (optional)<br>
+<a href="#gal.request-controller">request-controller</a> (optional)<br>
+<a href="#gal.security-manager">security-manager</a> (optional)<br></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="wildfly_basic_galleon_layers"><a class="anchor" href="#wildfly_basic_galleon_layers"></a>2.1.2. Basic Galleon Layers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dependencies</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.application-security-realm"></a>application-security-realm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security realm meant for securing applications.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.base-server"></a>base-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Empty runnable server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.git-history">git-history</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.batch-jberet"></a>batch-jberet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Batch.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.ee">ee</a><br>
+<a href="#gal.elytron">elytron</a><br>
+<a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.bean-validation"></a>bean-validation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Bean Validation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.cdi">cdi</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.cdi"></a>cdi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Contexts and Dependency Injection.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.bean-validation">bean-validation</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.cloud-profile"></a>cloud-profile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An aggregation of some basic layers to address cloud use cases.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
+<a href="#gal.cdi">cdi</a> (optional)<br>
+<a href="#gal.ee-security">ee-security</a> (optional)<br>
+<a href="#gal.jaxrs">jaxrs</a> (optional)<br>
+<a href="#gal.jms-activemq">jms-activemq</a> (optional)<br>
+<a href="#gal.jpa">jpa</a> (optional)<br>
+<a href="#gal.observability">observability</a> (optional)<br>
+<a href="#gal.resource-adapters">resource-adapters</a> (optional)<br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-management"></a>core-management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for server management services.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-security-realms"></a>core-security-realms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for core Application and Management security realms.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.application-security-realm">application-security-realm</a> (optional)<br>
+<a href="#gal.base-server">base-server</a><br>
+<a href="#gal.management-security-realm">management-security-realm</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-tools"></a>core-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for <em>jboss-cli</em>, <em>add-user</em> and <em>elytron-tool</em> launch scripts and configuration files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.datasources"></a>datasources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for datasources.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.deployment-scanner"></a>deployment-scanner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for deployment directory scanning.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.discovery"></a>discovery</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for discovery.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee"></a>ee</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for common functionality in the Jakarta EE platform.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jsonb">jsonb</a> (optional)<br>
+<a href="#gal.naming">naming</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-security"></a>ee-security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for EE Security.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb"></a>ejb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Enterprise Beans, excluding the IIOP protocol.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ejb-lite">ejb-lite</a><br>
+<a href="#gal.messaging-activemq">messaging-activemq</a><br>
+<a href="#gal.remoting">remoting</a><br>
+<a href="#gal.resource-adapters">resource-adapters</a><br>
+<a href="#gal.undertow">undertow</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb-dist-cache"></a>ejb-dist-cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infinispan-based distributed cache for stateful session beans.<br>
+<em>Alternative:</em> <a href="#gal.ejb-local-cache">ejb-local-cache</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb-lite"></a>ejb-lite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Enterprise Beans Lite.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ejb-local-cache">ejb-local-cache</a> (optional)<br>
+<a href="#gal.naming">naming</a><br>
+<a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb-local-cache"></a>ejb-local-cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infinispan-based local cache for stateful session beans.<br>
+<em>Alternative:</em> <a href="#gal.ejb-dist-cache">ejb-dist-cache</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.elytron"></a>elytron</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Elytron security.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.git-history"></a>git-history</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for using <em>git</em> for configuration management.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.h2-datasource"></a>h2-datasource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for an H2 datasource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.h2-driver">h2-driver</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.h2-default-datasource"></a>h2-default-datasource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for an H2 datasource set as the ee subsystem default datasource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.h2-datasource">h2-datasource</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.h2-driver"></a>h2-driver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the H2 JDBC driver.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.io"></a>io</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for XNIO workers and buffer pools.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs"></a>jaxrs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JAXRS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br>
+<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jdr"></a>jdr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the JBoss Diagnostic Reporting (JDR) subsystem.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.management">management</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jms-activemq"></a>jms-activemq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated - use <a href="#gal.messaging-activemq">messaging-activemq</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.messaging-activemq">messaging-activemq</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jmx"></a>jmx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for registration of Management Model MBeans.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jmx-remoting"></a>jmx-remoting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for a JMX remoting connector.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jmx">jmx</a><br>
+<a href="#gal.management">management</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jpa"></a>jpa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JPA (using the latest WildFly supported Hibernate release).<br>
+<em>Alternative:</em> <a href="#gal.jpa-distributed">jpa-distributed</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
+<a href="#gal.datasources">datasources</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jpa-distributed"></a>jpa-distributed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JPA with a distributed second level cache.<br>
+<em>Alternative:</em> <a href="#gal.jpa">jpa</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
+<a href="#gal.datasources">datasources</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsf"></a>jsf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Server Faces.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
+<a href="#gal.cdi">cdi</a> (optional)<br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsonb"></a>jsonb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Binding (Jakarta JSON Binding) provisioning the Jakarta JSON Binding API and Implementation modules.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsonp"></a>jsonp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Processing (Jakarta JSON Processing) provisioning the Jakarta JSON Processing API and Implementation modules.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-management"></a>legacy-management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for remote access to management interfaces secured with the core ManagementRealm.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management-security-realm">management-security-realm</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-remoting"></a>legacy-remoting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for inbound and outbound JBoss Remoting connections, secured using legacy security realms.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.application-security-realm">application-security-realm</a><br>
+<a href="#gal.io">io</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-security"></a>legacy-security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for legacy Picketbox-based web security.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.naming">naming</a><br>
+<a href="#gal.vault">vault</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.logging"></a>logging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the logging subsystem.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.mail"></a>mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Mail.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.naming">naming</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.management"></a>management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for remote access to management interfaces secured using Elytron.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.elytron">elytron</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.management-security-realm"></a>management-security-realm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security realm meant for securing server management interfaces.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.messaging-activemq"></a>messaging-activemq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Jakarta Messaging broker.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-config"></a>microprofile-config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Config.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-fault-tolerance"></a>microprofile-fault-tolerance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Fault Tolerance.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br>
+<a href="#gal.microprofile-metrics">microprofile-metrics</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-health"></a>microprofile-health</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Health.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-jwt"></a>microprofile-jwt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile JWT.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee-security">ee-security</a><br>
+<a href="#gal.elytron">elytron</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-metrics"></a>microprofile-metrics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Metrics.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-openapi"></a>microprofile-openapi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenAPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jaxrs">jaxrs</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-opentracing"></a>microprofile-opentracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenTracing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-platform"></a>microprofile-platform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for available MicroProfile platform specifications.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a> (optional)<br>
+<a href="#gal.microprofile-fault-tolerance">microprofile-fault-tolerance</a> (optional)<br>
+<a href="#gal.microprofile-health">microprofile-health</a> (optional)<br>
+<a href="#gal.microprofile-jwt">microprofile-jwt</a> (optional)<br>
+<a href="#gal.microprofile-metrics">microprofile-metrics</a> (optional)<br>
+<a href="#gal.microprofile-openapi">microprofile-openapi</a> (optional)<br>
+<a href="#gal.open-tracing">microprofile-opentracing</a> (optional)<br>
+<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-rest-client"></a>microprofile-rest-client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile REST client.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-messaging"></a>microprofile-reactive-messaging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Messaging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-reactive-streams-operators">reactive-streams-operators</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-messaging-kafka"></a>microprofile-reactive-messaging-kafka</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Messaging Kafka connector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-reactive-messaging">reactive-messaging</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-streams-operators"></a>microprofile-reactive-streams-operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Streams Operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.naming"></a>naming</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JNDI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.observability"></a>observability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile monitoring features.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a> (optional)<br>
+<a href="#gal.microprofile-health">microprofile-health</a> (optional)<br>
+<a href="#gal.microprofile-metrics">microprofile-metrics</a> (optional)<br>
+<a href="#gal.open-tracing">open-tracing</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.open-tracing"></a>open-tracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Deprecated</strong> Use <a href="#gal.microprofile-opentracing">microprofile-opentracing</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.pojo"></a>pojo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for legacy JBoss Microcontainer applications.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.remote-activemq"></a>remote-activemq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Apache Activemq Artemis Jakarta Messaging broker.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.remoting"></a>remoting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for inbound and outbound JBoss Remoting connections, secured using Elytron.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.elytron">elytron</a><br>
+<a href="#gal.io">io</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.request-controller"></a>request-controller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for request management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.resource-adapters"></a>resource-adapters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for deployment of Jakarta Connectors resource adapters.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.sar"></a>sar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for SAR archives to deploy MBeans.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.jmx">jmx</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.security-manager"></a>security-manager</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for applying security manager permissions to applications.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.transactions"></a>transactions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for transactions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee">ee</a><br>
+<a href="#gal.elytron">elytron</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow"></a>undertow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the Undertow HTTP server. Provides servlet support but does not provide typical EE integration like resource injection.
+Use <a href="#gal.web-server">web-server</a> for a servlet container with EE integration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.io">io</a><br>
+<a href="#gal.vault">vault</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow-legacy-https"></a>undertow-legacy-https</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the Undertow HTTPS server secured using the legacy security ApplicationRealm.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-security-realms">core-security-realms</a><br>
+<a href="#gal.undertow">undertow</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow-load-balancer"></a>undertow-load-balancer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Undertow configured as a load balancer.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
+<a href="#gal.io">io</a><br>
+<a href="#gal.vault">vault</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.vault"></a>vault</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Picketbox security vaults.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-clustering"></a>web-clustering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for distributable web applications. Configures a non-local Infinispan-based container web cache for data session handling suitable to clustering environments.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-console"></a>web-console</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for loading the HAL web console from the /console context on the HTTP
+management interface. Not required to use a HAL console obtained independently
+and configured to connect to the server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-passivation"></a>web-passivation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for distributable web applications. Configures a local Infinispan-based container web cache for data session handling suitable to single node environments.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-server"></a>web-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A servlet container.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.deployment-scanner">deployment-scanner</a> (optional)<br>
+<a href="#gal.ee">ee</a><br>
+<a href="#gal.naming">naming</a><br>
+<a href="#gal.undertow">undertow</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.webservices"></a>webservices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta XML Web Services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ejb-lite">ejb-lite</a> (optional)<br>
+<a href="#gal.messaging-activemq">messaging-activemq</a> (optional)<br>
+<a href="#gal.web-server">web-server</a><br></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Persistence API(JPA) refer to the Jakarta Persistence unless otherwise noted.
+      References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly-jar-maven-plugin-additional-configuration"><a class="anchor" href="#wildfly-jar-maven-plugin-additional-configuration"></a>3. Additional configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The plugin allows you to specify additional configuration items:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A set of WildFly CLI scripts to execute to fine tune the server configuration.</p>
+</li>
+<li>
+<p>Some extra content to be copied inside the bootable JAR (e.g.: server keystore).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Check <a href="https://docs.wildfly.org/bootablejar">this documentation</a> for more details on how to configure execution of
+CLI scripts and to package extra content.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly-jar-maven-plugin-build"><a class="anchor" href="#wildfly-jar-maven-plugin-build"></a>4. Packaging your application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Call <code>` mvn package</code>`  to package both your application and the bootable JAR in the file <code><code>&lt;project build directory&gt;/&lt;project final name&gt;-bootable.jar</code></code></p>
+</div>
+<div class="paragraph">
+<p>In order to speed-up the development of your application (avoid rebuilding the JAR each time your application is re-compiled),
+the Maven plugin offers a <em>development</em> mode that allows you to build and start the bootable JAR only once.</p>
+</div>
+<div class="paragraph">
+<p>Check <a href="https://docs.wildfly.org/bootablejar">this documentation</a> for more details on the <em>development</em> mode.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly-jar-maven-plugin-run"><a class="anchor" href="#wildfly-jar-maven-plugin-run"></a>5. Running your application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Call <code><code>java -jar &lt;path to bootable JAR&gt; &lt;arguments&gt;</code></code></p>
+</div>
+<div class="paragraph">
+<p>In additon, you can use the <code><code>wildfly-jar:run</code></code> and <code><code>wildfly-jar:start</code></code> plugin goals to launch the bootable JAR.</p>
+</div>
+<div class="sect2">
+<h3 id="wildfly-bootable-jar-arguments"><a class="anchor" href="#wildfly-bootable-jar-arguments"></a>5.1. Bootable JAR arguments</h3>
+<div class="paragraph">
+<p>The following arguments can be used when starting the bootable JAR:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-b[interface]=&lt;value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set system property jboss.bind.address.&lt;interface&gt; to the given value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-b=&lt;value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set system property jboss.bind.address to the given value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-D&lt;name&gt;[=&lt;value&gt;]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set a system property. The system properties are set by the server. They are not set by the bootable JAR JVM.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display help then exit</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--cli-script=&lt;path to CLI script file&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to a CLI script to execute when starting the Bootable JAR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--deployment=&lt;path to WAR/JAR/EAR file or exploded deployment directory&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application to install in the hollow JAR. Adding a deployment to an bootable JAR already containing a deployment is invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--display-galleon-config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display the content of the Galleon configuration used to build this bootable JAR.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--install-dir=&lt;path to directory to install server in&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default a new TEMP directory is created. TEMP directory location is controlled by the Java VM (call to <code><code>Files.createTempDirectory</code></code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--properties=&lt;url&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load system properties from the given url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-S&lt;name&gt;[=value]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set a security property</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-secmgr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Activate and install the <code>WildFlySecurityManager</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-u=&lt;value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set system property jboss.default.multicast.address to the given value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Print version and exit.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>WildFly Operator - User Documentation :: My Demo Site</title>
+    <link rel="canonical" href="https://docs.demo.com/wildfly-operator/user-guide.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <script>var uiRootPath = '../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">My Demo Site</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="wildfly-operator" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="user-guide.html">Kubernetes Operator for WildFly</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="user-guide.html">WildFly Operator - User Documentation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="apis.html">WildFly Operator - API Documentation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Kubernetes Operator for WildFly</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="user-guide.html">Kubernetes Operator for WildFly</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="user-guide.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly/index.html">WildFly</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../wildfly-cloud/main/index.html">WildFly on the Cloud</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../wildfly-cloud/main/index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../wildfly/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="user-guide.html">Kubernetes Operator for WildFly</a></li>
+    <li><a href="user-guide.html">WildFly Operator - User Documentation</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jmesnil/wildfly-operator/edit/antora/doc/modules/ROOT/pages/user-guide.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">WildFly Operator - User Documentation</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#basic-install">Basic Install (Phase I)</a>
+<ul class="sectlevel1">
+<li><a href="#application-image">Specify the Docker Application Image</a></li>
+<li><a href="#bootableJar">Specify a Bootable JAR application image</a></li>
+<li><a href="#size">Specify the Size of the Application</a></li>
+<li><a href="#storage">Specify the Storage Requirements for the Server Data Directory</a></li>
+<li><a href="#env">Configure the Application Environment</a></li>
+<li><a href="#secret">Configure Secrets</a></li>
+<li><a href="#configmaps">Configure ConfigMaps</a></li>
+<li><a href="#standalone-config-map">Bring Your Own Standalone XML Configuration</a></li>
+<li><a href="#_monitor_wildfly_metrics">Monitor WildFly Metrics</a></li>
+<li><a href="#_openshift_features">OpenShift Features</a>
+<ul class="sectlevel2">
+<li><a href="#seamless-upgrades">Seamless Upgrades</a></li>
+<li><a href="#http-route-creation">Creation of an HTTP Route</a></li>
+</ul>
+</li>
+<li><a href="#scaledown-transaction-recovery">Transaction recovery during scaledown</a>
+<ul class="sectlevel2">
+<li><a href="#_transaction_scaledown_special_cases">Transaction scaledown special cases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide documents the various features and capabilites provides by the WildFly Operator.</p>
+</div>
+<div class="paragraph">
+<p>This guide is complemented by the <a href="../apis.adoc">API Documentation</a>.</p>
+</div>
+</div>
+</div>
+<h1 id="basic-install" class="sect0"><a class="anchor" href="#basic-install"></a>Basic Install (Phase I)</h1>
+<div class="paragraph">
+<p>The features and capabilities of <strong>Basic Install (Phase I)</strong> deals with the provisioning, installation and configuration of a Java application managed by the WildFly Operator.</p>
+</div>
+<div class="sect1">
+<h2 id="application-image"><a class="anchor" href="#application-image"></a>Specify the Docker Application Image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>applicationImage</code> specifies the Docker application image that contains the Java application.
+The operator support two kind of application images:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>WildFly S2I Builder/Runtime application image. This application image is built by using <a href="https://github.com/wildfly/wildfly-s2i">WildFly S2I</a>. This is the default one.</p>
+</li>
+<li>
+<p>Bootable Jar application image. This application image is built by using <a href="https://github.com/wildfly-extras/wildfly-jar-maven-plugin">Bootable JAR</a></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Example of application image configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  applicationImage: "quay.io/wildfly-quickstarts/wildfly-operator-quickstart:18.0"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>applicationImage</code> accepts different references to Docker image:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the name of the image: <code>quay.io/wildfly-quickstarts/wildfly-operator-quickstart</code></p>
+</li>
+<li>
+<p>a tag: <code>quay.io/wildfly-quickstarts/wildfly-operator-quickstart:18.0</code></p>
+</li>
+<li>
+<p>a digest: <code>quay.io/wildfly-quickstarts/wildfly-operator-quickstart@sha256:0af38bc38be93116b6a1d86a9c78bd14cd527121970899d719baf78e5dc7bfd2</code></p>
+</li>
+<li>
+<p>an imagestream tag: <code>wildfly-operator-quickstart:latest</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Using an imatestream tag is supported only on OpenShift and the imagestream must be in the same namespace that the deployed <code>WildFlyServer</code> resource.
+The WildFly Operator will trigger new deployment of the application whenever the image corresponding to the imagestream tag changes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bootableJar"><a class="anchor" href="#bootableJar"></a>Specify a Bootable JAR application image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>bootableJar</code> specifies whether the application image is a Bootable JAR server. If this configuration is unspecified, the WildFly Operator assumes that the application image is an S2I image.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of Bootable JAR configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  bootableJar: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are some restrictions about the base image you can use to launch the Bootable JAR:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The base image for the Bootable JAR container must be <code>registry.access.redhat.com/ubi8/openjdk-11</code> or any other Red Hat ubi8 supplying a higher JDK version.</p>
+</li>
+<li>
+<p>The Bootable JAR must be built for a server configured for the cloud environment. This is done by enabling the <code>cloud</code> configuration item on the <code>wildfly-jar-maven-plugin</code> configuration. See <a href="https://docs.wildfly.org/bootablejar/#wildfly_jar_configuring_cloud">Configuring the server for cloud execution</a> on the <code>wildfly-jar-maven-plugin</code> documentation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="size"><a class="anchor" href="#size"></a>Specify the Size of the Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>replicas</code> specifies the size of the application, i.e. the number of pods that runs the application image.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of size configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  replicas:2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="storage"><a class="anchor" href="#storage"></a>Specify the Storage Requirements for the Server Data Directory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>storage</code> defines the storage requirements for WildFly&#8217;s own data.
+The application may require persistent storage for some data (e.g. transaction or messaging logs) that must persist across Pod restarts.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>storage</code> spec is empty, an <code>EmptyDir</code> volume will be used by each pod of the application (but this volume will not persist after its corresponding pod is stopped).</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Using the <code>EmptyDir</code> is especially unsafe for XA transaction processing.
+When the application uses the XA transactions then is required to configure the persistent volume claim (example below)
+or configure the transaction subsystem to store transaction log in database with
+<a href="https://docs.wildfly.org/23/wildscribe/subsystem/transactions/index.html#attr-use-jdbc-store">use of JDBC store</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A <code>volumeClaimTemplate</code> cna be specifed to configure <code>Resources</code> requirements to store WildFly standalone data directory.
+The name of the template is derived from the <code>WildFlyServer</code> name. The corresponding volume will be mounted in <code>ReadWriteOnce</code> access mode.</p>
+</div>
+<div class="paragraph">
+<p>The <code>storage</code> spec is defined in the <a href="../apis.adoc#StorageSpec">StorageSpec API Documentation</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of storage requirement</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  storage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+          requests:
+            storage: 3Gi</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The persistent volume that meets this storage requirement is mounted on the <code>/wildfly/standalone/data</code> directory (corresponding to WildFly&#8217;s <code>jboss.server.data.dir</code> path).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="env"><a class="anchor" href="#env"></a>Configure the Application Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Environment can be configured using the <code>env</code> spec.
+Environment variables can come directly from values (such as the <code>POSTGRESQL_SERVICE_HOST</code> example below) or from secrets (e.g. the <code>POSTGRESQL_USER</code> example below).</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of environment configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  env:
+  - name: POSTGRESQL_SERVICE_HOST
+    value: postgresql
+  - name: POSTGRESQL_SERVICE_PORT
+    value: '5432'
+  - name: POSTGRESQL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        key: database-name
+        name: postgresql
+  - name: POSTGRESQL_USER
+    valueFrom:
+      secretKeyRef:
+        key: database-user
+        name: postgresql
+  - name: POSTGRESQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: database-password
+        name: postgresql</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="secret"><a class="anchor" href="#secret"></a>Configure Secrets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Secrets can be mounted as volumes to be accessed from the application.</p>
+</div>
+<div class="paragraph">
+<p>The secrets must be created <strong>before</strong> the WildFly Operator deploys the application. For example we can create a secret named <code>my-secret</code> with a command such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ kubectl create secret generic my-secret --from-literal=my-key=devuser --from-literal=my-password='my-very-secure-pasword'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the secret has been created, we can specify its name in the WildFlyServer Spec to have it mounted as a volume in the pods running the application:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of mounting secrets</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  secrets:
+    - my-secret</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The secrets will then be mounted under <code>/etc/secrets/&lt;secret name&gt;</code> and each key/value will be stored in a file (whose name is the key and the content is the value).</p>
+</div>
+<div class="listingblock">
+<div class="title">Secret is mounted as a volume inside the Pod</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">[jboss@quickstart-0 ~]$ ls /etc/secrets/my-secret/
+my-key  my-password
+[jboss@quickstart-0 ~]$ cat /etc/secrets/my-secret/my-key
+devuser
+[jboss@quickstart-0 ~]$ cat /etc/secrets/my-secret/my-password
+my-very-secure-pasword</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configmaps"><a class="anchor" href="#configmaps"></a>Configure ConfigMaps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ConfigMaps can be mounted as volumes to be accessed from the application.</p>
+</div>
+<div class="paragraph">
+<p>The config maps must be created <strong>before</strong> the WildFly Operator deploys the application. For example we can create a config map named <code>my-config</code> with a command such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ kubectl create configmap my-config --from-literal=key1=value1 --from-literal=key2=value2
+configmap/my-config created</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the config map has been created, we can specify its name in the WildFlyServer Spec to have it mounted as a volume in the pods running the application:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of mounting config maps</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  configMaps:
+  - my-config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The config maps will then be mounted under <code>/etc/configmaps/&lt;config map name&gt;</code> and each key/value will be stored in a file (whose name is the key and the content is the value).</p>
+</div>
+<div class="listingblock">
+<div class="title">Config Map is mounted as a volume inside the Pod</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">[jboss@quickstart-0 ~]$ ls /etc/configmaps/my-config/
+key1 key2
+[jboss@quickstart-0 ~]$ cat /etc/configmaps/my-config/key1
+value1
+[jboss@quickstart-0 ~]$ cat /etc/configmaps/my-config/key2
+value2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="standalone-config-map"><a class="anchor" href="#standalone-config-map"></a>Bring Your Own Standalone XML Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is possible to directly provide WildFly standalone configuration instead of the one in the application image (that comes from WildFly S2I).</p>
+</div>
+<div class="paragraph">
+<p>The standalone XML file must be put in a ConfigMap that is accessible by the operator.
+The <code>standaloneConfigMap</code> must provide the <code>name</code> of this ConfigMap as well as the <code>key</code> corresponding to the name of standalone XML file.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of bringing its own standalone configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  standaloneConfigMap:
+    name: clusterbench-config-map
+    key: standalone-openshift.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the <code>clusterbench-config-map</code> must be created <strong>before</strong> the WildFly Operator deploys the application.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of reating a ConfigMap from a standalone XML file</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ kubectl create configmap clusterbench-config-map --from-file examples/clustering/config/standalone-openshift.xml
+configmap/clusterbench-config-map created</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is not supported by a Bootable JAR application image. If you enabled it, your application image will not be deployed in the cluster.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitor_wildfly_metrics"><a class="anchor" href="#_monitor_wildfly_metrics"></a>Monitor WildFly Metrics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the Prometheus Operator is deployed on the cluster (and the <code>ServiceMonitor</code> Custom Resource Definition is installed), the WildFly operator automatically creates a <code>ServiceMonitor</code> to expose its metrics to Prometheus.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_openshift_features"><a class="anchor" href="#_openshift_features"></a>OpenShift Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some Operator features are only available when running on OpenShift if Kubernetes does not provide the required resources to activate these features.</p>
+</div>
+<div class="sect2">
+<h3 id="seamless-upgrades"><a class="anchor" href="#seamless-upgrades"></a>Seamless Upgrades</h3>
+<div class="paragraph">
+<p>On OpenShift, it is possible to use an imagestream tag for the <code>applicationImage</code> to provide seamless upgrades.</p>
+</div>
+<div class="paragraph">
+<p>The imagestream must be in the same namespace that the deployed <code>WildFlyServer</code> resource.
+If that&#8217;s the case, the WildFly Operator will trigger new deployment of the application whenever the image corresponding to the imagestream tag changes.</p>
+</div>
+<div class="paragraph">
+<p>This allows to take full advantage of the OpenShift ecosystem to build the image using <code>BuildConfig</code> in order to trigger new deployments when the code of the application changes (using WebHooks to trigger new builds and then new deployments) or when WildFly S2I images changes (which can also trigger new build).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="http-route-creation"><a class="anchor" href="#http-route-creation"></a>Creation of an HTTP Route</h3>
+<div class="paragraph">
+<p>By default, when the Operator runs on OpenShift, it creates an external route to the HTTP port of the Java application.</p>
+</div>
+<div class="paragraph">
+<p>This route creation can be disabled by setting <code>disableHTTPRoute</code> to <code>true</code> if you do not wish to create an external route to the Java application.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example to disable HTTP route</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  disableHTTPRoute: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="scaledown-transaction-recovery"><a class="anchor" href="#scaledown-transaction-recovery"></a>Transaction recovery during scaledown</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As the application deployed in the WildFly application server
+may use JTA transactions there and the question emerges: what does happen when the cluster is scaled down?
+When the number of active WildFly replicas is decreased, still there may be some in-doubt transactions in the transaction log.
+When the pod is removed then all the in-progress transactions are stopped and rolled back.
+A more troublesome situation occurs when XA transactions are used.
+When the XA transaction declares it&#8217;s prepared it&#8217;s a promise to finish the transaction successfully.
+But the transaction manager which made this promise is running inside the WildFly server.
+Then simply shutting down such pod may lead to data inconsistencies or data locks.</p>
+</div>
+<div class="paragraph">
+<p>It must be ensured that all transactions are finished before the number of replicas is really decreased.
+For that purpose, the WildFly Operator provides scale down functionality which verifies if all transactions were finished
+and only then marks the pod as clean for termination.</p>
+</div>
+<div class="paragraph">
+<p>Decreasing the replica size in the <code>WildFlyServer</code> customer resource is done at field <code>WildFlyServer.Spec.Replicas</code> (see <a href="#size">Specify the Size of the Application</a>).
+You can use for example patch command like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>oc patch wildflyserver &lt;name&gt; -p '[{"op":"replace", "path":"/spec/replicas", "value":0}]' --type json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or you can manually edit and change the replica number with <code>oc edit wildflyserver &lt;name&gt;</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Decreasing replica size at the <code>StatefulSet</code> or deleting the Pod itself has no effect and as such changes will be reverted.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+if you decide to delete whole <code>WildflyServer</code> definition (<code>oc delete wildflyserver &lt;deployment_name&gt;</code>)
+         then no transaction recovery process is started and the pod is terminated regardless of unfinished transactions.
+         If you want to remove the deployment in a safe way without data inconsistencies,
+         you need first to scale down the number of pods to 0, wait until all pods are terminated
+         and only after that you can delete the <code>WildFlyServer</code> instance
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Narayana recovery listener has to be enabled in the WildFly transaction subsystem.
+         Otherwise, scaledown transaction recovery processing is skipped for the particular WildFly pod.
+         See the <a href="https://wildscribe.github.io/WildFly/18.0/subsystem/transactions/index.html"><code>recovery-listener</code> attribute of the transaction subsystem</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>when the scaledown process begins the pod state (<code>oc get pod &lt;pod_name&gt;`</code>) is still marked as <code>Running</code>.
+The reason is that that the pod needs to be able to finish all the unfinished transactions and which includes the remote EJB calls that target it.
+If you want to observe the state of the scaledown processing you need to observe the status of the <code>WildFlyServer</code> instance.
+When running <code>oc describe wildflyserver &lt;name&gt;</code> you can see the status of the Pods.</p>
+</div>
+<div class="paragraph">
+<p>The <code>WildFlyServer.Status.Pods[].State</code> can be one of the following values:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status.Pod.State</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pod is active and processing requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCALING_DOWN_RECOVERY_INVESTIGATION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pod is about to be scaled down. The scale-down process is under investigation about the state of transactions in WildFly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCALING_DOWN_RECOVERY_DIRTY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The WildFly contains some unfinished transactions. The pod cannot be terminated until they are cleaned.
+  The transaction recovery is periodically run at WildFly and it waits the transactions are finished eventually.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCALING_DOWN_CLEAN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pod was processed by transaction scaled down processing and is marked as clean to be removed from the cluster.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can observe the overall state of the active and no-active pods by looking at the
+<code>WildFlyServer.Status.'Scalingdown Pods'</code> and <code>WildFlyServer.Status.Replicas</code> fields.
+The <code>'Scalingdown Pods'</code> defines the number of pods which are about to be terminated when they are clean of unfinished transactions.
+The <code>Replicas</code> defines the current number of running pods.
+The <code>WildFlyServer.Spec.Replicas</code> (see <a href="#size">Specify the Size of the Application</a>) defines the desired number of the active pods.
+If there are no pods in scaledown process the numbers of <code>WildFlyServer.Status.Replicas</code> and <code>WildFlyServer.Spec.Replicas</code> are equals.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is not supported by a Bootable JAR application image. The transaction recovery facility will be ignored for Bootable JAR application images.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_transaction_scaledown_special_cases"><a class="anchor" href="#_transaction_scaledown_special_cases"></a>Transaction scaledown special cases</h3>
+<div class="sect3">
+<h4 id="_heuristics_transactions"><a class="anchor" href="#_heuristics_transactions"></a>Heuristics transactions</h4>
+<div class="paragraph">
+<p>As it&#8217;s well-known the transaction may finish either with commit or roll-back.
+Unfortunately there is a third outcome which is <em>unknown</em>.
+It’s a state when there is no way of automatic transaction recovery and human intervention is needed.
+If the transaction is in state of heuristics the pod is marked as <code>SCALING_DOWN_RECOVERY_DIRTY</code>
+and the administrator needs to manually connect with the <code>jboss-cli</code> to the particular WildFly instance
+and to resolve the heuristic transaction.</p>
+</div>
+<div class="paragraph">
+<p>When all the formerly heuristics records are removed from the transaction object store then the operator
+marks the pod as <code>SCALING_DOWN_CLEAN</code> and the pod is terminated.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_scaling_down_clean_state_and_statefulset_behaviour"><a class="anchor" href="#_scaling_down_clean_state_and_statefulset_behaviour"></a>SCALING_DOWN_CLEAN state and StatefulSet behaviour</h4>
+<div class="paragraph">
+<p>There is a special case coming from the design of the <code>StatefulSet</code> that ensures that the network hostname is stable
+(it does not change on the pod restart). The <code>StatefulSet</code> depends on ordering of the pods. The pod are named by the defined order.
+The <code>StatefulSet</code> then requires the pod-0 not being terminated before the pod-1. First pod-1 is terminated and then pod-0.</p>
+</div>
+<div class="paragraph">
+<p>From that rule we can observe that if the pod-1 is in state <code>SCALING_DOWN_RECOVERY_DIRTY</code> (contains some unfinished, e.g. heuristic transactions)
+then if pod-0 is in the state of <code>SCALING_DOWN_CLEAN</code> in will be lingering at that state until the pod-1 is terminated.</p>
+</div>
+<div class="paragraph">
+<p>But even the pod is in state <code>SCALING_DOWN_CLEAN</code> the pod is not receiving any new requests
+so it&#8217;s practically idle.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
